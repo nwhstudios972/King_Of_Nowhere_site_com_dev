@@ -5,7 +5,7 @@ import node from '@astrojs/node';
 
 export default defineConfig({
   site: 'https://kingofnowhere.com',
-  output: 'hybrid',
+  output: 'server',
   adapter: node({ mode: 'standalone' }),
   integrations: [tailwind(), mdx()],
   i18n: {

@@ -6,13 +6,24 @@ import WarIntro from '../../components/WarIntro.astro';
 import Factions from '../../components/Factions.astro';
 import DevlogPreview from '../../components/DevlogPreview.astro';
 import BetaSignup from '../../components/BetaSignup.astro';
+import ComingSoon from '../../components/ComingSoon.astro';
+
+export const prerender = false;
+
+const isAdmin = Astro.locals.isAdmin;
 ---
 
 <BaseLayout>
-  <Hero />
-  <WorldPitch />
-  <WarIntro />
-  <Factions />
-  <DevlogPreview />
-  <BetaSignup />
+  {isAdmin ? (
+    <Fragment>
+      <Hero />
+      <WorldPitch />
+      <WarIntro />
+      <Factions />
+      <DevlogPreview />
+      <BetaSignup />
+    </Fragment>
+  ) : (
+    <ComingSoon />
+  )}
 </BaseLayout>

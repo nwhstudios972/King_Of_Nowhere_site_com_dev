@@ -21,4 +21,4 @@ order: 5
 
 Choisir Démon comme race oriente naturellement vers le camp Démons. La trahison de leur propre nature est punie sévèrement.
 
-> *Placeholder — contenu Drive à intégrer.*
+> *Le chemin est long, mais la voie est sûre*

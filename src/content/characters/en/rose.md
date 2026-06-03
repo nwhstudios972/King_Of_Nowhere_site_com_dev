@@ -18,7 +18,7 @@ Born of a forgotten heritage, Rose walks between two worlds. Quiet but deeply em
 
 ## The forgotten heritage
 
-Rose was a **half-elf princess without knowing it**, born of a mother she never knew, raised alone within the castle walls while her father **Grand-Pa** waged ceaseless war.
+Rose was a **half-elf princess without knowing it**, born of a mother she never knew, raised alone within the castle walls while her father [**Grandpa**](/en/univers/personnages/grandpa/) waged ceaseless war.
 
 Despite this deep solitude, she radiated compassion, walking her kingdom to bring peace and smiles to those who suffered — as if she were unconsciously trying to fill the void of her absent mother.
 
@@ -30,7 +30,7 @@ They spoke for days while time stood still. Rose saw, beyond the physical abomin
 
 ## The double life
 
-Despite the violent refusal of Grand-Pa — who knew the monstrous nature of the Split King — Rose continued **in secret** to meet him. And from those meetings were born **four children**, impossible fruits of a forbidden love:
+Despite the violent refusal of [Grandpa](/en/univers/personnages/grandpa/) — who knew the monstrous nature of the Split King — Rose continued **in secret** to meet him. And from those meetings were born **four children**, impossible fruits of a forbidden love:
 
 1. [**Blanche**](/en/univers/personnages/blanche/) — half-elf, half-archangel. The Guardian.
 2. [**The Heir of the Void**](/en/univers/personnages/heritier-du-neant/) — half-elf, half-demon. The manipulator.

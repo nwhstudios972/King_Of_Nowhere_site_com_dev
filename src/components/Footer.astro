@@ -3,10 +3,15 @@ import { useTranslations, getLangFromUrl, getLocalizedPath } from '../i18n/ui';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+const isAdmin = Astro.locals?.isAdmin ?? false;
 
 const navLinks = [
-  { href: getLocalizedPath(lang, '/univers/'), label: t('nav.universe') },
-  { href: getLocalizedPath(lang, '/devlog/'), label: t('nav.devlog') },
+  ...(isAdmin
+    ? [
+        { href: getLocalizedPath(lang, '/univers/'), label: t('nav.universe') },
+        { href: getLocalizedPath(lang, '/devlog/'), label: t('nav.devlog') },
+      ]
+    : []),
   { href: getLocalizedPath(lang, '/#beta'), label: t('nav.beta'), accent: true },
 ];
 ---

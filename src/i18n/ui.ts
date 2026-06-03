@@ -167,6 +167,26 @@ export const ui = {
     'footer.copyright': '© 2026 Nowhere Studios. Tous droits réservés.',
     'footer.legal': 'Mentions légales',
     'footer.contact': 'Contact',
+
+    'comingSoon.eyebrow': 'Le royaume s’éveille',
+    'comingSoon.title': 'King Of Nowhere',
+    'comingSoon.tagline': 'Le MMORPG qui réécrit les règles arrive bientôt.',
+    'comingSoon.lead':
+      'Bâtissez sans limites. Forgez des clans. Choisissez votre camp dans la guerre éternelle entre Anges et Démons. Le site ouvre ses portes au public dans quelques semaines — d’ici là, seules les âmes invitées peuvent franchir le seuil.',
+    'comingSoon.beta_intro': 'Inscrivez-vous pour être prévenu en premier.',
+    'comingSoon.locked_notice': 'Accès restreint pendant la phase de développement.',
+
+    'adminLogin.eyebrow': 'Accès restreint',
+    'adminLogin.title': 'Le seuil du royaume.',
+    'adminLogin.lead': 'Seuls les forgerons du studio peuvent franchir cette porte.',
+    'adminLogin.email_label': 'Adresse e-mail',
+    'adminLogin.password_label': 'Mot de passe',
+    'adminLogin.submit': 'Entrer',
+    'adminLogin.back': '← Retour à l’accueil',
+    'adminLogin.error_denied': 'Identifiants invalides.',
+    'adminLogin.error_invalid': 'Veuillez renseigner email et mot de passe.',
+    'adminLogin.error_config': 'Configuration serveur manquante. Contactez le studio.',
+    'adminLogin.error_rate': 'Trop de tentatives. Réessayez dans 15 minutes.',
   },
   en: {
     'meta.title': 'King Of Nowhere — Forge your world. Choose your side.',
@@ -326,6 +346,26 @@ export const ui = {
     'footer.copyright': '© 2026 Nowhere Studios. All rights reserved.',
     'footer.legal': 'Legal notice',
     'footer.contact': 'Contact',
+
+    'comingSoon.eyebrow': 'The realm awakens',
+    'comingSoon.title': 'King Of Nowhere',
+    'comingSoon.tagline': 'The MMORPG that rewrites the rules is coming.',
+    'comingSoon.lead':
+      'Build without limits. Forge clans. Choose your side in the eternal war between Angels and Demons. The site opens to the public in a few weeks — until then, only invited souls may cross the threshold.',
+    'comingSoon.beta_intro': 'Sign up to be the first to know.',
+    'comingSoon.locked_notice': 'Restricted access during development.',
+
+    'adminLogin.eyebrow': 'Restricted access',
+    'adminLogin.title': 'The threshold of the realm.',
+    'adminLogin.lead': 'Only the studio forgers may pass this gate.',
+    'adminLogin.email_label': 'Email address',
+    'adminLogin.password_label': 'Password',
+    'adminLogin.submit': 'Enter',
+    'adminLogin.back': '← Back to home',
+    'adminLogin.error_denied': 'Invalid credentials.',
+    'adminLogin.error_invalid': 'Please provide both email and password.',
+    'adminLogin.error_config': 'Server configuration missing. Contact the studio.',
+    'adminLogin.error_rate': 'Too many attempts. Try again in 15 minutes.',
   },
 } as const;
 

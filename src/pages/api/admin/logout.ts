@@ -1,0 +1,11 @@
+import type { APIRoute } from 'astro';
+import { ADMIN_COOKIE } from '../../../lib/auth';
+
+export const prerender = false;
+
+export const POST: APIRoute = async ({ cookies, redirect }) => {
+  cookies.delete(ADMIN_COOKIE, { path: '/' });
+  return redirect('/fr/', 303);
+};
+
+export const GET = POST;

@@ -20,10 +20,45 @@ npm run dev            # http://localhost:4321
 
 La racine `/` redirige vers `/fr/`. Routes disponibles :
 
-- `/fr/`, `/en/` — one-pager hype
-- `/fr/devlog/`, `/en/devlog/` — liste des articles
-- `/fr/devlog/[slug]/`, `/en/devlog/[slug]/` — article
-- `/api/signup` — POST `{email, side, locale}` → insert Supabase
+- `/fr/`, `/en/` — page "Coming Soon" pour le public, one-pager complet pour les admins connectés
+- `/fr/admin/secure`, `/en/admin/secure` — formulaire de login admin (non lié publiquement)
+- `/fr/devlog/`, `/en/devlog/` — liste des articles (admin uniquement)
+- `/fr/devlog/[slug]/`, `/en/devlog/[slug]/` — article (admin uniquement)
+- `/fr/univers/*`, `/en/univers/*` — codex (admin uniquement)
+- `/api/signup` — POST `{email, side, locale}` → insert Supabase (public, depuis la page coming soon)
+- `/api/admin/login`, `/api/admin/logout` — endpoints d'auth admin
+
+## Accès admin (gate "Coming Soon")
+
+Pendant la phase de développement, le site complet est verrouillé : le public ne voit que la page "Coming Soon". Seul l'admin connecté voit le vrai contenu (devlog, univers, one-pager).
+
+**Configurer l'accès :**
+
+```bash
+# 1. Générer le hash bcrypt du mot de passe admin
+node scripts/hash-password.mjs
+# (entrer le mot de passe quand demandé — il imprime le hash)
+
+# 2. Générer le secret HMAC pour signer les cookies
+openssl rand -hex 32
+```
+
+Renseigne ensuite dans `.env` :
+
+```
+ADMIN_EMAIL=ton.email@exemple.com
+ADMIN_PASSWORD_HASH=\$2b\$12\$...   # hash généré ci-dessus, $ ÉCHAPPÉS avec \$
+AUTH_SECRET=...                      # 64 caractères hex
+```
+
+> ⚠️ **Important** : Vite interpole les `$` dans `.env` (les traite comme
+> variables). Le bcrypt hash en contient plusieurs. Échappe chaque `$` avec
+> `\$` sinon la valeur est silencieusement vidée. Le script
+> `hash-password.mjs` imprime déjà la version échappée prête à coller.
+
+**Se connecter :** va sur `/fr/admin/secure` (ou `/en/admin/secure`), entre tes identifiants. Un cookie signé HMAC (`kon_admin`, HttpOnly, 7 jours) est posé. Le middleware (`src/middleware.ts`) le vérifie sur chaque requête. Le bouton ✕ dans le header déconnecte.
+
+**Rate limit :** 5 tentatives par IP / 15 min (in-memory, best-effort).
 
 ## Configurer Supabase
 

@@ -8,7 +8,7 @@ const SIDES = new Set(['angel', 'demon', 'undecided']);
 const LOCALES = new Set(['fr', 'en']);
 
 function json(body: unknown, status = 200) {
-  return new Response(JSON.stringify(body), {
+    return new Response(JSON.stringify(body), {
     status,
     headers: { 'Content-Type': 'application/json' },
   });

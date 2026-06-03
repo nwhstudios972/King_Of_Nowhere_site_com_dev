@@ -4,6 +4,7 @@ import LangSwitcher from './LangSwitcher.astro';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+const isAdmin = Astro.locals?.isAdmin ?? false;
 ---
 
 <header class="absolute top-0 inset-x-0 z-30">
@@ -15,18 +16,30 @@ const t = useTranslations(lang);
     </a>
 
     <nav class="flex items-center gap-5 sm:gap-7">
-      <a
-        href={getLocalizedPath(lang, '/univers/')}
-        class="hidden sm:inline text-sm font-display tracking-widest uppercase text-white/70 hover:text-white transition-colors"
-      >
-        {t('nav.universe')}
-      </a>
-      <a
-        href={getLocalizedPath(lang, '/devlog/')}
-        class="text-sm font-display tracking-widest uppercase text-white/70 hover:text-white transition-colors"
-      >
-        {t('nav.devlog')}
-      </a>
+      {isAdmin && (
+        <Fragment>
+          <a
+            href={getLocalizedPath(lang, '/univers/')}
+            class="hidden sm:inline text-sm font-display tracking-widest uppercase text-white/70 hover:text-white transition-colors"
+          >
+            {t('nav.universe')}
+          </a>
+          <a
+            href={getLocalizedPath(lang, '/devlog/')}
+            class="text-sm font-display tracking-widest uppercase text-white/70 hover:text-white transition-colors"
+          >
+            {t('nav.devlog')}
+          </a>
+          <form method="POST" action="/api/admin/logout" class="inline">
+            <button
+              type="submit"
+              class="text-sm font-display tracking-widest uppercase text-white/40 hover:text-demon-300 transition-colors"
+            >
+              ✕
+            </button>
+          </form>
+        </Fragment>
+      )}
       <a
         href={getLocalizedPath(lang, '/#beta')}
         class="hidden sm:inline-flex text-sm font-display tracking-widest uppercase text-gold-300 hover:text-gold-500 transition-colors"

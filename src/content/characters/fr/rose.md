@@ -18,7 +18,7 @@ Issue d'un héritage oublié, Rose marche entre deux mondes. Discrète mais prof
 
 ## L'héritage oublié
 
-Rose était une **princesse demi-elfe sans le savoir**, née d'une mère qu'elle n'a jamais connue, élevée seule dans les murs du château tandis que son père **Grand-Pa** guerroyait sans cesse.
+Rose était une **princesse demi-elfe sans le savoir**, née d'une mère qu'elle n'a jamais connue, élevée seule dans les murs du château tandis que son père [**GrandPa**](/fr/univers/personnages/grandpa/) guerroyait sans cesse.
 
 Malgré cette solitude profonde, elle rayonnait de compassion, parcourant son royaume pour apporter paix et sourires à ceux qui souffraient — comme si elle cherchait inconsciemment à combler le vide de son absence maternelle.
 
@@ -30,7 +30,7 @@ Ils parlèrent pendant des jours sans que le temps ne passe. Rose vit au-delà d
 
 ## La vie double
 
-Malgré le refus violent de Grand-Pa — qui connaissait la nature monstrueuse du Roi Fendu — Rose continua **en secret** à le rencontrer. Et de ces rencontres naquirent **quatre enfants**, fruits impossibles d'un amour interdit :
+Malgré le refus violent de [GrandPa](/fr/univers/personnages/grandpa/) — qui connaissait la nature monstrueuse du Roi Fendu — Rose continua **en secret** à le rencontrer. Et de ces rencontres naquirent **quatre enfants**, fruits impossibles d'un amour interdit :
 
 1. [**Blanche**](/fr/univers/personnages/blanche/) — mi-elfe, mi-archange. La Gardienne.
 2. [**L'Héritier du Néant**](/fr/univers/personnages/heritier-du-neant/) — mi-elfe, mi-démon. Le manipulateur.
