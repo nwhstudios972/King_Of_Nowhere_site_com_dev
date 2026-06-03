@@ -1,0 +1,61 @@
+---
+import { getCollection } from 'astro:content';
+import { useTranslations, getLangFromUrl, getLocalizedPath, type Lang } from '../i18n/ui';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const all = await getCollection('races', ({ data }) => data.lang === lang && !data.draft);
+const races = all.sort((a, b) => a.data.order - b.data.order);
+
+const slugFor = (id: string) => id.replace(/^[^/]+\//, '').replace(/\.(md|mdx)$/, '');
+
+const alignmentClass = (a: string) =>
+  a === 'good'
+    ? 'border-angel-500/30 text-angel-300'
+    : a === 'evil'
+      ? 'border-demon-500/30 text-demon-300'
+      : 'border-white/15 text-white/60';
+---
+
+<section class="pt-32 pb-24">
+  <div class="container-x">
+    <a
+      href={getLocalizedPath(lang, '/univers/')}
+      class="text-sm font-display tracking-widest uppercase text-gold-300 hover:text-gold-500 transition-colors"
+    >
+      ← {t('universe.eyebrow')}
+    </a>
+    <p class="eyebrow mt-8">{t('races.eyebrow')}</p>
+    <h1 class="mt-4 text-4xl sm:text-5xl text-white">{t('races.title')}</h1>
+    <p class="mt-4 max-w-2xl text-white/70">{t('races.lead')}</p>
+
+    {
+      races.length === 0 ? (
+        <p class="mt-16 text-white/40 italic">{t('races.empty')}</p>
+      ) : (
+        <div class="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {races.map((r) => (
+            <a
+              href={getLocalizedPath(lang, `/univers/races/${slugFor(r.id)}/`)}
+              class="group rounded-xl border border-white/10 bg-ink-800/40 p-6 hover:border-gold-500/40 transition-all hover:-translate-y-1 duration-300 block"
+            >
+              <span
+                class:list={[
+                  'inline-block text-[10px] tracking-[0.3em] uppercase px-2 py-1 rounded border font-display',
+                  alignmentClass(r.data.alignment),
+                ]}
+              >
+                {t(`alignment.${r.data.alignment}` as any)}
+              </span>
+              <h2 class="mt-4 text-2xl text-white group-hover:text-gold-300 transition-colors font-display">
+                {r.data.name}
+              </h2>
+              <p class="mt-3 text-white/65 italic text-sm">{r.data.tagline}</p>
+            </a>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</section>

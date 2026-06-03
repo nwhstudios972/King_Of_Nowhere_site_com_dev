@@ -1,0 +1,65 @@
+---
+import { useTranslations, getLangFromUrl } from '../i18n/ui';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section class="section">
+  <div class="container-x">
+    <div class="text-center mb-16">
+      <p class="eyebrow reveal">{t('sides.eyebrow')}</p>
+      <h2 class="reveal mt-4 text-4xl sm:text-5xl text-white">
+        {t('sides.title')}
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6 lg:gap-10">
+      <!-- ANGELS -->
+      <article
+        class="reveal relative overflow-hidden rounded-2xl border border-angel-500/20 p-10 group hover:border-angel-300/60 transition-all duration-500"
+        style="background: linear-gradient(160deg, rgba(91,141,239,0.08) 0%, rgba(13,16,28,0.85) 60%);"
+      >
+        <div
+          class="absolute -top-32 -right-32 w-64 h-64 rounded-full bg-angel-glow opacity-10 blur-3xl group-hover:opacity-20 transition-opacity duration-700"
+        ></div>
+        <p class="text-xs tracking-[0.35em] uppercase text-angel-300 font-display">
+          {t('sides.angels_name')}
+        </p>
+        <h3 class="mt-3 text-3xl text-white font-display">
+          {t('sides.angels_tagline')}
+        </h3>
+        <p class="mt-6 text-white/70 leading-relaxed">
+          {t('sides.angels_text')}
+        </p>
+        <div class="mt-8 inline-flex items-center gap-2 text-angel-300 font-display tracking-widest uppercase text-sm">
+          <span class="w-8 h-px bg-angel-300"></span>
+          {t('sides.angels_cta')}
+        </div>
+      </article>
+
+      <!-- DEMONS -->
+      <article
+        class="reveal relative overflow-hidden rounded-2xl border border-demon-500/20 p-10 group hover:border-demon-300/60 transition-all duration-500"
+        style="background: linear-gradient(200deg, rgba(216,58,26,0.08) 0%, rgba(13,16,28,0.85) 60%); animation-delay: 0.15s"
+      >
+        <div
+          class="absolute -bottom-32 -left-32 w-64 h-64 rounded-full bg-demon-glow opacity-10 blur-3xl group-hover:opacity-20 transition-opacity duration-700"
+        ></div>
+        <p class="text-xs tracking-[0.35em] uppercase text-demon-300 font-display">
+          {t('sides.demons_name')}
+        </p>
+        <h3 class="mt-3 text-3xl text-white font-display">
+          {t('sides.demons_tagline')}
+        </h3>
+        <p class="mt-6 text-white/70 leading-relaxed">
+          {t('sides.demons_text')}
+        </p>
+        <div class="mt-8 inline-flex items-center gap-2 text-demon-300 font-display tracking-widest uppercase text-sm">
+          <span class="w-8 h-px bg-demon-300"></span>
+          {t('sides.demons_cta')}
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

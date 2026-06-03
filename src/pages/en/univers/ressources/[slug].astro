@@ -1,0 +1,58 @@
+---
+import { getCollection, render } from 'astro:content';
+import CodexLayout from '../../../../layouts/CodexLayout.astro';
+import { useTranslations, getLocalizedPath } from '../../../../i18n/ui';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const all = await getCollection('resources', ({ data }) => data.lang === 'en');
+  return all.map((res) => ({
+    params: { slug: res.id.replace(/^[^/]+\//, '').replace(/\.(md|mdx)$/, '') },
+    props: { res },
+  }));
+}
+
+const { res } = Astro.props;
+const { Content } = await render(res);
+const t = useTranslations('en');
+
+const categoryLabels: Record<string, string> = {
+  mineral: 'Ore', plant: 'Plant', wood: 'Wood', fabric: 'Fabric',
+  magic: 'Magic', food: 'Food', relic: 'Relic', misc: 'Misc',
+};
+---
+
+<CodexLayout
+  title={res.data.name}
+  description={res.data.summary}
+  crumbs={[{ href: getLocalizedPath('en', '/univers/ressources/'), label: t('resources.eyebrow') }]}
+  eyebrow={t('resources.eyebrow')}
+>
+  <div slot="meta" class="grid sm:grid-cols-2 gap-6 rounded-xl border border-white/10 bg-ink-800/40 p-6">
+    <div>
+      <p class="text-xs tracking-widest uppercase text-white/40">{t('resources.category')}</p>
+      <p class="mt-1 text-white">{categoryLabels[res.data.category]}</p>
+    </div>
+    <div>
+      <p class="text-xs tracking-widest uppercase text-white/40">{t('resources.rarity')}</p>
+      <p class="mt-1 text-white">{t(`rarity.${res.data.rarity}` as any)}</p>
+    </div>
+    {res.data.whereFound && (
+      <div class="sm:col-span-2">
+        <p class="text-xs tracking-widest uppercase text-white/40">{t('resources.where_found')}</p>
+        <p class="mt-1 text-white/85">{res.data.whereFound}</p>
+      </div>
+    )}
+    {res.data.uses.length > 0 && (
+      <div class="sm:col-span-2">
+        <p class="text-xs tracking-widest uppercase text-white/40">{t('resources.uses')}</p>
+        <ul class="mt-1 text-white/85 list-disc pl-5 space-y-1">
+          {res.data.uses.map((u) => <li>{u}</li>)}
+        </ul>
+      </div>
+    )}
+  </div>
+  <p class="mt-6 text-xl italic text-white/80">{res.data.summary}</p>
+  <Content />
+</CodexLayout>

@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import UniverseHub from '../../../components/UniverseHub.astro';
+import { useTranslations } from '../../../i18n/ui';
+
+const t = useTranslations('fr');
+---
+
+<BaseLayout title={`${t('universe.title')} — King Of Nowhere`} description={t('universe.lead')}>
+  <UniverseHub />
+</BaseLayout>

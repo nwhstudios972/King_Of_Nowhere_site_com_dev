@@ -1,0 +1,39 @@
+---
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../i18n/ui';
+import LangSwitcher from './LangSwitcher.astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<header class="absolute top-0 inset-x-0 z-30">
+  <div class="container-x flex items-center justify-between py-6">
+    <a href={getLocalizedPath(lang, '/')} class="flex items-center gap-3 group">
+      <span class="text-2xl font-display tracking-[0.18em] text-white">
+        KING <span class="text-gold-300">OF</span> NOWHERE
+      </span>
+    </a>
+
+    <nav class="flex items-center gap-5 sm:gap-7">
+      <a
+        href={getLocalizedPath(lang, '/univers/')}
+        class="hidden sm:inline text-sm font-display tracking-widest uppercase text-white/70 hover:text-white transition-colors"
+      >
+        {t('nav.universe')}
+      </a>
+      <a
+        href={getLocalizedPath(lang, '/devlog/')}
+        class="text-sm font-display tracking-widest uppercase text-white/70 hover:text-white transition-colors"
+      >
+        {t('nav.devlog')}
+      </a>
+      <a
+        href={getLocalizedPath(lang, '/#beta')}
+        class="hidden sm:inline-flex text-sm font-display tracking-widest uppercase text-gold-300 hover:text-gold-500 transition-colors"
+      >
+        {t('nav.beta')}
+      </a>
+      <LangSwitcher />
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,82 @@
+---
+import { getCollection, render } from 'astro:content';
+import CodexLayout from '../../../../layouts/CodexLayout.astro';
+import { useTranslations, getLocalizedPath } from '../../../../i18n/ui';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const all = await getCollection('characters', ({ data }) => data.lang === 'en');
+  return all.map((char) => ({
+    params: { slug: char.id.replace(/^[^/]+\//, '').replace(/\.(md|mdx)$/, '') },
+    props: { char },
+  }));
+}
+
+const { char } = Astro.props;
+const { Content } = await render(char);
+const t = useTranslations('en');
+
+const slugFor = (id: string) => id.replace(/^[^/]+\//, '').replace(/\.(md|mdx)$/, '');
+
+const raceMatch = char.data.race
+  ? (await getCollection('races', ({ data, id }) => data.lang === 'en' && slugFor(id) === char.data.race)).at(0)
+  : undefined;
+
+const raceName = raceMatch?.data.name;
+const raceHref = char.data.race ? getLocalizedPath('en', `/univers/races/${char.data.race}/`) : undefined;
+---
+
+<CodexLayout
+  title={char.data.name}
+  description={char.data.summary}
+  crumbs={[{ href: getLocalizedPath('en', '/univers/personnages/'), label: t('characters.eyebrow') }]}
+  eyebrow={t(`characters.type_${char.data.type}` as any)}
+  ogImage={char.data.cover}
+>
+  {char.data.cover && (
+    <div slot="meta" class="-mx-6 sm:mx-0 mb-8 overflow-hidden rounded-2xl border border-white/10">
+      <img
+        src={char.data.cover}
+        alt={char.data.name}
+        class="w-full h-auto object-cover"
+        loading="eager"
+      />
+    </div>
+  )}
+
+  <div slot="meta" class="grid sm:grid-cols-2 gap-6 rounded-xl border border-white/10 bg-ink-800/40 p-6">
+    {char.data.role && (
+      <div>
+        <p class="text-xs tracking-widest uppercase text-white/40">{t('characters.role')}</p>
+        <p class="mt-1 text-white">{char.data.role}</p>
+      </div>
+    )}
+    {raceName && raceHref && (
+      <div>
+        <p class="text-xs tracking-widest uppercase text-white/40">{t('characters.race')}</p>
+        <p class="mt-1 text-white">
+          <a href={raceHref} class="hover:text-gold-300 transition-colors underline-offset-4 hover:underline">
+            {raceName}
+          </a>
+        </p>
+      </div>
+    )}
+    {char.data.faction !== 'neutral' && (
+      <div>
+        <p class="text-xs tracking-widest uppercase text-white/40">{t('characters.faction')}</p>
+        <p class:list={['mt-1', char.data.faction === 'angel' ? 'text-angel-300' : 'text-demon-300']}>
+          {t(`faction.${char.data.faction}` as any)}
+        </p>
+      </div>
+    )}
+    {char.data.location && (
+      <div>
+        <p class="text-xs tracking-widest uppercase text-white/40">{t('characters.location')}</p>
+        <p class="mt-1 text-white">{char.data.location}</p>
+      </div>
+    )}
+  </div>
+  <p class="mt-6 text-xl italic text-white/80">{char.data.summary}</p>
+  <Content />
+</CodexLayout>

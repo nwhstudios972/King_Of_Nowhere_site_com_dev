@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-ink-900 text-ink-50 font-body antialiased;
+    background-image:
+      radial-gradient(ellipse at top, rgba(91, 141, 239, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom, rgba(216, 58, 26, 0.06) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display tracking-wide;
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply max-w-6xl mx-auto px-6 sm:px-8;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-7 py-3 rounded-md
+           bg-gradient-to-r from-gold-500 to-gold-300 text-ink-900
+           font-display tracking-widest uppercase text-sm
+           shadow-lg shadow-gold-500/20 hover:shadow-gold-300/40
+           transition-all duration-300 hover:scale-[1.02];
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-md
+           border border-white/15 text-white/80
+           font-display tracking-widest uppercase text-sm
+           hover:border-white/40 hover:text-white
+           transition-all duration-300;
+  }
+
+  .section {
+    @apply py-24 sm:py-32 relative;
+  }
+
+  .eyebrow {
+    @apply text-xs tracking-[0.35em] uppercase text-gold-300/80 font-display;
+  }
+
+  .reveal {
+    opacity: 0;
+  }
+
+  .reveal.is-visible {
+    @apply animate-fade-up;
+  }
+
+  .starfield {
+    background-image:
+      radial-gradient(1px 1px at 20px 30px, rgba(255,255,255,0.35), transparent),
+      radial-gradient(1px 1px at 60px 110px, rgba(255,255,255,0.25), transparent),
+      radial-gradient(1px 1px at 130px 70px, rgba(255,255,255,0.4), transparent),
+      radial-gradient(1px 1px at 180px 160px, rgba(255,255,255,0.2), transparent),
+      radial-gradient(1.5px 1.5px at 240px 30px, rgba(168,199,255,0.4), transparent),
+      radial-gradient(1px 1px at 90px 200px, rgba(255,255,255,0.25), transparent);
+    background-size: 280px 240px;
+    background-repeat: repeat;
+  }
+}

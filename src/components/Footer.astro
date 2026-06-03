@@ -1,0 +1,47 @@
+---
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../i18n/ui';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const navLinks = [
+  { href: getLocalizedPath(lang, '/univers/'), label: t('nav.universe') },
+  { href: getLocalizedPath(lang, '/devlog/'), label: t('nav.devlog') },
+  { href: getLocalizedPath(lang, '/#beta'), label: t('nav.beta'), accent: true },
+];
+---
+
+<footer class="border-t border-white/10 mt-12">
+  <div class="container-x py-12">
+    <nav class="flex flex-wrap items-center justify-center gap-6 mb-10">
+      {
+        navLinks.map((l) => (
+          <a
+            href={l.href}
+            class:list={[
+              'text-xs font-display tracking-widest uppercase transition-colors',
+              l.accent ? 'text-gold-300 hover:text-gold-500' : 'text-white/70 hover:text-white',
+            ]}
+          >
+            {l.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-6 pt-8 border-t border-white/5">
+      <div class="text-center sm:text-left">
+        <p class="text-sm text-white/70 font-display tracking-widest uppercase">
+          {t('footer.studio')}
+        </p>
+        <p class="text-xs text-white/40 mt-1">{t('footer.copyright')}</p>
+      </div>
+      <div class="flex items-center gap-6 text-xs text-white/50">
+        <a href="#" class="hover:text-white/80 transition-colors">{t('footer.legal')}</a>
+        <a href="mailto:contact@nowherestudios.com" class="hover:text-white/80 transition-colors">
+          {t('footer.contact')}
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,66 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../i18n/ui';
+
+interface Crumb {
+  href: string;
+  label: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  /** Breadcrumb crumbs in order from root to current. Last is current page (no link). */
+  crumbs: Crumb[];
+  eyebrow?: string;
+  ogImage?: string;
+}
+
+const { title, description, crumbs, eyebrow, ogImage } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const fullCrumbs: Crumb[] = [
+  { href: getLocalizedPath(lang, '/univers/'), label: t('universe.eyebrow') },
+  ...crumbs,
+  { href: '', label: title },
+];
+---
+
+<BaseLayout title={`${title} — King Of Nowhere`} description={description} ogImage={ogImage}>
+  <article class="container-x pt-32 pb-24 max-w-4xl">
+    <nav aria-label="breadcrumb" class="text-xs font-display tracking-widest uppercase">
+      <ol class="flex flex-wrap items-center gap-2 text-white/40">
+        {
+          fullCrumbs.map((c, i) => (
+            <li class="flex items-center gap-2">
+              {i > 0 && <span class="text-white/20">/</span>}
+              {c.href ? (
+                <a href={c.href} class="hover:text-gold-300 transition-colors">
+                  {c.label}
+                </a>
+              ) : (
+                <span class="text-white/70">{c.label}</span>
+              )}
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+
+    {eyebrow && <p class="eyebrow mt-10">{eyebrow}</p>}
+    <h1 class="mt-4 text-4xl sm:text-5xl text-white leading-tight">{title}</h1>
+
+    <div class="mt-10">
+      <slot name="meta" />
+    </div>
+
+    <div
+      class="prose prose-invert prose-headings:font-display prose-headings:text-white prose-p:text-white/75 prose-a:text-gold-300 prose-strong:text-white mt-10 max-w-none"
+    >
+      <slot />
+    </div>
+
+    <slot name="after" />
+  </article>
+</BaseLayout>

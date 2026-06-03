@@ -1,0 +1,26 @@
+---
+import { languages, getLangFromUrl, type Lang } from '../i18n/ui';
+
+const current = getLangFromUrl(Astro.url);
+const rest = Astro.url.pathname.replace(/^\/(fr|en)/, '') || '/';
+const switchTo = (l: Lang) => `/${l}${rest === '/' ? '/' : rest}`;
+---
+
+<div class="flex items-center gap-1 text-xs font-display tracking-widest">
+  {
+    (Object.keys(languages) as Lang[]).map((l) => (
+      <a
+        href={switchTo(l)}
+        class:list={[
+          'px-2 py-1 rounded transition-colors',
+          current === l
+            ? 'text-gold-300'
+            : 'text-white/40 hover:text-white/80',
+        ]}
+        aria-current={current === l ? 'page' : undefined}
+      >
+        {l.toUpperCase()}
+      </a>
+    ))
+  }
+</div>

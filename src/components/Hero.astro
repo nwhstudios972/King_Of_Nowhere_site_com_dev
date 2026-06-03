@@ -1,0 +1,48 @@
+---
+import { useTranslations, getLangFromUrl } from '../i18n/ui';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const title = t('hero.title');
+const lines = title.split('\n');
+---
+
+<section class="relative min-h-[100svh] flex items-center overflow-hidden pt-28 pb-24">
+  <div class="absolute inset-0 -z-10">
+    <div
+      class="absolute inset-0 bg-gradient-to-b from-ink-900 via-ink-800 to-ink-900"
+    ></div>
+    <div
+      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120vw] h-[120vw] max-w-[1400px] max-h-[1400px] rounded-full opacity-40 blur-3xl animate-glow-pulse"
+      style="background: radial-gradient(circle, rgba(168,199,255,0.25) 0%, rgba(255,106,58,0.15) 45%, transparent 70%);"
+    ></div>
+    <div class="absolute inset-0 starfield opacity-50"></div>
+  </div>
+
+  <div class="container-x relative">
+    <p class="eyebrow reveal">{t('hero.eyebrow')}</p>
+    <h1
+      class="reveal mt-6 font-display text-5xl sm:text-7xl lg:text-8xl leading-[0.95] tracking-tight text-white"
+      style="animation-delay: 0.1s"
+    >
+      {lines[0]}<br />
+      <span class="bg-gradient-to-r from-angel-glow via-white to-demon-glow bg-clip-text text-transparent">
+        {lines[1]}
+      </span>
+    </h1>
+    <p
+      class="reveal mt-8 max-w-2xl text-lg sm:text-xl text-white/70 leading-relaxed"
+      style="animation-delay: 0.2s"
+    >
+      {t('hero.subtitle')}
+    </p>
+    <div class="reveal mt-12 flex flex-wrap gap-4" style="animation-delay: 0.3s">
+      <a href="#beta" class="btn-primary">{t('hero.cta_primary')}</a>
+      <a href="#world" class="btn-ghost">{t('hero.cta_secondary')}</a>
+    </div>
+  </div>
+
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/30 text-xs tracking-widest uppercase animate-glow-pulse">
+    ↓
+  </div>
+</section>

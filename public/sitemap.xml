@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://kingofnowhere.com/fr/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://kingofnowhere.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kingofnowhere.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kingofnowhere.com/fr/"/>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://kingofnowhere.com/en/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://kingofnowhere.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kingofnowhere.com/en/"/>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://kingofnowhere.com/fr/devlog/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://kingofnowhere.com/fr/devlog/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kingofnowhere.com/en/devlog/"/>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kingofnowhere.com/en/devlog/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kingofnowhere.com/fr/devlog/le-monde-ne-sera-pas-fini/</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://kingofnowhere.com/fr/devlog/anges-et-demons-le-serment/</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://kingofnowhere.com/en/devlog/the-world-will-never-be-finished/</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://kingofnowhere.com/en/devlog/angels-and-demons-the-oath/</loc>
+    <priority>0.6</priority>
+  </url>
+</urlset>
