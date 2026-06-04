@@ -5,7 +5,7 @@ faction: neutral
 role: L'énigmatique
 location: Sur tous les royaumes
 summary: Troisième enfant de Rose et du Roi Fendu, béni par l'Entité avec les quatre natures — mi-archange, mi-démon, mi-elfe, mi-humain. Conseiller des rois, sauveur des peuples, hanté chaque nuit par le fardeau de sauver un monde qui peut s'auto-détruire.
-cover: /images/codex/roi-decoiffe/cover.jpg
+cover: /images/codex/personnages/roi-decoiffe/cover.jpg
 portrait: /images/codex/roi-decoiffe/portrait.jpg
 lang: fr
 order: 19

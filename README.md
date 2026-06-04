@@ -5,10 +5,10 @@ One-pager bilingue (FR/EN) + devlog markdown + capture beta via Supabase.
 
 ## Stack
 
-- [Astro 4](https://astro.build) (output `hybrid`)
+- [Astro 4](https://astro.build) (output `server`, SSR)
 - [Tailwind CSS](https://tailwindcss.com) + `@tailwindcss/typography`
 - [Supabase](https://supabase.com) — table `beta_signups`
-- Adapter `@astrojs/node` pour les routes API
+- Adapter `@astrojs/vercel` (serverless) pour le déploiement
 
 ## Démarrer en local
 
@@ -103,16 +103,29 @@ centralisés dans `src/i18n/ui.ts`. Édite-les là, jamais dans les composants.
 ## Build & deploy
 
 ```bash
-npm run build     # génère dist/
+npm run build     # génère .vercel/output/ (build serverless)
 npm run preview   # tester la version production locale
 ```
 
-Pour le déploiement (hybrid = SSR + statique), n'importe quel hébergeur Node
-fonctionne :
+### Déploiement sur Vercel
 
-- **Vercel** (recommandé pour Astro) : connecte le repo, ajoute les env
-  vars `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY`.
-- **Netlify**, **Cloudflare Pages**, **Render** : équivalents.
+Le projet utilise l'adapter `@astrojs/vercel/serverless` : chaque route SSR
+devient une fonction serverless Vercel.
+
+1. Connecte le repo sur [vercel.com](https://vercel.com) (framework détecté : Astro).
+2. Dans **Project Settings → Environment Variables**, ajoute :
+   - `SUPABASE_URL`
+   - `SUPABASE_SERVICE_ROLE_KEY`
+   - `ADMIN_EMAIL`
+   - `ADMIN_PASSWORD_HASH` ⚠️ **ne pas échapper les `$`** dans l'UI Vercel
+     (l'échappement `\$` est uniquement requis pour le fichier `.env` local à
+     cause de l'interpolation Vite — le dashboard Vercel prend la valeur brute).
+   - `AUTH_SECRET`
+3. Déploie. La racine `/` redirige vers `/fr/` ; toutes les routes API
+   (`/api/signup`, `/api/admin/*`) tournent en serverless.
+
+> Pour un autre hébergeur (Netlify, Cloudflare Pages, etc.), remplace l'adapter
+> dans `astro.config.mjs` par celui correspondant.
 
 ## Structure
 

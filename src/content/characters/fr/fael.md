@@ -5,7 +5,7 @@ faction: neutral
 role: Le Héraut Réticent
 location: Errant entre tous les royaumes
 summary: Quatrième et dernier enfant de Rose et du Roi Fendu. Mi-démon, mi-humain, avec un sang d'archange affaibli qui coule à peine dans ses veines. Maudit malgré lui, les mains dans les poches, semant le désastre où qu'il aille — sans jamais le vouloir.
-cover: /images/codex/fael/cover.jpg
+cover: /images/codex/personnages/fael/cover.jpg
 portrait: /images/codex/fael/portrait.jpg
 lang: fr
 order: 20

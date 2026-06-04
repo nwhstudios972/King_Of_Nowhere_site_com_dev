@@ -6,7 +6,7 @@ faction: angel
 role: Mère protectrice du noyau, Archange suprême
 location: Gardienne de la porte du Noyau de l'Entité
 summary: Égale en pouvoir à Belzebut, mais guidée par la compassion plutôt que l'ambition. Mère du Roi Fendu, elle garde aujourd'hui la porte du Noyau — pour que plus personne ne refasse la chute.
-cover: /images/codex/archange-marie/cover.jpg
+cover: /images/codex/personnages/archange-marie/cover.jpg
 portrait: /images/codex/archange-marie/portrait.jpg
 lang: fr
 order: 14

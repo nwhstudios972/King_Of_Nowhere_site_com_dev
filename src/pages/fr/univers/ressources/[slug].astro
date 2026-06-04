@@ -3,17 +3,18 @@ import { getCollection, render } from 'astro:content';
 import CodexLayout from '../../../../layouts/CodexLayout.astro';
 import { useTranslations, getLocalizedPath } from '../../../../i18n/ui';
 
-export const prerender = true;
+export const prerender = false;
 
-export async function getStaticPaths() {
-  const all = await getCollection('resources', ({ data }) => data.lang === 'fr');
-  return all.map((res) => ({
-    params: { slug: res.id.replace(/^[^/]+\//, '').replace(/\.(md|mdx)$/, '') },
-    props: { res },
-  }));
+const { slug } = Astro.params;
+const slugFor = (id: string) => id.replace(/^[^/]+\//, '').replace(/\.(md|mdx)$/, '');
+
+const matches = await getCollection('resources', ({ data, id }) =>
+  data.lang === 'fr' && !data.draft && slugFor(id) === slug,
+);
+const res = matches.at(0);
+if (!res) {
+  return new Response(null, { status: 404 });
 }
-
-const { res } = Astro.props;
 const { Content } = await render(res);
 const t = useTranslations('fr');
 
@@ -28,7 +29,14 @@ const categoryLabels: Record<string, string> = {
   description={res.data.summary}
   crumbs={[{ href: getLocalizedPath('fr', '/univers/ressources/'), label: t('resources.eyebrow') }]}
   eyebrow={t('resources.eyebrow')}
+  ogImage={res.data.cover}
 >
+  {res.data.cover && (
+    <div slot="meta" class="-mx-6 sm:mx-0 mb-8 overflow-hidden rounded-2xl border border-white/10">
+      <img src={res.data.cover} alt={res.data.name} class="w-full h-auto object-cover" loading="eager" />
+    </div>
+  )}
+
   <div slot="meta" class="grid sm:grid-cols-2 gap-6 rounded-xl border border-white/10 bg-ink-800/40 p-6">
     <div>
       <p class="text-xs tracking-widest uppercase text-white/40">{t('resources.category')}</p>
@@ -55,4 +63,17 @@ const categoryLabels: Record<string, string> = {
   </div>
   <p class="mt-6 text-xl italic text-white/80">{res.data.summary}</p>
   <Content />
+
+  {res.data.gallery.length > 0 && (
+    <div slot="after" class="mt-16">
+      <h2 class="text-xs font-display tracking-widest uppercase text-white/40">Galerie</h2>
+      <div class="mt-4 grid gap-3 sm:grid-cols-2">
+        {res.data.gallery.map((src) => (
+          <div class="overflow-hidden rounded-lg border border-white/10 bg-ink-900">
+            <img src={src} alt={res.data.name} class="w-full h-auto object-cover" loading="lazy" />
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
 </CodexLayout>

@@ -6,7 +6,7 @@ faction: demon
 role: Roi des Enfers, ancien archange déchu
 location: Draktar
 summary: Jadis l'archange le plus puissant et le plus aimé de l'Entité. Aujourd'hui Roi des Enfers, père d'une race entière née de sa chute, et hanté à jamais par la lumière qu'il a perdue.
-cover: /images/codex/belzebut/cover.jpg
+cover: /images/codex/personnages/belzebut/cover.jpg
 portrait: /images/codex/belzebut/portrait.jpg
 lang: fr
 order: 13

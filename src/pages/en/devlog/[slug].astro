@@ -2,17 +2,18 @@
 import { getCollection, render } from 'astro:content';
 import DevlogLayout from '../../../layouts/DevlogLayout.astro';
 
-export const prerender = true;
+export const prerender = false;
 
-export async function getStaticPaths() {
-  const posts = await getCollection('devlog', ({ data }) => data.lang === 'en');
-  return posts.map((post) => ({
-    params: { slug: post.id.replace(/^[^/]+\//, '').replace(/\.(md|mdx)$/, '') },
-    props: { post },
-  }));
+const { slug } = Astro.params;
+const slugFor = (id: string) => id.replace(/^[^/]+\//, '').replace(/\.(md|mdx)$/, '');
+
+const posts = await getCollection('devlog', ({ data, id }) =>
+  data.lang === 'en' && !data.draft && slugFor(id) === slug,
+);
+const post = posts.at(0);
+if (!post) {
+  return new Response(null, { status: 404 });
 }
-
-const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 

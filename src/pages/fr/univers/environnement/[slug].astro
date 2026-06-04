@@ -1,0 +1,84 @@
+---
+import { getCollection, render } from 'astro:content';
+import CodexLayout from '../../../../layouts/CodexLayout.astro';
+import { useTranslations, getLocalizedPath } from '../../../../i18n/ui';
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+const slugFor = (id: string) => id.replace(/^[^/]+\//, '').replace(/\.(md|mdx)$/, '');
+
+const matches = await getCollection('biomes', ({ data, id }) =>
+  data.lang === 'fr' && !data.draft && slugFor(id) === slug,
+);
+const biome = matches.at(0);
+if (!biome) {
+  return new Response(null, { status: 404 });
+}
+const { Content } = await render(biome);
+const t = useTranslations('fr');
+---
+
+<CodexLayout
+  title={biome.data.name}
+  description={biome.data.summary}
+  crumbs={[{ href: getLocalizedPath('fr', '/univers/environnement/'), label: t('biomes.eyebrow') }]}
+  eyebrow={t('biomes.eyebrow')}
+  ogImage={biome.data.cover}
+>
+  {biome.data.cover && (
+    <div slot="meta" class="-mx-6 sm:mx-0 mb-8 overflow-hidden rounded-2xl border border-white/10">
+      <img src={biome.data.cover} alt={biome.data.name} class="w-full h-auto object-cover" loading="eager" />
+    </div>
+  )}
+
+  <div slot="meta" class="grid sm:grid-cols-2 gap-6 rounded-xl border border-white/10 bg-ink-800/40 p-6">
+    <div>
+      <p class="text-xs tracking-widest uppercase text-white/40">{t('biomes.climate')}</p>
+      <p class="mt-1 text-white">{t(`climate.${biome.data.climate}` as any)}</p>
+    </div>
+    <div>
+      <p class="text-xs tracking-widest uppercase text-white/40">{t('biomes.danger')}</p>
+      <p class="mt-1 text-white">{t(`danger.${biome.data.dangerLevel}` as any)}</p>
+    </div>
+    {biome.data.fauna.length > 0 && (
+      <div class="sm:col-span-2">
+        <p class="text-xs tracking-widest uppercase text-white/40">{t('biomes.fauna')}</p>
+        <ul class="mt-1 text-white/85 list-disc pl-5 space-y-1">
+          {biome.data.fauna.map((f) => <li>{f}</li>)}
+        </ul>
+      </div>
+    )}
+    {biome.data.resources.length > 0 && (
+      <div class="sm:col-span-2">
+        <p class="text-xs tracking-widest uppercase text-white/40">{t('biomes.resources')}</p>
+        <ul class="mt-1 text-white/85 list-disc pl-5 space-y-1">
+          {biome.data.resources.map((r) => <li>{r}</li>)}
+        </ul>
+      </div>
+    )}
+    {biome.data.dangers.length > 0 && (
+      <div class="sm:col-span-2">
+        <p class="text-xs tracking-widest uppercase text-white/40">{t('biomes.dangers')}</p>
+        <ul class="mt-1 text-white/85 list-disc pl-5 space-y-1">
+          {biome.data.dangers.map((d) => <li>{d}</li>)}
+        </ul>
+      </div>
+    )}
+  </div>
+  <p class="mt-6 text-xl italic text-white/80">{biome.data.summary}</p>
+  <Content />
+
+  {biome.data.gallery.length > 0 && (
+    <div slot="after" class="mt-16">
+      <h2 class="text-xs font-display tracking-widest uppercase text-white/40">Galerie</h2>
+      <div class="mt-4 grid gap-3 sm:grid-cols-2">
+        {biome.data.gallery.map((src) => (
+          <div class="overflow-hidden rounded-lg border border-white/10 bg-ink-900">
+            <img src={src} alt={biome.data.name} class="w-full h-auto object-cover" loading="lazy" />
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+</CodexLayout>

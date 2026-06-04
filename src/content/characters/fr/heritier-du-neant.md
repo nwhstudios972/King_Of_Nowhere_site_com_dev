@@ -6,7 +6,7 @@ faction: demon
 role: La nuance et le choix
 location: Aux carrefours du destin
 summary: Second enfant de Rose et du Roi Fendu, mi-démon mi-elfe en parts égales. Maître de la parole trompeuse, manipulateur élégant, joueur d'âmes. Aimé autant que craint. Et profondément blessé sous son sourire.
-cover: /images/codex/heritier-du-neant/cover.jpg
+cover: /images/codex/personnages/heritier-du-neant/cover.jpg
 portrait: /images/codex/heritier-du-neant/portrait.jpg
 lang: fr
 order: 18

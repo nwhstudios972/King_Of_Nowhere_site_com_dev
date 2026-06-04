@@ -6,7 +6,7 @@ faction: angel
 role: Protective Mother of the Core, Supreme Archangel
 location: Keeper of the Gate to the Core of the Entity
 summary: Equal in power to Belzebut, but guided by compassion rather than ambition. Mother of the Split King, she now guards the gate to the Core — so that no one shall ever fall as he did.
-cover: /images/codex/archange-marie/cover.jpg
+cover: /images/codex/personnages/archange-marie/cover.jpg
 portrait: /images/codex/archange-marie/portrait.jpg
 lang: en
 order: 14

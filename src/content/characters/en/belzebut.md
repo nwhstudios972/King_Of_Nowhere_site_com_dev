@@ -6,7 +6,7 @@ faction: demon
 role: King of Hell, Fallen Archangel
 location: Draktar
 summary: Once the most powerful and beloved archangel of the Entity. Now King of Hell, father of an entire race born of his fall, and forever haunted by the light he lost.
-cover: /images/codex/belzebut/cover.jpg
+cover: /images/codex/personnages/belzebut/cover.jpg
 portrait: /images/codex/belzebut/portrait.jpg
 lang: en
 order: 13

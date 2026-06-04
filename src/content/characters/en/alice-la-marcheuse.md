@@ -6,7 +6,7 @@ faction: neutral
 role: Event vendor, walker of pivotal moments
 location: Wherever an event is about to unfold
 summary: A nomadic merchant with light steps. She always arrives just before great events — weddings, battles, coronations — as if she could sense them coming. Sells companion mascots and, on rare days, items capable of turning the tide of a war.
-cover: /images/codex/alice-la-marcheuse/cover.jpg
+cover: /images/codex/personnages/alice-la-marcheuse/cover.jpg
 portrait: /images/codex/alice-la-marcheuse/portrait.jpg
 lang: en
 order: 101

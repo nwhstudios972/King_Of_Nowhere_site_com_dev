@@ -5,7 +5,7 @@ faction: neutral
 role: The Reluctant Herald
 location: Wandering through every kingdom
 summary: Fourth and last child of Rose and the Split King. Half-demon, half-human, with a weakened archangel blood that barely runs in his veins. Cursed against his will, hands always in his pockets, sowing disaster wherever he goes — without ever wanting to.
-cover: /images/codex/fael/cover.jpg
+cover: /images/codex/personnages/fael/cover.jpg
 portrait: /images/codex/fael/portrait.jpg
 lang: en
 order: 20

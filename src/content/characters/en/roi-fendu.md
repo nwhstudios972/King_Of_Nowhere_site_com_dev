@@ -5,7 +5,7 @@ faction: demon
 role: The abomination of the gods
 location: The Lands of Men
 summary: Born of the impossible union between the archangel Marie and the demon Belzebut. Half-light, half-shadow. Cast out by the heavens, rejected by men, his angelic heart was consumed by five centuries of betrayals.
-cover: /images/codex/roi-fendu/cover.jpg
+cover: /images/codex/personnages/roi-fendu/cover.jpg
 portrait: /images/codex/roi-fendu/portrait.jpg
 lang: en
 order: 15

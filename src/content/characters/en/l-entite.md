@@ -5,7 +5,7 @@ faction: neutral
 role: Creative source of the worlds
 location: The Core of the Entity
 summary: The creative substance of the worlds. No fixed form, no intent, no judgement. Source of infinite power, it offers the choice without imposing the path.
-cover: /images/codex/entite/cover.jpg
+cover: /images/codex/personnages/entite/cover.jpg
 portrait: /images/codex/entite/portrait.jpg
 lang: en
 order: 0

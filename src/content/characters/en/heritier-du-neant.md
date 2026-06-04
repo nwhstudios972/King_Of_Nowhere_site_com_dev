@@ -6,7 +6,7 @@ faction: demon
 role: The nuance and the choice
 location: At the crossroads of fate
 summary: Second child of Rose and the Split King, half-demon and half-elf in equal measure. Master of treacherous words, elegant manipulator, player of souls. Loved as much as feared. And deeply wounded beneath his smile.
-cover: /images/codex/heritier-du-neant/cover.jpg
+cover: /images/codex/personnages/heritier-du-neant/cover.jpg
 portrait: /images/codex/heritier-du-neant/portrait.jpg
 lang: en
 order: 18

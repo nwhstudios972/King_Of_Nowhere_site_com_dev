@@ -6,7 +6,7 @@ faction: neutral
 role: The gentle mother, princess of a hidden heritage
 location: Kingdom of Grand-Pa
 summary: A half-elf princess who never knew it. Raised alone within the castle walls while her father waged endless war. Secret companion of the Split King, mother of his four children — and the only light that could have saved him.
-cover: /images/codex/rose/cover.jpg
+cover: /images/codex/personnages/rose/cover.jpg
 portrait: /images/codex/rose/portrait.jpg
 lang: en
 order: 16

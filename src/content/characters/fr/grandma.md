@@ -6,7 +6,7 @@ faction: neutral
 role: Gardienne des âges, voix de la nature éternelle
 location: Les forêts originelles
 summary: Shin'aido, l'elfe sage. Témoin de la création des mondes, bénie par l'Entité d'immortalité et de pouvoirs secrets. Reine des humains par stratégie, déesse vivante chez les elfes, force silencieuse derrière les plus grandes décisions de Grand-Pa.
-cover: /images/codex/grandma/cover.jpg
+cover: /images/codex/personnages/grandma/cover.jpg
 portrait: /images/codex/grandma/portrait.jpg
 lang: fr
 order: 21

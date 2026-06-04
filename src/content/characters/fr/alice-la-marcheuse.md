@@ -6,7 +6,7 @@ faction: neutral
 role: Vendeuse événementielle, marcheuse des moments charnières
 location: Partout où un événement s'apprête à s'écrire
 summary: Marchande nomade aux pas légers. Elle arrive toujours juste avant les grands événements — mariages, batailles, couronnements — comme si elle les sentait venir. Vend des mascottes compagnons et, parfois, des objets capables de retourner une guerre.
-cover: /images/codex/alice-la-marcheuse/cover.jpg
+cover: /images/codex/personnages/alice-la-marcheuse/cover.jpg
 portrait: /images/codex/alice-la-marcheuse/portrait.jpg
 lang: fr
 order: 101

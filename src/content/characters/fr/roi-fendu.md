@@ -5,7 +5,7 @@ faction: demon
 role: L'abomination des dieux
 location: Terre des humains
 summary: Né de l'union impossible entre l'archange Marie et le démon Belzebut. Mi-lumière, mi-noirceur. Renié par les cieux, rejeté par les hommes, son cœur angélique s'est consumé en cinq siècles de trahisons.
-cover: /images/codex/roi-fendu/cover.jpg
+cover: /images/codex/personnages/roi-fendu/cover.jpg
 portrait: /images/codex/roi-fendu/portrait.jpg
 lang: fr
 order: 15

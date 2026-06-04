@@ -6,7 +6,7 @@ faction: neutral
 role: La douce mère, princesse à l'héritage caché
 location: Royaume de Grand-Pa
 summary: Princesse demi-elfe sans le savoir. Élevée seule dans les murs du château pendant que son père guerroyait. Compagne secrète du Roi Fendu, mère de ses quatre enfants — et seule lumière capable de le sauver.
-cover: /images/codex/rose/cover.jpg
+cover: /images/codex/personnages/rose/cover.jpg
 portrait: /images/codex/rose/portrait.jpg
 lang: fr
 order: 16

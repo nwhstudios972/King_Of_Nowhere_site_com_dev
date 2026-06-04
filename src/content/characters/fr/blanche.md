@@ -6,7 +6,7 @@ faction: angel
 role: La Gardienne
 location: Là où naît le chaos
 summary: Fille d'un archange et d'un démon. Mais contrairement à ses frères, elle n'hérita que de la lumière. L'Entité elle-même bénit son épée. Aujourd'hui gardienne de l'équilibre, elle combat sans relâche le frère qu'elle ne peut pas comprendre.
-cover: /images/codex/blanche/cover.jpg
+cover: /images/codex/personnages/blanche/cover.jpg
 portrait: /images/codex/blanche/portrait.jpg
 lang: fr
 order: 17

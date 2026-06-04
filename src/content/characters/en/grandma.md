@@ -6,7 +6,7 @@ faction: neutral
 role: Keeper of the Ages, voice of eternal nature
 location: The Primal Forests
 summary: Shin'aido, the wise elf. Witness of the creation of worlds, blessed by the Entity with immortality and hidden powers. Queen of humans by strategy, living goddess among the elves, silent force behind Grand-Pa's greatest decisions.
-cover: /images/codex/grandma/cover.jpg
+cover: /images/codex/personnages/grandma/cover.jpg
 portrait: /images/codex/grandma/portrait.jpg
 lang: en
 order: 21

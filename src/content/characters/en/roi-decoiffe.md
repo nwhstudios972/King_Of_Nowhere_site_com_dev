@@ -5,7 +5,7 @@ faction: neutral
 role: The enigmatic one
 location: Across every kingdom
 summary: Third child of Rose and the Split King, blessed by the Entity with the four natures — half-archangel, half-demon, half-elf, half-human. Counsellor of kings, saviour of peoples, haunted nightly by the burden of saving a world that could destroy itself.
-cover: /images/codex/roi-decoiffe/cover.jpg
+cover: /images/codex/personnages/roi-decoiffe/cover.jpg
 portrait: /images/codex/roi-decoiffe/portrait.jpg
 lang: en
 order: 19

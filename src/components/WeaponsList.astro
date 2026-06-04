@@ -1,0 +1,128 @@
+---
+import { getCollection } from 'astro:content';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../i18n/ui';
+import { WEAPON_TYPES } from '../content/config';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const all = await getCollection('weapons', ({ data }) => data.lang === lang && !data.draft);
+const weapons = all.sort((a, b) => {
+  const orderDiff = a.data.order - b.data.order;
+  return orderDiff !== 0 ? orderDiff : a.data.name.localeCompare(b.data.name);
+});
+
+const slugFor = (id: string) => id.replace(/^[^/]+\//, '').replace(/\.(md|mdx)$/, '');
+
+const rarityStyle = (r: string) => {
+  switch (r) {
+    case 'legendary': return 'border-gold-300/60 text-gold-300 bg-gold-500/10';
+    case 'epic': return 'border-fuchsia-400/40 text-fuchsia-300 bg-fuchsia-500/5';
+    case 'rare': return 'border-angel-300/40 text-angel-300 bg-angel-500/5';
+    case 'uncommon': return 'border-emerald-300/30 text-emerald-300 bg-emerald-500/5';
+    default: return 'border-white/15 text-white/60 bg-white/5';
+  }
+};
+
+const allFilter = { value: 'all', label: t('weapons.filter_all') };
+const typeFilters = WEAPON_TYPES.map((c) => ({
+  value: c,
+  label: t(`weapon.${c}` as any),
+}));
+const filters = [allFilter, ...typeFilters];
+---
+
+<section class="pt-32 pb-24">
+  <div class="container-x">
+    <a
+      href={getLocalizedPath(lang, '/univers/')}
+      class="text-sm font-display tracking-widest uppercase text-gold-300 hover:text-gold-500 transition-colors"
+    >
+      ← {t('universe.eyebrow')}
+    </a>
+    <p class="eyebrow mt-8">{t('weapons.eyebrow')}</p>
+    <h1 class="mt-4 text-4xl sm:text-5xl text-white">{t('weapons.title')}</h1>
+    <p class="mt-4 max-w-2xl text-white/70">{t('weapons.lead')}</p>
+
+    <div id="weapon-filters" class="mt-10 flex flex-wrap gap-2">
+      {
+        filters.map((f) => (
+          <button
+            type="button"
+            class="filter-pill text-xs font-display tracking-widest uppercase px-4 py-2 rounded-full border border-white/10 text-white/60 hover:border-gold-300/60 hover:text-gold-300 transition-all data-[active=true]:border-gold-300 data-[active=true]:text-gold-300 data-[active=true]:bg-gold-500/10"
+            data-filter={f.value}
+            data-active={f.value === 'all' ? 'true' : 'false'}
+          >
+            {f.label}
+          </button>
+        ))
+      }
+    </div>
+
+    {
+      weapons.length === 0 ? (
+        <p class="mt-16 text-white/40 italic">{t('weapons.empty')}</p>
+      ) : (
+        <div id="weapon-grid" class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {weapons.map((w) => (
+            <a
+              href={getLocalizedPath(lang, `/univers/armes/${slugFor(w.id)}/`)}
+              class="weapon-card group rounded-xl border border-white/10 bg-ink-800/40 overflow-hidden hover:border-gold-500/40 transition-all hover:-translate-y-1 duration-300 block"
+              data-type={w.data.type}
+            >
+              {w.data.cover ? (
+                <div class="aspect-[4/3] overflow-hidden bg-ink-900">
+                  <img
+                    src={w.data.cover}
+                    alt={w.data.name}
+                    loading="lazy"
+                    class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+              ) : (
+                <div class="aspect-[4/3] bg-gradient-to-br from-ink-700 to-ink-900 border-b border-white/5 flex items-center justify-center">
+                  <span class="text-5xl text-white/10 font-display">⚒</span>
+                </div>
+              )}
+              <div class="p-6">
+                <div class="flex items-center justify-between gap-3">
+                  <span class="inline-block text-[10px] tracking-[0.3em] uppercase px-2 py-1 rounded border border-white/10 text-white/60 font-display">
+                    {t(`weapon.${w.data.type}` as any)}
+                  </span>
+                  <span
+                    class:list={[
+                      'inline-block text-[10px] tracking-[0.3em] uppercase px-2 py-1 rounded border font-display',
+                      rarityStyle(w.data.rarity),
+                    ]}
+                  >
+                    {t(`rarity.${w.data.rarity}` as any)}
+                  </span>
+                </div>
+                <h2 class="mt-4 text-xl text-white group-hover:text-gold-300 transition-colors font-display">
+                  {w.data.name}
+                </h2>
+                <p class="mt-3 text-white/65 text-sm leading-relaxed line-clamp-3">{w.data.summary}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<script>
+  const filters = document.querySelectorAll<HTMLButtonElement>('#weapon-filters .filter-pill');
+  const cards = document.querySelectorAll<HTMLElement>('.weapon-card');
+
+  filters.forEach((pill) => {
+    pill.addEventListener('click', () => {
+      const value = pill.dataset.filter || 'all';
+      filters.forEach((p) => p.setAttribute('data-active', p === pill ? 'true' : 'false'));
+      cards.forEach((card) => {
+        const match = value === 'all' || card.dataset.type === value;
+        card.style.display = match ? '' : 'none';
+      });
+    });
+  });
+</script>

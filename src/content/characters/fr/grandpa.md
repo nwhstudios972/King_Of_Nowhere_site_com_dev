@@ -6,7 +6,7 @@ faction: neutral
 role: Le déchu des rois
 location: Sur les ruines de son royaume
 summary: Roi épique des hommes. Manipulé par les archanges, contraint à boire le sang des démons pour combattre le Roi Fendu, il créa la cicatrice qui déchira la réalité — et tua involontairement sa propre fille Rose. C'est sur les ruines de sa décision que commença le jeu.
-cover: /images/codex/grandpa/cover.jpg
+cover: /images/codex/personnages/grandpa/cover.jpg
 portrait: /images/codex/grandpa/portrait.jpg
 lang: fr
 order: 22

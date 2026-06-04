@@ -6,7 +6,7 @@ faction: neutral
 role: The Fallen of Kings
 location: Upon the ruins of his kingdom
 summary: Epic king of men. Manipulated by the archangels, made to drink the blood of demons to fight the Split King, he created the scar that tore reality apart — and unknowingly killed his own daughter Rose. It was upon the ruins of his decision that the game began.
-cover: /images/codex/grandpa/cover.jpg
+cover: /images/codex/personnages/grandpa/cover.jpg
 portrait: /images/codex/grandpa/portrait.jpg
 lang: en
 order: 22

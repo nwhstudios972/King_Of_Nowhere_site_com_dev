@@ -1,0 +1,128 @@
+---
+import { getCollection } from 'astro:content';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../i18n/ui';
+import { BIOME_CLIMATES } from '../content/config';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const all = await getCollection('biomes', ({ data }) => data.lang === lang && !data.draft);
+const biomes = all.sort((a, b) => {
+  const orderDiff = a.data.order - b.data.order;
+  return orderDiff !== 0 ? orderDiff : a.data.name.localeCompare(b.data.name);
+});
+
+const slugFor = (id: string) => id.replace(/^[^/]+\//, '').replace(/\.(md|mdx)$/, '');
+
+const dangerStyle = (d: string) => {
+  switch (d) {
+    case 'deadly': return 'border-demon-500/50 text-demon-300 bg-demon-500/10';
+    case 'high': return 'border-fuchsia-400/40 text-fuchsia-300 bg-fuchsia-500/5';
+    case 'moderate': return 'border-gold-300/40 text-gold-300 bg-gold-500/5';
+    case 'low': return 'border-emerald-300/30 text-emerald-300 bg-emerald-500/5';
+    default: return 'border-white/15 text-white/60 bg-white/5';
+  }
+};
+
+const allFilter = { value: 'all', label: t('biomes.filter_all') };
+const climateFilters = BIOME_CLIMATES.map((c) => ({
+  value: c,
+  label: t(`climate.${c}` as any),
+}));
+const filters = [allFilter, ...climateFilters];
+---
+
+<section class="pt-32 pb-24">
+  <div class="container-x">
+    <a
+      href={getLocalizedPath(lang, '/univers/')}
+      class="text-sm font-display tracking-widest uppercase text-gold-300 hover:text-gold-500 transition-colors"
+    >
+      ← {t('universe.eyebrow')}
+    </a>
+    <p class="eyebrow mt-8">{t('biomes.eyebrow')}</p>
+    <h1 class="mt-4 text-4xl sm:text-5xl text-white">{t('biomes.title')}</h1>
+    <p class="mt-4 max-w-2xl text-white/70">{t('biomes.lead')}</p>
+
+    <div id="biome-filters" class="mt-10 flex flex-wrap gap-2">
+      {
+        filters.map((f) => (
+          <button
+            type="button"
+            class="filter-pill text-xs font-display tracking-widest uppercase px-4 py-2 rounded-full border border-white/10 text-white/60 hover:border-gold-300/60 hover:text-gold-300 transition-all data-[active=true]:border-gold-300 data-[active=true]:text-gold-300 data-[active=true]:bg-gold-500/10"
+            data-filter={f.value}
+            data-active={f.value === 'all' ? 'true' : 'false'}
+          >
+            {f.label}
+          </button>
+        ))
+      }
+    </div>
+
+    {
+      biomes.length === 0 ? (
+        <p class="mt-16 text-white/40 italic">{t('biomes.empty')}</p>
+      ) : (
+        <div id="biome-grid" class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {biomes.map((b) => (
+            <a
+              href={getLocalizedPath(lang, `/univers/environnement/${slugFor(b.id)}/`)}
+              class="biome-card group rounded-xl border border-white/10 bg-ink-800/40 overflow-hidden hover:border-gold-500/40 transition-all hover:-translate-y-1 duration-300 block"
+              data-climate={b.data.climate}
+            >
+              {b.data.cover ? (
+                <div class="aspect-[4/3] overflow-hidden bg-ink-900">
+                  <img
+                    src={b.data.cover}
+                    alt={b.data.name}
+                    loading="lazy"
+                    class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+              ) : (
+                <div class="aspect-[4/3] bg-gradient-to-br from-ink-700 to-ink-900 border-b border-white/5 flex items-center justify-center">
+                  <span class="text-5xl text-white/10 font-display">⛰</span>
+                </div>
+              )}
+              <div class="p-6">
+                <div class="flex items-center justify-between gap-3">
+                  <span class="inline-block text-[10px] tracking-[0.3em] uppercase px-2 py-1 rounded border border-white/10 text-white/60 font-display">
+                    {t(`climate.${b.data.climate}` as any)}
+                  </span>
+                  <span
+                    class:list={[
+                      'inline-block text-[10px] tracking-[0.3em] uppercase px-2 py-1 rounded border font-display',
+                      dangerStyle(b.data.dangerLevel),
+                    ]}
+                  >
+                    {t(`danger.${b.data.dangerLevel}` as any)}
+                  </span>
+                </div>
+                <h2 class="mt-4 text-xl text-white group-hover:text-gold-300 transition-colors font-display">
+                  {b.data.name}
+                </h2>
+                <p class="mt-3 text-white/65 text-sm leading-relaxed line-clamp-3">{b.data.summary}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<script>
+  const filters = document.querySelectorAll<HTMLButtonElement>('#biome-filters .filter-pill');
+  const cards = document.querySelectorAll<HTMLElement>('.biome-card');
+
+  filters.forEach((pill) => {
+    pill.addEventListener('click', () => {
+      const value = pill.dataset.filter || 'all';
+      filters.forEach((p) => p.setAttribute('data-active', p === pill ? 'true' : 'false'));
+      cards.forEach((card) => {
+        const match = value === 'all' || card.dataset.climate === value;
+        card.style.display = match ? '' : 'none';
+      });
+    });
+  });
+</script>

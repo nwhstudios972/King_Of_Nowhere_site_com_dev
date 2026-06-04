@@ -3,25 +3,25 @@ import { getCollection, render } from 'astro:content';
 import CodexLayout from '../../../../layouts/CodexLayout.astro';
 import { useTranslations, getLocalizedPath } from '../../../../i18n/ui';
 
-export const prerender = true;
+export const prerender = false;
 
-export async function getStaticPaths() {
-  const all = await getCollection('races', ({ data }) => data.lang === 'en');
-  return all.map((race) => ({
-    params: { slug: race.id.replace(/^[^/]+\//, '').replace(/\.(md|mdx)$/, '') },
-    props: { race },
-  }));
+const { slug } = Astro.params;
+const slugFor = (id: string) => id.replace(/^[^/]+\//, '').replace(/\.(md|mdx)$/, '');
+
+const matches = await getCollection('races', ({ data, id }) =>
+  data.lang === 'en' && !data.draft && slugFor(id) === slug,
+);
+const race = matches.at(0);
+if (!race) {
+  return new Response(null, { status: 404 });
 }
-
-const { race } = Astro.props;
 const { Content } = await render(race);
 const t = useTranslations('en');
 
-const raceSlug = race.id.replace(/^[^/]+\//, '').replace(/\.(md|mdx)$/, '');
+const raceSlug = slugFor(race.id);
 const related = (
   await getCollection('characters', ({ data }) => data.lang === 'en' && !data.draft && data.race === raceSlug)
 ).sort((a, b) => a.data.order - b.data.order);
-const slugFor = (id: string) => id.replace(/^[^/]+\//, '').replace(/\.(md|mdx)$/, '');
 ---
 
 <CodexLayout
@@ -29,7 +29,14 @@ const slugFor = (id: string) => id.replace(/^[^/]+\//, '').replace(/\.(md|mdx)$/
   description={race.data.tagline}
   crumbs={[{ href: getLocalizedPath('en', '/univers/races/'), label: t('races.eyebrow') }]}
   eyebrow={t('races.eyebrow')}
+  ogImage={race.data.cover}
 >
+  {race.data.cover && (
+    <div slot="meta" class="-mx-6 sm:mx-0 mb-8 overflow-hidden rounded-2xl border border-white/10">
+      <img src={race.data.cover} alt={race.data.name} class="w-full h-auto object-cover" loading="eager" />
+    </div>
+  )}
+
   <div slot="meta" class="grid sm:grid-cols-2 gap-6 rounded-xl border border-white/10 bg-ink-800/40 p-6">
     <div>
       <p class="text-xs tracking-widest uppercase text-white/40">{t('races.alignment')}</p>
@@ -70,6 +77,19 @@ const slugFor = (id: string) => id.replace(/^[^/]+\//, '').replace(/\.(md|mdx)$/
   </div>
   <p class="mt-6 text-xl italic text-white/80">{race.data.tagline}</p>
   <Content />
+
+  {race.data.gallery.length > 0 && (
+    <div slot="after" class="mt-16">
+      <h2 class="text-xs font-display tracking-widest uppercase text-white/40">Gallery</h2>
+      <div class="mt-4 grid gap-3 sm:grid-cols-2">
+        {race.data.gallery.map((src) => (
+          <div class="overflow-hidden rounded-lg border border-white/10 bg-ink-900">
+            <img src={src} alt={race.data.name} class="w-full h-auto object-cover" loading="lazy" />
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
 
   {related.length > 0 && (
     <section slot="after" class="mt-16 pt-10 border-t border-white/10">

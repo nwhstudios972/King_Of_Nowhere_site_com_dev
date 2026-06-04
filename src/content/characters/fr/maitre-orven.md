@@ -6,7 +6,7 @@ faction: neutral
 role: Marchand d'arcanes du Bazar des Cendres
 location: Bazar des Cendres (zone neutre)
 summary: Vend tout, à condition que vous ayez les bonnes pièces et la bonne attitude. Connaît un secret sur chaque client qui franchit son comptoir.
-cover: /images/codex/orven/cover.jpg
+cover: /images/codex/personnages/orven/cover.jpg
 portrait: /images/codex/orven/portrait.jpg
 lang: fr
 order: 100

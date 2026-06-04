@@ -1,0 +1,78 @@
+---
+import { getCollection, render } from 'astro:content';
+import CodexLayout from '../../../../layouts/CodexLayout.astro';
+import { useTranslations, getLocalizedPath } from '../../../../i18n/ui';
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+const slugFor = (id: string) => id.replace(/^[^/]+\//, '').replace(/\.(md|mdx)$/, '');
+
+const matches = await getCollection('weapons', ({ data, id }) =>
+  data.lang === 'en' && !data.draft && slugFor(id) === slug,
+);
+const weapon = matches.at(0);
+if (!weapon) {
+  return new Response(null, { status: 404 });
+}
+const { Content } = await render(weapon);
+const t = useTranslations('en');
+---
+
+<CodexLayout
+  title={weapon.data.name}
+  description={weapon.data.summary}
+  crumbs={[{ href: getLocalizedPath('en', '/univers/armes/'), label: t('weapons.eyebrow') }]}
+  eyebrow={t('weapons.eyebrow')}
+  ogImage={weapon.data.cover}
+>
+  {weapon.data.cover && (
+    <div slot="meta" class="-mx-6 sm:mx-0 mb-8 overflow-hidden rounded-2xl border border-white/10">
+      <img src={weapon.data.cover} alt={weapon.data.name} class="w-full h-auto object-cover" loading="eager" />
+    </div>
+  )}
+
+  <div slot="meta" class="grid sm:grid-cols-2 gap-6 rounded-xl border border-white/10 bg-ink-800/40 p-6">
+    <div>
+      <p class="text-xs tracking-widest uppercase text-white/40">{t('weapons.type')}</p>
+      <p class="mt-1 text-white">{t(`weapon.${weapon.data.type}` as any)}</p>
+    </div>
+    <div>
+      <p class="text-xs tracking-widest uppercase text-white/40">{t('weapons.rarity')}</p>
+      <p class="mt-1 text-white">{t(`rarity.${weapon.data.rarity}` as any)}</p>
+    </div>
+    <div>
+      <p class="text-xs tracking-widest uppercase text-white/40">{t('weapons.faction')}</p>
+      <p class="mt-1 text-white">{t(`faction.${weapon.data.faction}` as any)}</p>
+    </div>
+    {weapon.data.howToObtain && (
+      <div>
+        <p class="text-xs tracking-widest uppercase text-white/40">{t('weapons.how_to_obtain')}</p>
+        <p class="mt-1 text-white/85">{weapon.data.howToObtain}</p>
+      </div>
+    )}
+    {weapon.data.materials.length > 0 && (
+      <div class="sm:col-span-2">
+        <p class="text-xs tracking-widest uppercase text-white/40">{t('weapons.materials')}</p>
+        <ul class="mt-1 text-white/85 list-disc pl-5 space-y-1">
+          {weapon.data.materials.map((m) => <li>{m}</li>)}
+        </ul>
+      </div>
+    )}
+  </div>
+  <p class="mt-6 text-xl italic text-white/80">{weapon.data.summary}</p>
+  <Content />
+
+  {weapon.data.gallery.length > 0 && (
+    <div slot="after" class="mt-16">
+      <h2 class="text-xs font-display tracking-widest uppercase text-white/40">Gallery</h2>
+      <div class="mt-4 grid gap-3 sm:grid-cols-2">
+        {weapon.data.gallery.map((src) => (
+          <div class="overflow-hidden rounded-lg border border-white/10 bg-ink-900">
+            <img src={src} alt={weapon.data.name} class="w-full h-auto object-cover" loading="lazy" />
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+</CodexLayout>

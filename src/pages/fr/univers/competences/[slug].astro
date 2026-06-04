@@ -1,0 +1,87 @@
+---
+import { getCollection, render } from 'astro:content';
+import CodexLayout from '../../../../layouts/CodexLayout.astro';
+import { useTranslations, getLocalizedPath } from '../../../../i18n/ui';
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+const slugFor = (id: string) => id.replace(/^[^/]+\//, '').replace(/\.(md|mdx)$/, '');
+
+const matches = await getCollection('skills', ({ data, id }) =>
+  data.lang === 'fr' && !data.draft && slugFor(id) === slug,
+);
+const skill = matches.at(0);
+if (!skill) {
+  return new Response(null, { status: 404 });
+}
+const { Content } = await render(skill);
+const t = useTranslations('fr');
+
+const raceLabels: Record<string, string> = {
+  humain: 'Humain',
+  elfe: 'Elfe',
+  ange: 'Ange',
+  'mort-vivant': 'Mort-vivant',
+  demon: 'Démon',
+  wolf: 'Wolf',
+};
+---
+
+<CodexLayout
+  title={skill.data.name}
+  description={skill.data.summary}
+  crumbs={[{ href: getLocalizedPath('fr', '/univers/competences/'), label: t('skills.eyebrow') }]}
+  eyebrow={t('skills.eyebrow')}
+  ogImage={skill.data.cover}
+>
+  {skill.data.cover && (
+    <div slot="meta" class="-mx-6 sm:mx-0 mb-8 overflow-hidden rounded-2xl border border-white/10">
+      <img src={skill.data.cover} alt={skill.data.name} class="w-full h-auto object-cover" loading="eager" />
+    </div>
+  )}
+
+  <div slot="meta" class="grid sm:grid-cols-2 gap-6 rounded-xl border border-white/10 bg-ink-800/40 p-6">
+    <div>
+      <p class="text-xs tracking-widest uppercase text-white/40">{t('skills.category')}</p>
+      <p class="mt-1 text-white">{t(`skill.${skill.data.category}` as any)}</p>
+    </div>
+    <div>
+      <p class="text-xs tracking-widest uppercase text-white/40">{t('skills.faction')}</p>
+      <p class="mt-1 text-white">{t(`faction.${skill.data.faction}` as any)}</p>
+    </div>
+    {skill.data.requiredLevel > 0 && (
+      <div>
+        <p class="text-xs tracking-widest uppercase text-white/40">{t('skills.required_level')}</p>
+        <p class="mt-1 text-white">{skill.data.requiredLevel}</p>
+      </div>
+    )}
+    {skill.data.progression && (
+      <div>
+        <p class="text-xs tracking-widest uppercase text-white/40">{t('skills.progression')}</p>
+        <p class="mt-1 text-white/85">{skill.data.progression}</p>
+      </div>
+    )}
+    {skill.data.races.length > 0 && (
+      <div class="sm:col-span-2">
+        <p class="text-xs tracking-widest uppercase text-white/40">{t('skills.races')}</p>
+        <p class="mt-1 text-white/85">{skill.data.races.map((r) => raceLabels[r] ?? r).join(' · ')}</p>
+      </div>
+    )}
+  </div>
+  <p class="mt-6 text-xl italic text-white/80">{skill.data.summary}</p>
+  <Content />
+
+  {skill.data.gallery.length > 0 && (
+    <div slot="after" class="mt-16">
+      <h2 class="text-xs font-display tracking-widest uppercase text-white/40">Galerie</h2>
+      <div class="mt-4 grid gap-3 sm:grid-cols-2">
+        {skill.data.gallery.map((src) => (
+          <div class="overflow-hidden rounded-lg border border-white/10 bg-ink-900">
+            <img src={src} alt={skill.data.name} class="w-full h-auto object-cover" loading="lazy" />
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+</CodexLayout>

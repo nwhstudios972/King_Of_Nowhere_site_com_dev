@@ -6,7 +6,7 @@ faction: angel
 role: The Guardian
 location: Wherever chaos is born
 summary: Daughter of an archangel and a demon. But unlike her brothers, she inherited only the light. The Entity itself blessed her blade. Today she stands as guardian of balance, fighting endlessly the brother she cannot understand.
-cover: /images/codex/blanche/cover.jpg
+cover: /images/codex/personnages/blanche/cover.jpg
 portrait: /images/codex/blanche/portrait.jpg
 lang: en
 order: 17

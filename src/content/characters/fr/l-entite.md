@@ -5,7 +5,7 @@ faction: neutral
 role: Source créatrice des mondes
 location: Le Noyau de l'Entité
 summary: La substance créatrice des mondes. Sans forme fixe, sans intention, sans jugement. Source du pouvoir infini, elle offre le choix sans imposer la voie.
-cover: /images/codex/entite/cover.jpg
+cover: /images/codex/personnages/entite/cover.jpg
 portrait: /images/codex/entite/portrait.jpg
 lang: fr
 order: 0
