@@ -1,4 +1,8 @@
 ---
+cover: /images/codex/races/humain/cover.jpg
+gallery:
+- /images/codex/races/humain/01.jpg
+- /images/codex/races/humain/02.jpg
 name: Humain
 tagline: La race adaptable, ni bénie ni damnée.
 alignment: neutral

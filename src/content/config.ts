@@ -167,4 +167,83 @@ const biomes = defineCollection({
   }),
 });
 
-export const collections = { devlog, races, characters, resources, weapons, skills, biomes };
+export const CREATURE_TYPES = [
+  'beast',
+  'undead',
+  'demon',
+  'angel',
+  'elemental',
+  'aberration',
+  'humanoid',
+  'spirit',
+] as const;
+export type CreatureType = (typeof CREATURE_TYPES)[number];
+
+export const THREAT_LEVELS = ['minor', 'standard', 'elite', 'boss', 'legendary'] as const;
+export type ThreatLevel = (typeof THREAT_LEVELS)[number];
+
+const creatures = defineCollection({
+  type: 'content',
+  schema: z.object({
+    name: z.string(),
+    tagline: z.string().optional(),
+    type: z.enum(CREATURE_TYPES),
+    threatLevel: z.enum(THREAT_LEVELS).default('standard'),
+    faction: z.enum(['angel', 'demon', 'neutral']).default('neutral'),
+    biomes: z.array(z.string()).default([]),
+    behavior: z.string().optional(),
+    weaknesses: z.array(z.string()).default([]),
+    loots: z
+      .array(
+        z.object({
+          name: z.string(),
+          resource: z.string().optional(),
+          rarity: z.enum(['common', 'uncommon', 'rare', 'epic', 'legendary']).default('common'),
+          note: z.string().optional(),
+        }),
+      )
+      .default([]),
+    summary: z.string(),
+    cover: z.string().optional(),
+    gallery: z.array(z.string()).default([]),
+    lang: langField,
+    draft: z.boolean().default(false),
+    order: z.number().default(100),
+  }),
+});
+
+export const BUILD_CATEGORIES = ['structure', 'functional', 'defense', 'decor'] as const;
+export type BuildCategory = (typeof BUILD_CATEGORIES)[number];
+
+export const DURABILITY_LEVELS = ['fragile', 'standard', 'reinforced', 'indestructible'] as const;
+export type DurabilityLevel = (typeof DURABILITY_LEVELS)[number];
+
+const buildables = defineCollection({
+  type: 'content',
+  schema: z.object({
+    name: z.string(),
+    tagline: z.string().optional(),
+    category: z.enum(BUILD_CATEGORIES),
+    faction: z.enum(['angel', 'demon', 'neutral']).default('neutral'),
+    durability: z.enum(DURABILITY_LEVELS).default('standard'),
+    requiredLevel: z.number().int().min(0).default(0),
+    materials: z
+      .array(
+        z.object({
+          name: z.string(),
+          resource: z.string().optional(),
+          quantity: z.number().int().positive().optional(),
+        }),
+      )
+      .default([]),
+    howToDestroy: z.string().optional(),
+    summary: z.string(),
+    cover: z.string().optional(),
+    gallery: z.array(z.string()).default([]),
+    lang: langField,
+    draft: z.boolean().default(false),
+    order: z.number().default(100),
+  }),
+});
+
+export const collections = { devlog, races, characters, resources, weapons, skills, biomes, creatures, buildables };

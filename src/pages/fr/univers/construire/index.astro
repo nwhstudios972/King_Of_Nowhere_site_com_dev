@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import BuildablesList from '../../../../components/BuildablesList.astro';
+import { useTranslations } from '../../../../i18n/ui';
+
+const t = useTranslations('fr');
+---
+
+<BaseLayout title={`${t('build.title')} — King Of Nowhere`} description={t('build.lead')}>
+  <BuildablesList />
+</BaseLayout>

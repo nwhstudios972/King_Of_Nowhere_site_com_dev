@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import CreaturesList from '../../../../components/CreaturesList.astro';
+import { useTranslations } from '../../../../i18n/ui';
+
+const t = useTranslations('en');
+---
+
+<BaseLayout title={`${t('creatures.title')} — King Of Nowhere`} description={t('creatures.lead')}>
+  <CreaturesList />
+</BaseLayout>

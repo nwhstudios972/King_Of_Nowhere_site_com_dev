@@ -1,0 +1,99 @@
+---
+import { getCollection, render } from 'astro:content';
+import CodexLayout from '../../../../layouts/CodexLayout.astro';
+import { useTranslations, getLocalizedPath } from '../../../../i18n/ui';
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+const slugFor = (id: string) => id.replace(/^[^/]+\//, '').replace(/\.(md|mdx)$/, '');
+
+const matches = await getCollection('buildables', ({ data, id }) =>
+  data.lang === 'fr' && !data.draft && slugFor(id) === slug,
+);
+const item = matches.at(0);
+if (!item) {
+  return new Response(null, { status: 404 });
+}
+const { Content } = await render(item);
+const t = useTranslations('fr');
+---
+
+<CodexLayout
+  title={item.data.name}
+  description={item.data.summary}
+  crumbs={[{ href: getLocalizedPath('fr', '/univers/construire/'), label: t('build.eyebrow') }]}
+  eyebrow={t('build.eyebrow')}
+  ogImage={item.data.cover}
+>
+  {item.data.cover && (
+    <div slot="meta" class="-mx-6 sm:mx-0 mb-8 overflow-hidden rounded-2xl border border-white/10">
+      <img src={item.data.cover} alt={item.data.name} class="w-full h-auto object-cover" loading="eager" />
+    </div>
+  )}
+
+  <div slot="meta" class="grid sm:grid-cols-2 gap-6 rounded-xl border border-white/10 bg-ink-800/40 p-6">
+    <div>
+      <p class="text-xs tracking-widest uppercase text-white/40">{t('build.category')}</p>
+      <p class="mt-1 text-white">{t(`build_cat.${item.data.category}` as any)}</p>
+    </div>
+    <div>
+      <p class="text-xs tracking-widest uppercase text-white/40">{t('build.faction')}</p>
+      <p class="mt-1 text-white">{t(`faction.${item.data.faction}` as any)}</p>
+    </div>
+    <div>
+      <p class="text-xs tracking-widest uppercase text-white/40">{t('build.durability')}</p>
+      <p class="mt-1 text-white">{t(`durability.${item.data.durability}` as any)}</p>
+    </div>
+    {item.data.requiredLevel > 0 && (
+      <div>
+        <p class="text-xs tracking-widest uppercase text-white/40">{t('build.required_level')}</p>
+        <p class="mt-1 text-white">{item.data.requiredLevel}</p>
+      </div>
+    )}
+    {item.data.materials.length > 0 && (
+      <div class="sm:col-span-2">
+        <p class="text-xs tracking-widest uppercase text-white/40">{t('build.materials')}</p>
+        <ul class="mt-2 space-y-1">
+          {item.data.materials.map((m) => {
+            const label = m.quantity ? `${m.quantity} × ${m.name}` : m.name;
+            return m.resource ? (
+              <li>
+                <a
+                  href={getLocalizedPath('fr', `/univers/ressources/${m.resource}/`)}
+                  class="text-white/85 hover:text-gold-300 transition-colors"
+                >
+                  {label}
+                </a>
+              </li>
+            ) : (
+              <li class="text-white/85">{label}</li>
+            );
+          })}
+        </ul>
+      </div>
+    )}
+    {item.data.howToDestroy && (
+      <div class="sm:col-span-2">
+        <p class="text-xs tracking-widest uppercase text-demon-300/80">{t('build.how_to_destroy')}</p>
+        <p class="mt-1 text-white/85">{item.data.howToDestroy}</p>
+      </div>
+    )}
+  </div>
+
+  <p class="mt-6 text-xl italic text-white/80">{item.data.summary}</p>
+  <Content />
+
+  {item.data.gallery.length > 0 && (
+    <div slot="after" class="mt-16">
+      <h2 class="text-xs font-display tracking-widest uppercase text-white/40">Galerie</h2>
+      <div class="mt-4 grid gap-3 sm:grid-cols-2">
+        {item.data.gallery.map((src) => (
+          <div class="overflow-hidden rounded-lg border border-white/10 bg-ink-900">
+            <img src={src} alt={item.data.name} class="w-full h-auto object-cover" loading="lazy" />
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+</CodexLayout>

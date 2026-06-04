@@ -1,0 +1,140 @@
+---
+import { getCollection, render } from 'astro:content';
+import CodexLayout from '../../../../layouts/CodexLayout.astro';
+import { useTranslations, getLocalizedPath } from '../../../../i18n/ui';
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+const slugFor = (id: string) => id.replace(/^[^/]+\//, '').replace(/\.(md|mdx)$/, '');
+
+const matches = await getCollection('creatures', ({ data, id }) =>
+  data.lang === 'en' && !data.draft && slugFor(id) === slug,
+);
+const creature = matches.at(0);
+if (!creature) {
+  return new Response(null, { status: 404 });
+}
+const { Content } = await render(creature);
+const t = useTranslations('en');
+
+const biomes = creature.data.biomes.length
+  ? await getCollection('biomes', ({ data, id }) =>
+      data.lang === 'en' && !data.draft && creature.data.biomes.includes(slugFor(id)),
+    )
+  : [];
+
+const rarityClass = (r: string) =>
+  r === 'legendary'
+    ? 'text-gold-200'
+    : r === 'epic'
+      ? 'text-demon-300'
+      : r === 'rare'
+        ? 'text-angel-300'
+        : r === 'uncommon'
+          ? 'text-white/85'
+          : 'text-white/60';
+---
+
+<CodexLayout
+  title={creature.data.name}
+  description={creature.data.summary}
+  crumbs={[{ href: getLocalizedPath('en', '/univers/creatures/'), label: t('creatures.eyebrow') }]}
+  eyebrow={t('creatures.eyebrow')}
+  ogImage={creature.data.cover}
+>
+  {creature.data.cover && (
+    <div slot="meta" class="-mx-6 sm:mx-0 mb-8 overflow-hidden rounded-2xl border border-white/10">
+      <img src={creature.data.cover} alt={creature.data.name} class="w-full h-auto object-cover" loading="eager" />
+    </div>
+  )}
+
+  <div slot="meta" class="grid sm:grid-cols-2 gap-6 rounded-xl border border-white/10 bg-ink-800/40 p-6">
+    <div>
+      <p class="text-xs tracking-widest uppercase text-white/40">{t('creatures.type')}</p>
+      <p class="mt-1 text-white">{t(`creature.${creature.data.type}` as any)}</p>
+    </div>
+    <div>
+      <p class="text-xs tracking-widest uppercase text-white/40">{t('creatures.threat')}</p>
+      <p class="mt-1 text-white">{t(`threat.${creature.data.threatLevel}` as any)}</p>
+    </div>
+    <div>
+      <p class="text-xs tracking-widest uppercase text-white/40">{t('creatures.faction')}</p>
+      <p class="mt-1 text-white">{t(`faction.${creature.data.faction}` as any)}</p>
+    </div>
+    {biomes.length > 0 && (
+      <div>
+        <p class="text-xs tracking-widest uppercase text-white/40">{t('creatures.biomes')}</p>
+        <ul class="mt-1 text-white/85 space-y-1">
+          {biomes.map((b) => (
+            <li>
+              <a
+                href={getLocalizedPath('en', `/univers/environnement/${slugFor(b.id)}/`)}
+                class="hover:text-gold-300 transition-colors"
+              >
+                {b.data.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+    {creature.data.behavior && (
+      <div class="sm:col-span-2">
+        <p class="text-xs tracking-widest uppercase text-white/40">{t('creatures.behavior')}</p>
+        <p class="mt-1 text-white/85">{creature.data.behavior}</p>
+      </div>
+    )}
+    {creature.data.weaknesses.length > 0 && (
+      <div class="sm:col-span-2">
+        <p class="text-xs tracking-widest uppercase text-angel-300/80">{t('creatures.weaknesses')}</p>
+        <ul class="mt-1 text-white/85 list-disc pl-5 space-y-1">
+          {creature.data.weaknesses.map((w) => <li>{w}</li>)}
+        </ul>
+      </div>
+    )}
+  </div>
+  <p class="mt-6 text-xl italic text-white/80">{creature.data.summary}</p>
+  <Content />
+
+  {creature.data.loots.length > 0 && (
+    <section slot="after" class="mt-16 pt-10 border-t border-white/10">
+      <h2 class="text-2xl font-display text-white">{t('creatures.loots')}</h2>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2">
+        {creature.data.loots.map((l) => {
+          const inner = (
+            <div class="flex items-start justify-between gap-4 rounded-xl border border-white/10 bg-ink-800/40 p-5 hover:border-gold-500/40 transition-colors">
+              <div>
+                <p class="text-white font-display">{l.name}</p>
+                {l.note && <p class="mt-1 text-xs text-white/55">{l.note}</p>}
+              </div>
+              <span class={`text-[10px] tracking-[0.3em] uppercase font-display ${rarityClass(l.rarity)}`}>
+                {t(`rarity.${l.rarity}` as any)}
+              </span>
+            </div>
+          );
+          return l.resource ? (
+            <a href={getLocalizedPath('en', `/univers/ressources/${l.resource}/`)} class="group block">
+              {inner}
+            </a>
+          ) : (
+            <div>{inner}</div>
+          );
+        })}
+      </div>
+    </section>
+  )}
+
+  {creature.data.gallery.length > 0 && (
+    <div slot="after" class="mt-16">
+      <h2 class="text-xs font-display tracking-widest uppercase text-white/40">Gallery</h2>
+      <div class="mt-4 grid gap-3 sm:grid-cols-2">
+        {creature.data.gallery.map((src) => (
+          <div class="overflow-hidden rounded-lg border border-white/10 bg-ink-900">
+            <img src={src} alt={creature.data.name} class="w-full h-auto object-cover" loading="lazy" />
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+</CodexLayout>

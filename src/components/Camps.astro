@@ -1,0 +1,78 @@
+---
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../i18n/ui';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section class="pt-32 pb-24">
+  <div class="container-x">
+    <a
+      href={getLocalizedPath(lang, '/univers/')}
+      class="text-sm font-display tracking-widest uppercase text-gold-300 hover:text-gold-500 transition-colors"
+    >
+      ← {t('universe.eyebrow')}
+    </a>
+    <p class="eyebrow mt-8">{t('camps.eyebrow')}</p>
+    <h1 class="mt-4 text-4xl sm:text-5xl text-white max-w-3xl leading-tight">{t('camps.title')}</h1>
+    <p class="mt-6 max-w-2xl text-lg text-white/70 leading-relaxed">{t('camps.lead')}</p>
+
+    <div class="mt-16 grid gap-6 md:grid-cols-2">
+      <article class="rounded-2xl border border-angel-500/30 bg-ink-800/40 p-8 hover:border-angel-300/60 transition-colors">
+        <p class="text-[10px] tracking-[0.3em] uppercase text-angel-300 font-display">{t('faction.angel')}</p>
+        <h2 class="mt-3 text-3xl text-white font-display">{t('camps.angels_name')}</h2>
+        <p class="mt-2 italic text-angel-200/85">{t('camps.angels_tagline')}</p>
+        <p class="mt-6 text-white/75 leading-relaxed">{t('camps.angels_text')}</p>
+        <div class="mt-8 pt-6 border-t border-angel-500/20">
+          <p class="text-xs tracking-widest uppercase text-angel-300/80">Pouvoirs</p>
+          <p class="mt-2 text-sm text-white/70 leading-relaxed">{t('camps.angels_powers')}</p>
+        </div>
+      </article>
+
+      <article class="rounded-2xl border border-demon-500/30 bg-ink-800/40 p-8 hover:border-demon-300/60 transition-colors">
+        <p class="text-[10px] tracking-[0.3em] uppercase text-demon-300 font-display">{t('faction.demon')}</p>
+        <h2 class="mt-3 text-3xl text-white font-display">{t('camps.demons_name')}</h2>
+        <p class="mt-2 italic text-demon-200/85">{t('camps.demons_tagline')}</p>
+        <p class="mt-6 text-white/75 leading-relaxed">{t('camps.demons_text')}</p>
+        <div class="mt-8 pt-6 border-t border-demon-500/20">
+          <p class="text-xs tracking-widest uppercase text-demon-300/80">Pouvoirs</p>
+          <p class="mt-2 text-sm text-white/70 leading-relaxed">{t('camps.demons_powers')}</p>
+        </div>
+      </article>
+    </div>
+
+    <section class="mt-20 pt-16 border-t border-white/10">
+      <p class="eyebrow">↻</p>
+      <h2 class="mt-4 text-3xl sm:text-4xl text-white font-display max-w-2xl leading-tight">
+        {t('camps.dynamic_title')}
+      </h2>
+      <p class="mt-6 max-w-3xl text-white/75 leading-relaxed text-lg">{t('camps.dynamic_text')}</p>
+
+      <div class="mt-10 relative h-2 rounded-full overflow-hidden border border-white/10 bg-ink-900/60 max-w-3xl">
+        <div class="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-angel-500/60 to-angel-500/0"></div>
+        <div class="absolute inset-y-0 right-0 w-1/2 bg-gradient-to-l from-demon-500/60 to-demon-500/0"></div>
+      </div>
+      <div class="mt-2 flex justify-between max-w-3xl text-[10px] tracking-[0.3em] uppercase font-display">
+        <span class="text-angel-300">{t('camps.angels_name')}</span>
+        <span class="text-white/40">·</span>
+        <span class="text-demon-300">{t('camps.demons_name')}</span>
+      </div>
+    </section>
+
+    <section class="mt-20 pt-16 border-t border-white/10">
+      <p class="eyebrow">✺</p>
+      <h2 class="mt-4 text-3xl sm:text-4xl text-white font-display max-w-2xl leading-tight">
+        {t('camps.archons_title')}
+      </h2>
+      <p class="mt-3 text-gold-300 italic">{t('camps.archons_lead')}</p>
+      <p class="mt-6 max-w-3xl text-white/75 leading-relaxed text-lg">{t('camps.archons_text')}</p>
+
+      <div class="mt-10 rounded-xl border border-gold-500/20 bg-ink-800/40 p-6 max-w-3xl">
+        <p class="text-xs tracking-widest uppercase text-gold-300/80 font-display">
+          {t('camps.archons_examples_title')}
+        </p>
+        <p class="mt-3 text-white/80 leading-relaxed">{t('camps.archons_examples')}</p>
+      </div>
+    </section>
+  </div>
+</section>
