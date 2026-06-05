@@ -1,0 +1,106 @@
+---
+import { getCollection, render } from 'astro:content';
+import CodexLayout from '../../../layouts/CodexLayout.astro';
+import { useTranslations, getLocalizedPath } from '../../../i18n/ui';
+
+export const prerender = false;
+
+const lang = 'en' as const;
+const { slug } = Astro.params;
+const slugFor = (id: string) => id.replace(/^[^/]+\//, '').replace(/\.(md|mdx)$/, '');
+
+const matches = await getCollection('events', ({ data, id }) =>
+  data.lang === lang && !data.draft && slugFor(id) === slug,
+);
+const event = matches.at(0);
+if (!event) {
+  return new Response(null, { status: 404 });
+}
+const { Content } = await render(event);
+const t = useTranslations(lang);
+
+const start = new Date(event.data.startDate);
+const end = event.data.endDate ? new Date(event.data.endDate) : null;
+const dateFmt = new Intl.DateTimeFormat('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+const isLive = today >= start && (!end || today <= end);
+const isPast = end ? today > end : today > start;
+
+const status = isLive ? t('events.status_live') : isPast ? t('events.status_past') : t('events.status_upcoming');
+const statusClass = isLive
+  ? 'border-gold-300/60 text-gold-200 bg-gold-900/20'
+  : isPast
+    ? 'border-white/15 text-white/45'
+    : 'border-angel-300/40 text-angel-200';
+
+const eventsRoot = '/events/';
+---
+
+<CodexLayout
+  title={event.data.title}
+  description={event.data.summary}
+  crumbs={[]}
+  rootCrumb={{ href: getLocalizedPath(lang, eventsRoot), label: t('events.eyebrow') }}
+  eyebrow={t(`event_cat.${event.data.category}` as any)}
+  ogImage={event.data.cover}
+>
+  {event.data.cover && (
+    <div slot="meta" class="-mx-6 sm:mx-0 mb-8 overflow-hidden rounded-2xl border border-white/10">
+      <img src={event.data.cover} alt={event.data.title} class="w-full h-auto object-cover" loading="eager" />
+    </div>
+  )}
+
+  <div slot="meta" class="grid sm:grid-cols-2 gap-6 rounded-xl border border-white/10 bg-ink-800/40 p-6">
+    <div>
+      <p class="text-xs tracking-widest uppercase text-white/40">{t('events.starts')}</p>
+      <p class="mt-1 text-white">{dateFmt.format(start)}</p>
+    </div>
+    {end && (
+      <div>
+        <p class="text-xs tracking-widest uppercase text-white/40">{t('events.ends')}</p>
+        <p class="mt-1 text-white">{dateFmt.format(end)}</p>
+      </div>
+    )}
+    {!end && (
+      <div>
+        <p class="text-xs tracking-widest uppercase text-white/40">Duration</p>
+        <p class="mt-1 text-white">{t('events.duration_single_day')}</p>
+      </div>
+    )}
+    {event.data.faction !== 'neutral' && (
+      <div>
+        <p class="text-xs tracking-widest uppercase text-white/40">Side</p>
+        <p class="mt-1 text-white">{t(`faction.${event.data.faction}` as any)}</p>
+      </div>
+    )}
+    {event.data.server && (
+      <div>
+        <p class="text-xs tracking-widest uppercase text-white/40">{t('events.server')}</p>
+        <p class="mt-1 text-white">{event.data.server}</p>
+      </div>
+    )}
+    {event.data.location && (
+      <div>
+        <p class="text-xs tracking-widest uppercase text-white/40">{t('events.location')}</p>
+        <p class="mt-1 text-white">{event.data.location}</p>
+      </div>
+    )}
+    {event.data.recurring !== 'once' && (
+      <div>
+        <p class="text-xs tracking-widest uppercase text-white/40">{t('events.recurring')}</p>
+        <p class="mt-1 text-white">{t(`event_recur.${event.data.recurring}` as any)}</p>
+      </div>
+    )}
+    <div class="sm:col-span-2 flex">
+      <span class:list={["inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[10px] font-display tracking-[0.3em] uppercase", statusClass]}>
+        {isLive && <span class="w-1.5 h-1.5 rounded-full bg-gold-300 animate-pulse"></span>}
+        {status}
+      </span>
+    </div>
+  </div>
+
+  <p class="mt-6 text-xl italic text-white/80">{event.data.summary}</p>
+  <Content />
+</CodexLayout>

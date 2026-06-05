@@ -1,24 +1,28 @@
 ---
-name: Démon
-tagline: Enfants du feu, maîtres de la liberté brûlante.
+cover: /images/codex/races/demon/cover.jpg
+gallery:
+- /images/codex/races/demon/01.jpg
+- /images/codex/races/demon/02.jpg
+name: Demon
+tagline: Children of fire, masters of burning freedom.
 alignment: evil
-origin: Issus des flammes du refus originel, les Démons sont la contrepartie exacte des Anges.
+origin: Born from the flames of the original refusal, Demons are the exact counterpart of the Angels.
 traits:
-  - Cornes et marques de feu
-  - Aura de chaleur
-  - Magie chaotique
+  - Horns and marks of fire
+  - Aura of heat
+  - Chaotic magic
 strengths:
-  - Magie destructrice
-  - Charisme intimidant
+  - Destructive magic
+  - Intimidating charisma
 weaknesses:
-  - Vulnérabilité au sacré
-  - Conflits internes constants
+  - Vulnerability to the sacred
+  - Constant internal conflicts
 lang: en
 order: 5
 ---
 
-## Les libres-flammes
+## The free-flames
 
-Choisir Démon comme race oriente naturellement vers le camp Démons. La trahison de leur propre nature est punie sévèrement.
+Choosing Demon as a race naturally pulls you toward the Demon side. Betraying their own nature is punished harshly.
 
-> *Placeholder — contenu Drive à intégrer.*
+> *Placeholder — content coming soon.*

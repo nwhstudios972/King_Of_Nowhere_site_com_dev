@@ -17,6 +17,19 @@ if (!biome) {
 }
 const { Content } = await render(biome);
 const t = useTranslations('en');
+
+const namedEntitySlugs = biome.data.namedEntities ?? [];
+const creatureEntries = namedEntitySlugs.length
+  ? await getCollection('creatures', ({ data, id }) =>
+      data.lang === 'en' && !data.draft && namedEntitySlugs.includes(slugFor(id)),
+    )
+  : [];
+const namedEntities = namedEntitySlugs.map((s) => {
+  const entry = creatureEntries.find((c) => slugFor(c.id) === s);
+  return entry
+    ? { slug: s, name: entry.data.name, href: getLocalizedPath('en', `/univers/creatures/${s}/`), found: true as const }
+    : { slug: s, name: s, href: null, found: false as const };
+});
 ---
 
 <CodexLayout
@@ -62,6 +75,24 @@ const t = useTranslations('en');
         <p class="text-xs tracking-widest uppercase text-white/40">{t('biomes.dangers')}</p>
         <ul class="mt-1 text-white/85 list-disc pl-5 space-y-1">
           {biome.data.dangers.map((d) => <li>{d}</li>)}
+        </ul>
+      </div>
+    )}
+    {namedEntities.length > 0 && (
+      <div class="sm:col-span-2">
+        <p class="text-xs tracking-widest uppercase text-white/40">{t('biomes.named_entities')}</p>
+        <ul class="mt-1 text-white/85 list-disc pl-5 space-y-1">
+          {namedEntities.map((n) => (
+            <li>
+              {n.found ? (
+                <a href={n.href!} class="text-gold-300 hover:text-gold-500 transition-colors underline-offset-2 hover:underline">
+                  {n.name}
+                </a>
+              ) : (
+                <span class="text-white/60 italic">{n.name}</span>
+              )}
+            </li>
+          ))}
         </ul>
       </div>
     )}

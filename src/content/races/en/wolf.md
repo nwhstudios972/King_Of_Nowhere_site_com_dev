@@ -1,24 +1,27 @@
 ---
-name: Loup-garou
-tagline: La race-meute, entre deux peaux.
+cover: /images/codex/races/wolf/cover.jpg
+gallery:
+- /images/codex/races/wolf/01.jpg
+name: Wolf
+tagline: The pack-race, between two skins.
 alignment: neutral
-origin: Anciens humains marqués par une malédiction lunaire ancestrale.
+origin: Ancient humans branded by an ancestral lunar curse.
 traits:
-  - Double forme (humain / loup)
-  - Cycle lunaire
-  - Instinct de meute
+  - Dual form (human / wolf)
+  - Lunar cycle
+  - Pack instinct
 strengths:
-  - Force brute en forme loup
-  - Sens surhumains
+  - Raw strength in wolf form
+  - Superhuman senses
 weaknesses:
-  - Vulnérabilité à l'argent
-  - Perte de contrôle pendant la pleine lune
+  - Vulnerability to silver
+  - Loss of control during the full moon
 lang: en
 order: 6
 ---
 
-## Entre deux peaux
+## Between two skins
 
-Les loups-garous vivent un dilemme permanent : céder à la bête ou tenir l'homme. Le gameplay reflète ce dilemme à chaque pleine lune (cycle in-game).
+Wolves live a permanent dilemma: give in to the beast or hold the man. Gameplay reflects that dilemma every full moon (in-game cycle).
 
-> *Placeholder — contenu Drive à intégrer.*
+> *Placeholder — content coming soon.*

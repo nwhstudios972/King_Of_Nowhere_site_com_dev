@@ -1,22 +1,24 @@
 ---
-name: Maître Orven
+name: Master Orven
 type: marchand
 race: humain
 faction: neutral
-role: Marchand d'arcanes du Bazar des Cendres
-location: Bazar des Cendres (zone neutre)
-summary: Vend tout, à condition que vous ayez les bonnes pièces et la bonne attitude. Connaît un secret sur chaque client qui franchit son comptoir.
+role: Arcane merchant of the Ash Bazaar
+location: Ash Bazaar (neutral zone)
+summary: Sells everything, as long as you have the right coins and the right attitude. Knows a secret about every customer who steps up to his counter.
+cover: /images/codex/personnages/orven/cover.jpg
+portrait: /images/codex/orven/portrait.jpg
 lang: en
 order: 100
 ---
 
-## Le comptoir d'Orven
+## Orven's counter
 
-Orven n'appartient à aucun camp — et c'est précisément pour ça que tout le monde finit par lui parler. Son comptoir est neutre par décret, protégé par une vieille accord scellé entre les deux camps.
+Orven belongs to no side — and that is exactly why everyone ends up talking to him. His counter is neutral by decree, protected by an old pact sealed between the two sides.
 
-## Mécanique de jeu
+## Game mechanics
 
-- Inventaire dynamique : son stock change chaque cycle lunaire.
-- Réputation : si vous l'insultez, il refuse de vous servir pendant 30 jours réels.
+- Dynamic inventory: his stock shifts with every lunar cycle, and his items are often epic — enough to let players turn the tide of legendary battles.
+- Reputation: insult him and he refuses to serve you for 7 real-life days.
 
-> *Placeholder Marchand — à remplacer par le contenu Drive.*
+> *Merchant placeholder — content coming soon.*

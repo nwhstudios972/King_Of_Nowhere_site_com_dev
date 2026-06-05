@@ -3,7 +3,7 @@ name: Sang de Lune
 category: plant
 rarity: epic
 uses:
-  - Potion de transformation accélérée (loup-garou)
+  - Potion de transformation accélérée (wolf)
   - Encre des pactes démoniaques
   - Antidote universel
 whereFound: Pousse uniquement les nuits de pleine lune, dans les clairières où un mort-vivant repose.

@@ -1,24 +1,24 @@
 ---
-name: Mort-vivant
-tagline: Les âmes qui ont refusé l'au-delà.
+name: Undead
+tagline: Souls that refused the afterlife.
 alignment: neutral
-origin: Ce ne sont pas des morts ranimés, mais des vivants qui ont refusé de partir.
+origin: They aren't reanimated corpses, but the living who refused to leave.
 traits:
-  - Insensibilité à la douleur
-  - Régénération lente
-  - Aura de froid
+  - Insensitivity to pain
+  - Slow regeneration
+  - Aura of cold
 strengths:
-  - Résistance aux dégâts
-  - Immunité aux poisons
+  - Damage resistance
+  - Poison immunity
 weaknesses:
-  - Lenteur
-  - Rejet de la lumière sacrée
+  - Slowness
+  - Rejection of sacred light
 lang: en
 order: 4
 ---
 
-## L'entre-deux
+## The in-between
 
-Les mort-vivants ne sont ni vivants ni morts. Ils se tiennent à la frontière, et c'est pour ça que les deux camps les craignent autant qu'ils les recherchent.
+The undead are neither living nor dead. They stand on the threshold, and that is why both sides fear them as much as they seek them out.
 
-> *Placeholder — contenu Drive à intégrer.*
+> *Placeholder — content coming soon.*

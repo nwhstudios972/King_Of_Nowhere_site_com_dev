@@ -1,4 +1,8 @@
 ---
+cover: /images/codex/races/mort-vivant/cover.jpg
+gallery:
+- /images/codex/races/mort-vivant/01.jpg
+- /images/codex/races/mort-vivant/02.jpg
 name: Mort-vivant
 tagline: Les âmes qui ont refusé l'au-delà.
 alignment: neutral

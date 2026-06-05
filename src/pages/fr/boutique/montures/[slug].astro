@@ -1,0 +1,95 @@
+---
+import { getCollection, render } from 'astro:content';
+import CodexLayout from '../../../../layouts/CodexLayout.astro';
+import { useTranslations, getLocalizedPath } from '../../../../i18n/ui';
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+const slugFor = (id: string) => id.replace(/^[^/]+\//, '').replace(/\.(md|mdx)$/, '');
+
+const matches = await getCollection('mounts', ({ data, id }) =>
+  data.lang === 'fr' && !data.draft && slugFor(id) === slug,
+);
+const mount = matches.at(0);
+if (!mount) {
+  return new Response(null, { status: 404 });
+}
+const { Content } = await render(mount);
+const t = useTranslations('fr');
+
+const currencySymbol: Record<string, string> = { eur: '€', usd: '$', gold: '◉', gems: '◆' };
+const formatPrice = (price: number | undefined, currency: string) => {
+  if (price === undefined) return t('shop.price_tbd');
+  if (price === 0) return t('shop.price_free');
+  return `${price} ${currencySymbol[currency] ?? ''}`.trim();
+};
+---
+
+<CodexLayout
+  title={mount.data.name}
+  description={mount.data.summary}
+  rootCrumb={{ href: getLocalizedPath('fr', '/boutique/'), label: t('shop.eyebrow') }}
+  crumbs={[{ href: getLocalizedPath('fr', '/boutique/montures/'), label: t('shop.mounts_title') }]}
+  eyebrow={t('shop.mounts_eyebrow')}
+  ogImage={mount.data.cover}
+>
+  {mount.data.cover && (
+    <div slot="meta" class="-mx-6 sm:mx-0 mb-8 overflow-hidden rounded-2xl border border-white/10">
+      <img src={mount.data.cover} alt={mount.data.name} class="w-full h-auto object-cover" loading="eager" />
+    </div>
+  )}
+
+  <div slot="meta" class="grid sm:grid-cols-2 gap-6 rounded-xl border border-white/10 bg-ink-800/40 p-6">
+    <div>
+      <p class="text-xs tracking-widest uppercase text-white/40">{t('shop.type')}</p>
+      <p class="mt-1 text-white">{t(`mount.${mount.data.type}` as any)}</p>
+    </div>
+    <div>
+      <p class="text-xs tracking-widest uppercase text-white/40">{t('shop.rarity')}</p>
+      <p class="mt-1 text-white">{t(`rarity.${mount.data.rarity}` as any)}</p>
+    </div>
+    {mount.data.speed !== undefined && (
+      <div>
+        <p class="text-xs tracking-widest uppercase text-white/40">{t('shop.speed')}</p>
+        <p class="mt-1 text-white">{mount.data.speed} / 10</p>
+      </div>
+    )}
+    {mount.data.perks.length > 0 && (
+      <div class="sm:col-span-2">
+        <p class="text-xs tracking-widest uppercase text-white/40">{t('shop.perks')}</p>
+        <ul class="mt-1 text-white/85 list-disc pl-5 space-y-1">
+          {mount.data.perks.map((p) => <li>{p}</li>)}
+        </ul>
+      </div>
+    )}
+    <div class="sm:col-span-2 flex items-center justify-between gap-4 border-t border-white/10 pt-6">
+      <span class="text-gold-300 font-display text-2xl">
+        {formatPrice(mount.data.price, mount.data.currency)}
+      </span>
+      <button
+        type="button"
+        disabled
+        class="text-xs font-display tracking-[0.3em] uppercase px-5 py-3 rounded border border-white/15 text-white/40 cursor-not-allowed"
+        title={t('shop.soon_notice')}
+      >
+        {t('shop.soon')}
+      </button>
+    </div>
+  </div>
+  <p class="mt-6 text-xl italic text-white/80">{mount.data.summary}</p>
+  <Content />
+
+  {mount.data.gallery.length > 0 && (
+    <div slot="after" class="mt-16">
+      <h2 class="text-xs font-display tracking-widest uppercase text-white/40">Galerie</h2>
+      <div class="mt-4 grid gap-3 sm:grid-cols-2">
+        {mount.data.gallery.map((src) => (
+          <div class="overflow-hidden rounded-lg border border-white/10 bg-ink-900">
+            <img src={src} alt={mount.data.name} class="w-full h-auto object-cover" loading="lazy" />
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+</CodexLayout>

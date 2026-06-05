@@ -1,0 +1,316 @@
+---
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../i18n/ui';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const races = [
+  {
+    name: t('worldRules.humans_name'),
+    tagline: t('worldRules.humans_tagline'),
+    text: t('worldRules.humans_text'),
+    can: t('worldRules.humans_can'),
+    cannot: t('worldRules.humans_cannot'),
+    accent: 'gold',
+  },
+  {
+    name: t('worldRules.lycans_name'),
+    tagline: t('worldRules.lycans_tagline'),
+    text: t('worldRules.lycans_text'),
+    can: t('worldRules.lycans_can'),
+    cannot: t('worldRules.lycans_cannot'),
+    accent: 'angel',
+  },
+  {
+    name: t('worldRules.demons_name'),
+    tagline: t('worldRules.demons_tagline'),
+    text: t('worldRules.demons_text'),
+    can: t('worldRules.demons_can'),
+    cannot: t('worldRules.demons_cannot'),
+    accent: 'demon',
+  },
+];
+
+const magicSchools = [
+  {
+    name: t('worldRules.magic_noble_name'),
+    text: t('worldRules.magic_noble_text'),
+    accent: 'angel',
+    icon: '✨',
+  },
+  {
+    name: t('worldRules.magic_wild_name'),
+    text: t('worldRules.magic_wild_text'),
+    accent: 'gold',
+    icon: '🌿',
+  },
+  {
+    name: t('worldRules.magic_forbidden_name'),
+    text: t('worldRules.magic_forbidden_text'),
+    accent: 'demon',
+    icon: '🌑',
+  },
+];
+
+const statuses = [
+  {
+    name: t('worldRules.marked_name'),
+    text: t('worldRules.marked_text'),
+    accent: 'demon',
+  },
+  {
+    name: t('worldRules.abyssal_name'),
+    text: t('worldRules.abyssal_text'),
+    accent: 'demon',
+  },
+  {
+    name: t('worldRules.halfdemon_name'),
+    text: t('worldRules.halfdemon_text'),
+    accent: 'gold',
+  },
+  {
+    name: t('worldRules.bloodbond_name'),
+    text: t('worldRules.bloodbond_text'),
+    accent: 'demon',
+  },
+];
+
+const identityCards = [
+  {
+    title: t('worldRules.identity_lycan_title'),
+    text: t('worldRules.identity_lycan_text'),
+    accent: 'gold',
+  },
+  {
+    title: t('worldRules.identity_demon_title'),
+    text: t('worldRules.identity_demon_text'),
+    accent: 'demon',
+  },
+  {
+    title: t('worldRules.identity_halfdemon_title'),
+    text: t('worldRules.identity_halfdemon_text'),
+    accent: 'angel',
+  },
+];
+
+const accentBorder = {
+  gold: 'border-gold-500/30 hover:border-gold-300/60',
+  angel: 'border-angel-500/30 hover:border-angel-300/60',
+  demon: 'border-demon-500/30 hover:border-demon-300/60',
+};
+
+const accentText = {
+  gold: 'text-gold-300',
+  angel: 'text-angel-300',
+  demon: 'text-demon-300',
+};
+
+const accentTextSoft = {
+  gold: 'text-gold-200/85',
+  angel: 'text-angel-200/85',
+  demon: 'text-demon-200/85',
+};
+---
+
+<section class="pt-32 pb-24">
+  <div class="container-x">
+    <a
+      href={getLocalizedPath(lang, '/univers/')}
+      class="text-sm font-display tracking-widest uppercase text-gold-300 hover:text-gold-500 transition-colors"
+    >
+      {t('worldRules.back')}
+    </a>
+    <p class="eyebrow mt-8">{t('worldRules.eyebrow')}</p>
+    <h1 class="mt-4 text-4xl sm:text-5xl text-white max-w-3xl leading-tight">
+      {t('worldRules.title')}
+    </h1>
+    <p class="mt-6 max-w-2xl text-lg text-white/70 leading-relaxed">{t('worldRules.lead')}</p>
+
+    <!-- Principle -->
+    <section class="mt-20 pt-16 border-t border-white/10">
+      <p class="eyebrow">{t('worldRules.principle_eyebrow')}</p>
+      <h2 class="mt-4 text-3xl sm:text-4xl text-white font-display max-w-2xl leading-tight">
+        {t('worldRules.principle_title')}
+      </h2>
+      <p class="mt-6 max-w-3xl text-white/75 leading-relaxed text-lg">
+        {t('worldRules.principle_text')}
+      </p>
+      <blockquote class="mt-8 max-w-3xl border-l-2 border-gold-500/40 pl-6 italic text-gold-200/90 text-lg">
+        {t('worldRules.principle_quote')}
+      </blockquote>
+    </section>
+
+    <!-- Races -->
+    <section class="mt-20 pt-16 border-t border-white/10">
+      <p class="eyebrow">{t('worldRules.races_section_eyebrow')}</p>
+      <h2 class="mt-4 text-3xl sm:text-4xl text-white font-display max-w-2xl leading-tight">
+        {t('worldRules.races_section_title')}
+      </h2>
+      <p class="mt-6 max-w-3xl text-white/75 leading-relaxed text-lg">
+        {t('worldRules.races_section_lead')}
+      </p>
+
+      <div class="mt-12 grid gap-6 md:grid-cols-3">
+        {
+          races.map((r) => (
+            <article
+              class:list={[
+                'rounded-2xl border bg-ink-800/40 p-7 transition-colors',
+                accentBorder[r.accent as keyof typeof accentBorder],
+              ]}
+            >
+              <p
+                class:list={[
+                  'text-[10px] tracking-[0.3em] uppercase font-display',
+                  accentText[r.accent as keyof typeof accentText],
+                ]}
+              >
+                {r.tagline}
+              </p>
+              <h3 class="mt-3 text-2xl text-white font-display">{r.name}</h3>
+              <p class="mt-4 text-white/70 leading-relaxed text-sm">{r.text}</p>
+
+              <div class="mt-6 pt-5 border-t border-white/10">
+                <p class="text-[10px] tracking-widest uppercase text-emerald-300/80 font-display">
+                  ✅ {lang === 'fr' ? 'Peuvent' : 'Can'}
+                </p>
+                <p class="mt-2 text-sm text-white/75 leading-relaxed">{r.can}</p>
+              </div>
+              <div class="mt-5 pt-5 border-t border-white/10">
+                <p class="text-[10px] tracking-widest uppercase text-red-300/80 font-display">
+                  ❌ {lang === 'fr' ? 'Ne peuvent pas' : 'Cannot'}
+                </p>
+                <p class="mt-2 text-sm text-white/65 leading-relaxed">{r.cannot}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Magic schools -->
+    <section class="mt-20 pt-16 border-t border-white/10">
+      <p class="eyebrow">{t('worldRules.magic_section_eyebrow')}</p>
+      <h2 class="mt-4 text-3xl sm:text-4xl text-white font-display max-w-2xl leading-tight">
+        {t('worldRules.magic_section_title')}
+      </h2>
+      <p class="mt-6 max-w-3xl text-white/75 leading-relaxed text-lg">
+        {t('worldRules.magic_section_lead')}
+      </p>
+
+      <div class="mt-12 grid gap-6 md:grid-cols-3">
+        {
+          magicSchools.map((m) => (
+            <article
+              class:list={[
+                'rounded-2xl border bg-ink-800/40 p-7 transition-colors',
+                accentBorder[m.accent as keyof typeof accentBorder],
+              ]}
+            >
+              <div class="text-3xl mb-4">{m.icon}</div>
+              <h3
+                class:list={[
+                  'text-2xl text-white font-display',
+                ]}
+              >
+                {m.name}
+              </h3>
+              <p
+                class:list={[
+                  'mt-4 text-sm leading-relaxed',
+                  accentTextSoft[m.accent as keyof typeof accentTextSoft],
+                ]}
+              >
+                {m.text}
+              </p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Statuses -->
+    <section class="mt-20 pt-16 border-t border-white/10">
+      <p class="eyebrow">{t('worldRules.status_section_eyebrow')}</p>
+      <h2 class="mt-4 text-3xl sm:text-4xl text-white font-display max-w-2xl leading-tight">
+        {t('worldRules.status_section_title')}
+      </h2>
+      <p class="mt-6 max-w-3xl text-white/75 leading-relaxed text-lg">
+        {t('worldRules.status_section_lead')}
+      </p>
+
+      <div class="mt-12 grid gap-6 md:grid-cols-2">
+        {
+          statuses.map((s) => (
+            <article
+              class:list={[
+                'rounded-2xl border bg-ink-800/40 p-7 transition-colors',
+                accentBorder[s.accent as keyof typeof accentBorder],
+              ]}
+            >
+              <h3
+                class:list={[
+                  'text-2xl text-white font-display',
+                ]}
+              >
+                {s.name}
+              </h3>
+              <p class="mt-4 text-white/75 leading-relaxed">{s.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Identity hidden -->
+    <section class="mt-20 pt-16 border-t border-white/10">
+      <p class="eyebrow">{t('worldRules.identity_section_eyebrow')}</p>
+      <h2 class="mt-4 text-3xl sm:text-4xl text-white font-display max-w-2xl leading-tight">
+        {t('worldRules.identity_section_title')}
+      </h2>
+      <p class="mt-6 max-w-3xl text-white/75 leading-relaxed text-lg">
+        {t('worldRules.identity_section_lead')}
+      </p>
+
+      <div class="mt-12 grid gap-6 md:grid-cols-3">
+        {
+          identityCards.map((c) => (
+            <article
+              class:list={[
+                'rounded-2xl border bg-ink-800/40 p-7 transition-colors',
+                accentBorder[c.accent as keyof typeof accentBorder],
+              ]}
+            >
+              <h3
+                class:list={[
+                  'text-xl text-white font-display',
+                ]}
+              >
+                {c.title}
+              </h3>
+              <p class="mt-4 text-sm text-white/70 leading-relaxed">{c.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Concrete example -->
+    <section class="mt-20 pt-16 border-t border-white/10">
+      <p class="eyebrow">{t('worldRules.example_eyebrow')}</p>
+      <h2 class="mt-4 text-3xl sm:text-4xl text-white font-display max-w-2xl leading-tight">
+        {t('worldRules.example_title')}
+      </h2>
+      <div class="mt-8 rounded-xl border border-demon-500/20 bg-ink-800/40 p-7 max-w-3xl">
+        <p class="text-white/80 leading-relaxed">{t('worldRules.example_text')}</p>
+      </div>
+    </section>
+
+    <!-- Closing -->
+    <section class="mt-20 pt-16 border-t border-white/10">
+      <blockquote class="max-w-3xl border-l-2 border-gold-500/40 pl-6 italic text-gold-200/90 text-xl leading-relaxed">
+        {t('worldRules.closing_quote')}
+      </blockquote>
+    </section>
+  </div>
+</section>

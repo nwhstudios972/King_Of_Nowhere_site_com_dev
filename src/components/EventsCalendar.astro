@@ -1,0 +1,361 @@
+---
+import { getCollection } from 'astro:content';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../i18n/ui';
+import type { Lang } from '../i18n/ui';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const slugFor = (id: string) => id.replace(/^[^/]+\//, '').replace(/\.(md|mdx)$/, '');
+
+const eventsRoot = lang === 'fr' ? '/evenements' : '/events';
+const eventUrl = (id: string) => getLocalizedPath(lang, `${eventsRoot}/${slugFor(id)}/`);
+
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+const allEvents = await getCollection('events', ({ data }) => data.lang === lang && !data.draft);
+
+type CookedEvent = {
+  id: string;
+  slug: string;
+  data: typeof allEvents[number]['data'];
+  start: Date;
+  end: Date;
+};
+
+const events: CookedEvent[] = allEvents
+  .map((e) => {
+    const start = new Date(e.data.startDate);
+    start.setHours(0, 0, 0, 0);
+    const end = new Date(e.data.endDate ?? e.data.startDate);
+    end.setHours(23, 59, 59, 999);
+    return { id: e.id, slug: slugFor(e.id), data: e.data, start, end };
+  })
+  .sort((a, b) => a.start.valueOf() - b.start.valueOf());
+
+const liveEvents = events.filter((e) => today >= e.start && today <= e.end);
+const upcomingEvents = events.filter((e) => e.start > today);
+const pastEvents = events.filter((e) => e.end < today).reverse().slice(0, 6);
+
+// Build 6 months: current month + 5 ahead
+const MONTHS_AHEAD = 5;
+const monthAnchors: Date[] = [];
+const baseMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+for (let i = 0; i <= MONTHS_AHEAD; i++) {
+  monthAnchors.push(new Date(baseMonth.getFullYear(), baseMonth.getMonth() + i, 1));
+}
+
+const localeTag = lang === 'fr' ? 'fr-FR' : 'en-US';
+const monthFmt = new Intl.DateTimeFormat(localeTag, { month: 'long', year: 'numeric' });
+const dayFmt = new Intl.DateTimeFormat(localeTag, { day: 'numeric', month: 'long' });
+const dayWithYearFmt = new Intl.DateTimeFormat(localeTag, { day: 'numeric', month: 'long', year: 'numeric' });
+const iso = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+
+const dayLabels = [
+  t('cal.day_short_mon'),
+  t('cal.day_short_tue'),
+  t('cal.day_short_wed'),
+  t('cal.day_short_thu'),
+  t('cal.day_short_fri'),
+  t('cal.day_short_sat'),
+  t('cal.day_short_sun'),
+];
+
+type Cell = { date: Date; inMonth: boolean; isToday: boolean; events: CookedEvent[] };
+
+function buildMonth(anchor: Date): Cell[] {
+  const year = anchor.getFullYear();
+  const month = anchor.getMonth();
+  const firstDay = new Date(year, month, 1);
+  // Monday = 0, Sunday = 6
+  const startOffset = (firstDay.getDay() + 6) % 7;
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const totalCells = Math.ceil((startOffset + daysInMonth) / 7) * 7;
+
+  const cells: Cell[] = [];
+  for (let i = 0; i < totalCells; i++) {
+    const dayNum = i - startOffset + 1;
+    const cellDate = new Date(year, month, dayNum);
+    cellDate.setHours(0, 0, 0, 0);
+    const inMonth = dayNum >= 1 && dayNum <= daysInMonth;
+    const isToday = cellDate.valueOf() === today.valueOf();
+    const dayEvents = events.filter((e) => cellDate >= e.start && cellDate <= e.end);
+    cells.push({ date: cellDate, inMonth, isToday, events: dayEvents });
+  }
+  return cells;
+}
+
+const months = monthAnchors.map((a) => ({
+  key: iso(a),
+  label: monthFmt.format(a),
+  cells: buildMonth(a),
+  hasEvents: events.some((e) => e.start.getFullYear() === a.getFullYear() && e.start.getMonth() === a.getMonth())
+    || events.some((e) => e.end.getFullYear() === a.getFullYear() && e.end.getMonth() === a.getMonth()),
+}));
+
+const categoryDot: Record<string, string> = {
+  festival: 'bg-gold-300',
+  pvp: 'bg-demon-400',
+  coronation: 'bg-angel-300',
+  update: 'bg-white/70',
+  community: 'bg-gold-500',
+  dungeon: 'bg-demon-700',
+  economy: 'bg-gold-200',
+};
+
+const categoryBadge: Record<string, string> = {
+  festival: 'border-gold-300/40 text-gold-200',
+  pvp: 'border-demon-400/40 text-demon-300',
+  coronation: 'border-angel-300/40 text-angel-200',
+  update: 'border-white/20 text-white/70',
+  community: 'border-gold-500/40 text-gold-300',
+  dungeon: 'border-demon-700/60 text-demon-200',
+  economy: 'border-gold-200/40 text-gold-200',
+};
+
+function formatRange(e: CookedEvent): string {
+  const sameDay =
+    e.start.getFullYear() === e.end.getFullYear() &&
+    e.start.getMonth() === e.end.getMonth() &&
+    e.start.getDate() === e.end.getDate();
+  if (sameDay) return dayWithYearFmt.format(e.start);
+  const sameYear = e.start.getFullYear() === e.end.getFullYear();
+  const startStr = sameYear ? dayFmt.format(e.start) : dayWithYearFmt.format(e.start);
+  return `${startStr} → ${dayWithYearFmt.format(e.end)}`;
+}
+---
+
+<section class="pt-32 pb-24">
+  <div class="container-x">
+    <p class="eyebrow">{t('events.eyebrow')}</p>
+    <h1 class="mt-4 text-4xl sm:text-5xl text-white">{t('events.title')}</h1>
+    <p class="mt-4 max-w-2xl text-white/70">{t('events.lead')}</p>
+
+    {events.length === 0 ? (
+      <p class="mt-16 text-white/40 italic">{t('events.empty')}</p>
+    ) : (
+      <>
+        {liveEvents.length > 0 && (
+          <div class="mt-14">
+            <h2 class="text-xs font-display tracking-[0.3em] uppercase text-gold-300">
+              {t('events.live_now')}
+            </h2>
+            <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {liveEvents.map((e) => (
+                <a
+                  href={eventUrl(e.id)}
+                  class="group relative rounded-xl border border-gold-500/40 bg-gradient-to-br from-gold-900/20 via-ink-800/40 to-ink-900 p-5 hover:border-gold-300 transition-all"
+                >
+                  <span class="absolute -top-2 left-5 inline-flex items-center gap-2 rounded-full border border-gold-300/60 bg-ink-900 px-3 py-1 text-[10px] font-display tracking-[0.3em] uppercase text-gold-200">
+                    <span class="w-1.5 h-1.5 rounded-full bg-gold-300 animate-pulse"></span>
+                    {t('events.live_now')}
+                  </span>
+                  <div class="mt-2 flex flex-wrap gap-2">
+                    <span class:list={["inline-block text-[10px] tracking-[0.3em] uppercase px-2 py-1 rounded border font-display", categoryBadge[e.data.category]]}>
+                      {t(`event_cat.${e.data.category}` as any)}
+                    </span>
+                  </div>
+                  <h3 class="mt-3 text-xl text-white group-hover:text-gold-300 transition-colors font-display">
+                    {e.data.title}
+                  </h3>
+                  <p class="mt-2 text-white/65 text-sm leading-relaxed">{e.data.summary}</p>
+                  <p class="mt-3 text-xs text-white/40 tracking-widest uppercase">
+                    {formatRange(e)}
+                  </p>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div class="mt-16" data-events-calendar>
+          <div class="flex items-center justify-between gap-4 flex-wrap">
+            <button
+              type="button"
+              data-cal-prev
+              class="text-sm font-display tracking-widest uppercase text-white/50 hover:text-gold-300 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+            >
+              {t('events.month_prev')}
+            </button>
+            <h2 data-cal-label class="text-2xl sm:text-3xl text-white font-display capitalize">
+              {months[0].label}
+            </h2>
+            <button
+              type="button"
+              data-cal-next
+              class="text-sm font-display tracking-widest uppercase text-white/50 hover:text-gold-300 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+            >
+              {t('events.month_next')}
+            </button>
+          </div>
+
+          <div class="mt-8 grid grid-cols-7 gap-2 text-[10px] font-display tracking-[0.25em] uppercase text-white/40">
+            {dayLabels.map((d) => <div class="text-center py-2">{d}</div>)}
+          </div>
+
+          {months.map((m, idx) => (
+            <div
+              data-cal-month={m.key}
+              data-cal-index={idx}
+              class:list={["mt-2 grid grid-cols-7 gap-2", idx === 0 ? '' : 'hidden']}
+            >
+              {m.cells.map((cell) => (
+                <div
+                  class:list={[
+                    'min-h-[90px] sm:min-h-[110px] rounded-lg border p-2 flex flex-col gap-1.5',
+                    cell.inMonth
+                      ? cell.isToday
+                        ? 'border-gold-300/70 bg-ink-800/60'
+                        : 'border-white/10 bg-ink-800/30'
+                      : 'border-white/5 bg-ink-900/40 opacity-40',
+                  ]}
+                >
+                  <span
+                    class:list={[
+                      'text-xs font-display',
+                      cell.isToday ? 'text-gold-300' : cell.inMonth ? 'text-white/70' : 'text-white/30',
+                    ]}
+                  >
+                    {cell.date.getDate()}
+                  </span>
+                  {cell.events.length > 0 && (
+                    <div class="flex flex-col gap-1">
+                      {cell.events.slice(0, 3).map((e) => (
+                        <a
+                          href={eventUrl(e.id)}
+                          class="group flex items-center gap-1.5 text-[10px] leading-tight text-white/75 hover:text-gold-300 transition-colors"
+                          title={e.data.title}
+                        >
+                          <span class:list={["w-1.5 h-1.5 rounded-full flex-shrink-0", categoryDot[e.data.category]]}></span>
+                          <span class="truncate">{e.data.title}</span>
+                        </a>
+                      ))}
+                      {cell.events.length > 3 && (
+                        <span class="text-[10px] text-white/40">+{cell.events.length - 3}</span>
+                      )}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          ))}
+
+          {!months[0].hasEvents && liveEvents.length === 0 && upcomingEvents.length === 0 && (
+            <p class="mt-8 text-white/40 italic text-sm">{t('events.empty_month')}</p>
+          )}
+        </div>
+
+        {upcomingEvents.length > 0 && (
+          <div class="mt-20">
+            <h2 class="text-xs font-display tracking-[0.3em] uppercase text-white/50">
+              {t('events.upcoming')}
+            </h2>
+            <ul class="mt-6 space-y-4">
+              {upcomingEvents.map((e) => (
+                <li>
+                  <a
+                    href={eventUrl(e.id)}
+                    class="group flex flex-col sm:flex-row sm:items-center gap-4 rounded-xl border border-white/10 bg-ink-800/40 p-5 hover:border-gold-500/40 transition-all"
+                  >
+                    <div class="flex-shrink-0 w-full sm:w-32 text-left">
+                      <p class="text-xs text-white/40 tracking-widest uppercase">
+                        {formatRange(e)}
+                      </p>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <div class="flex flex-wrap gap-2">
+                        <span class:list={["inline-block text-[10px] tracking-[0.3em] uppercase px-2 py-1 rounded border font-display", categoryBadge[e.data.category]]}>
+                          {t(`event_cat.${e.data.category}` as any)}
+                        </span>
+                        {e.data.server && (
+                          <span class="inline-block text-[10px] tracking-[0.3em] uppercase px-2 py-1 rounded border border-white/15 text-white/55 font-display">
+                            {e.data.server}
+                          </span>
+                        )}
+                        {e.data.recurring !== 'once' && (
+                          <span class="inline-block text-[10px] tracking-[0.3em] uppercase px-2 py-1 rounded border border-white/15 text-white/45 font-display">
+                            {t(`event_recur.${e.data.recurring}` as any)}
+                          </span>
+                        )}
+                      </div>
+                      <h3 class="mt-2 text-xl text-white group-hover:text-gold-300 transition-colors font-display">
+                        {e.data.title}
+                      </h3>
+                      <p class="mt-1 text-white/65 text-sm">{e.data.summary}</p>
+                    </div>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {pastEvents.length > 0 && (
+          <div class="mt-20">
+            <h2 class="text-xs font-display tracking-[0.3em] uppercase text-white/30">
+              {t('events.past')}
+            </h2>
+            <ul class="mt-6 space-y-3">
+              {pastEvents.map((e) => (
+                <li>
+                  <a
+                    href={eventUrl(e.id)}
+                    class="group flex items-center gap-4 rounded-lg border border-white/5 bg-ink-900/30 px-4 py-3 hover:border-white/15 transition-all opacity-70 hover:opacity-100"
+                  >
+                    <span class="text-[10px] text-white/30 tracking-widest uppercase font-display w-32 flex-shrink-0">
+                      {dayWithYearFmt.format(e.start)}
+                    </span>
+                    <span class:list={["w-1.5 h-1.5 rounded-full flex-shrink-0", categoryDot[e.data.category]]}></span>
+                    <span class="text-white/60 group-hover:text-white/90 transition-colors text-sm truncate">
+                      {e.data.title}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </>
+    )}
+  </div>
+</section>
+
+<script>
+  const root = document.querySelector('[data-events-calendar]');
+  if (root) {
+    const months = Array.from(root.querySelectorAll<HTMLElement>('[data-cal-month]'));
+    const label = root.querySelector<HTMLElement>('[data-cal-label]');
+    const prevBtn = root.querySelector<HTMLButtonElement>('[data-cal-prev]');
+    const nextBtn = root.querySelector<HTMLButtonElement>('[data-cal-next]');
+    let idx = 0;
+
+    const monthLabels = months.map((m) => {
+      // Stash the originally-rendered label on the first paint for month 0
+      return m.dataset.calMonth ?? '';
+    });
+
+    // Pre-render labels: read each month's first visible day cell text to derive a stable label.
+    // Simpler: rely on data attribute and a JS Intl formatter mirroring server locale.
+    const lang = document.documentElement.lang || 'fr';
+    const localeTag = lang.startsWith('fr') ? 'fr-FR' : 'en-US';
+    const monthFmt = new Intl.DateTimeFormat(localeTag, { month: 'long', year: 'numeric' });
+
+    function show(newIdx: number) {
+      if (newIdx < 0 || newIdx >= months.length) return;
+      idx = newIdx;
+      months.forEach((m, i) => m.classList.toggle('hidden', i !== idx));
+      const [y, mo] = (months[idx].dataset.calMonth ?? '').split('-').map(Number);
+      if (label && y && mo) {
+        const d = new Date(y, mo - 1, 1);
+        label.textContent = monthFmt.format(d);
+      }
+      if (prevBtn) prevBtn.disabled = idx === 0;
+      if (nextBtn) nextBtn.disabled = idx === months.length - 1;
+    }
+
+    prevBtn?.addEventListener('click', () => show(idx - 1));
+    nextBtn?.addEventListener('click', () => show(idx + 1));
+    show(0);
+  }
+</script>

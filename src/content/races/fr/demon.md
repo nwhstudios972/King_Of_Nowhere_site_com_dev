@@ -1,4 +1,8 @@
 ---
+cover: /images/codex/races/demon/cover.jpg
+gallery:
+- /images/codex/races/demon/01.jpg
+- /images/codex/races/demon/02.jpg
 name: Démon
 tagline: Enfants du feu, maîtres de la liberté brûlante.
 alignment: evil

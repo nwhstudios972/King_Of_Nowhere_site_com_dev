@@ -1,10 +1,14 @@
 ---
-import { useTranslations, getLangFromUrl, getLocalizedPath } from '../i18n/ui';
+import { useTranslations, getLangFromUrl, getLocalizedPath, languages, type Lang } from '../i18n/ui';
 import LangSwitcher from './LangSwitcher.astro';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const isAdmin = Astro.locals?.isAdmin ?? false;
+
+const rest = Astro.url.pathname.replace(/^\/(fr|en)/, '') || '/';
+const switchTo = (l: Lang) => `/${l}${rest === '/' ? '/' : rest}`;
+const langKeys = Object.keys(languages) as Lang[];
 ---
 
 <header class="absolute top-0 inset-x-0 z-30">
@@ -15,14 +19,26 @@ const isAdmin = Astro.locals?.isAdmin ?? false;
       </span>
     </a>
 
-    <nav class="flex items-center gap-5 sm:gap-7">
+    <nav class="hidden md:flex items-center gap-5 lg:gap-7">
       {isAdmin && (
         <Fragment>
           <a
             href={getLocalizedPath(lang, '/univers/')}
-            class="hidden sm:inline text-sm font-display tracking-widest uppercase text-white/70 hover:text-white transition-colors"
+            class="text-sm font-display tracking-widest uppercase text-white/70 hover:text-white transition-colors"
           >
             {t('nav.universe')}
+          </a>
+          <a
+            href={getLocalizedPath(lang, lang === 'fr' ? '/boutique/' : '/shop/')}
+            class="text-sm font-display tracking-widest uppercase text-gold-300/80 hover:text-gold-300 transition-colors"
+          >
+            {t('nav.shop')}
+          </a>
+          <a
+            href={getLocalizedPath(lang, lang === 'fr' ? '/evenements/' : '/events/')}
+            class="text-sm font-display tracking-widest uppercase text-white/70 hover:text-white transition-colors"
+          >
+            {t('nav.events')}
           </a>
           <a
             href={getLocalizedPath(lang, '/devlog/')}
@@ -42,11 +58,164 @@ const isAdmin = Astro.locals?.isAdmin ?? false;
       )}
       <a
         href={getLocalizedPath(lang, '/#beta')}
-        class="hidden sm:inline-flex text-sm font-display tracking-widest uppercase text-gold-300 hover:text-gold-500 transition-colors"
+        class="text-sm font-display tracking-widest uppercase text-gold-300 hover:text-gold-500 transition-colors"
       >
         {t('nav.beta')}
       </a>
       <LangSwitcher />
     </nav>
+
+    <button
+      type="button"
+      class="md:hidden inline-flex items-center justify-center w-11 h-11 -mr-2 text-white"
+      aria-label={t('nav.menu')}
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      data-menu-toggle
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square">
+        <line x1="3" y1="7" x2="21" y2="7"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="17" x2="21" y2="17"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div
+    id="mobile-menu"
+    class="md:hidden fixed inset-0 z-40 bg-black/95 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300"
+    data-menu-panel
+    aria-hidden="true"
+  >
+    <div class="container-x flex items-center justify-between py-6">
+      <a href={getLocalizedPath(lang, '/')} class="flex items-center gap-3" data-menu-link>
+        <span class="text-2xl font-display tracking-[0.18em] text-white">
+          KING <span class="text-gold-300">OF</span> NOWHERE
+        </span>
+      </a>
+      <button
+        type="button"
+        class="inline-flex items-center justify-center w-11 h-11 -mr-2 text-white"
+        aria-label={t('nav.close')}
+        data-menu-close
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square">
+          <line x1="5" y1="5" x2="19" y2="19"></line>
+          <line x1="19" y1="5" x2="5" y2="19"></line>
+        </svg>
+      </button>
+    </div>
+
+    <nav class="container-x flex flex-col items-start gap-7 mt-10 pb-12">
+      {isAdmin && (
+        <Fragment>
+          <a
+            href={getLocalizedPath(lang, '/univers/')}
+            class="text-2xl font-display tracking-widest uppercase text-white/80 hover:text-white transition-colors"
+            data-menu-link
+          >
+            {t('nav.universe')}
+          </a>
+          <a
+            href={getLocalizedPath(lang, lang === 'fr' ? '/boutique/' : '/shop/')}
+            class="text-2xl font-display tracking-widest uppercase text-gold-300/90 hover:text-gold-300 transition-colors"
+            data-menu-link
+          >
+            {t('nav.shop')}
+          </a>
+          <a
+            href={getLocalizedPath(lang, lang === 'fr' ? '/evenements/' : '/events/')}
+            class="text-2xl font-display tracking-widest uppercase text-white/80 hover:text-white transition-colors"
+            data-menu-link
+          >
+            {t('nav.events')}
+          </a>
+          <a
+            href={getLocalizedPath(lang, '/devlog/')}
+            class="text-2xl font-display tracking-widest uppercase text-white/80 hover:text-white transition-colors"
+            data-menu-link
+          >
+            {t('nav.devlog')}
+          </a>
+        </Fragment>
+      )}
+      <a
+        href={getLocalizedPath(lang, '/#beta')}
+        class="text-2xl font-display tracking-widest uppercase text-gold-300 hover:text-gold-500 transition-colors"
+        data-menu-link
+      >
+        {t('nav.beta')}
+      </a>
+
+      <div class="mt-8 pt-8 border-t border-white/10 w-full flex items-center gap-4">
+        {langKeys.map((l) => (
+          <a
+            href={switchTo(l)}
+            class:list={[
+              'text-base font-display tracking-widest px-3 py-1 rounded transition-colors',
+              lang === l ? 'text-gold-300' : 'text-white/50 hover:text-white',
+            ]}
+            aria-current={lang === l ? 'page' : undefined}
+          >
+            {l.toUpperCase()}
+          </a>
+        ))}
+        {isAdmin && (
+          <form method="POST" action="/api/admin/logout" class="ml-auto inline">
+            <button
+              type="submit"
+              class="text-sm font-display tracking-widest uppercase text-white/40 hover:text-demon-300 transition-colors"
+            >
+              ✕
+            </button>
+          </form>
+        )}
+      </div>
+    </nav>
   </div>
 </header>
+
+<script>
+  function setupMobileMenu() {
+    const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+    const panel = document.querySelector<HTMLElement>('[data-menu-panel]');
+    const close = document.querySelector<HTMLButtonElement>('[data-menu-close]');
+    const links = document.querySelectorAll<HTMLAnchorElement>('[data-menu-link]');
+
+    if (!toggle || !panel || !close) return;
+
+    const open = () => {
+      panel.classList.remove('opacity-0', 'pointer-events-none');
+      panel.classList.add('opacity-100');
+      panel.setAttribute('aria-hidden', 'false');
+      toggle.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeMenu = () => {
+      panel.classList.add('opacity-0', 'pointer-events-none');
+      panel.classList.remove('opacity-100');
+      panel.setAttribute('aria-hidden', 'true');
+      toggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    };
+
+    toggle.addEventListener('click', open);
+    close.addEventListener('click', closeMenu);
+    links.forEach((link) => link.addEventListener('click', closeMenu));
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        closeMenu();
+      }
+    });
+
+    const mql = window.matchMedia('(min-width: 768px)');
+    mql.addEventListener('change', (e) => {
+      if (e.matches) closeMenu();
+    });
+  }
+
+  setupMobileMenu();
+  document.addEventListener('astro:page-load', setupMobileMenu);
+</script>

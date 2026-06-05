@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import CosmeticsList from '../../../../components/CosmeticsList.astro';
+import { useTranslations } from '../../../../i18n/ui';
+
+const t = useTranslations('fr');
+---
+
+<BaseLayout title={`${t('shop.cosmetics_title')} — King Of Nowhere`} description={t('shop.cosmetics_lead')}>
+  <CosmeticsList />
+</BaseLayout>

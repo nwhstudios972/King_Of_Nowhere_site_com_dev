@@ -11,12 +11,123 @@ export const ui = {
   fr: {
     'meta.title': 'King Of Nowhere — Forge ton monde. Choisis ton camp.',
     'meta.description':
-      "King Of Nowhere est un MMORPG où tu bâtis ton univers avec tes amis et où la guerre éternelle entre Anges et Démons attend ton serment.",
+      "King Of Nowhere, le seul MMORPG où tu bâtis ton univers avec tes amis déchiré par la guerre éternelle entre tes désires d'Anges et de Démons qui attendent de scèler ton serment.",
 
     'nav.devlog': 'Devlog',
     'nav.beta': 'Rejoindre la beta',
     'nav.home': 'Accueil',
     'nav.universe': 'Univers',
+    'nav.shop': 'Boutique',
+    'nav.events': 'Évènements',
+    'nav.menu': 'Menu',
+    'nav.close': 'Fermer',
+
+    'events.eyebrow': 'Calendrier du royaume',
+    'events.title': 'Ce qui se trame dans le monde.',
+    'events.lead':
+      "Festivals, sièges, couronnements, raids éphémères, mises à jour. Le rythme du serveur, mois après mois — pour qu'aucune âme ne rate l'heure du rassemblement.",
+    'events.empty': "Aucun évènement annoncé pour l'instant. Le calendrier s'écrit.",
+    'events.empty_month': 'Mois calme. Aucun évènement annoncé.',
+    'events.live_now': 'En ce moment',
+    'events.upcoming': 'Prochains évènements',
+    'events.past': 'Déjà passés',
+    'events.month_prev': '← Mois précédent',
+    'events.month_next': 'Mois suivant →',
+    'events.today': "Aujourd'hui",
+    'events.filter_all': 'Tout',
+    'events.starts': 'Début',
+    'events.ends': 'Fin',
+    'events.server': 'Serveur',
+    'events.location': 'Lieu',
+    'events.recurring': 'Récurrence',
+    'events.duration_single_day': 'Une journée',
+    'events.back': '← Tout le calendrier',
+    'events.details': 'Voir le détail',
+    'events.status_live': 'En cours',
+    'events.status_upcoming': 'À venir',
+    'events.status_past': 'Terminé',
+
+    'event_cat.festival': 'Fête & festival',
+    'event_cat.pvp': 'PvP & guerre',
+    'event_cat.coronation': 'Couronnement',
+    'event_cat.update': 'Mise à jour',
+    'event_cat.community': 'Communauté',
+    'event_cat.dungeon': 'Donjon éphémère',
+    'event_cat.economy': 'Économie & marché',
+
+    'event_recur.once': 'Évènement unique',
+    'event_recur.weekly': 'Hebdomadaire',
+    'event_recur.monthly': 'Mensuel',
+    'event_recur.yearly': 'Annuel',
+
+    'cal.day_short_mon': 'Lun',
+    'cal.day_short_tue': 'Mar',
+    'cal.day_short_wed': 'Mer',
+    'cal.day_short_thu': 'Jeu',
+    'cal.day_short_fri': 'Ven',
+    'cal.day_short_sat': 'Sam',
+    'cal.day_short_sun': 'Dim',
+
+    'shop.eyebrow': 'Boutique du royaume',
+    'shop.title': 'Mascottes, montures et trésors du monde.',
+    'shop.lead':
+      "Pour habiller ton âme, monter plus vite, ou remplir ta bourse de matériaux. Tout ce que la forge prépare pour ton aventure se trouvera ici.",
+    'shop.soon': 'Bientôt disponible',
+    'shop.soon_notice': "Le paiement n'est pas encore activé. La boutique ouvrira ses portes avant la beta.",
+    'shop.price_free': 'Offert',
+    'shop.price_tbd': 'Prix à venir',
+    'shop.buy': 'Acheter',
+    'shop.details': 'Voir le détail',
+    'shop.back': '← Toute la boutique',
+    'shop.filter_all': 'Tout',
+    'shop.empty': 'Le catalogue se prépare. Reviens bientôt.',
+
+    'shop.pets_title': 'Mascottes',
+    'shop.pets_lead': 'Compagnons fidèles. Familiers d’ombre ou de lumière. Une présence à tes côtés.',
+    'shop.mounts_title': 'Montures',
+    'shop.mounts_lead': 'Pour fendre les plaines, traverser les cieux, glisser sur les eaux maudites.',
+    'shop.packs_title': 'Ressources',
+    'shop.packs_lead': 'Packs de matériaux livrés dans ton inventaire in-game. Pour bâtir sans cueillir.',
+    'shop.cosmetics_title': 'Cosmétiques',
+    'shop.cosmetics_lead': 'Skins, apparences d’armure et d’arme, effets visuels. Tout ce qui change ton allure sans toucher tes stats.',
+
+    'shop.pets_eyebrow': 'Mascottes',
+    'shop.mounts_eyebrow': 'Montures',
+    'shop.packs_eyebrow': 'Ressources in-game',
+    'shop.cosmetics_eyebrow': 'Cosmétiques',
+
+    'shop.slot': 'Emplacement',
+    'shop.effect': 'Effet',
+
+    'shop.type': 'Type',
+    'shop.rarity': 'Rareté',
+    'shop.faction': 'Camp',
+    'shop.perks': 'Bonus',
+    'shop.contents': 'Contenu du pack',
+    'shop.speed': 'Vitesse',
+
+    'pet.companion': 'Compagnon',
+    'pet.familiar': 'Familier',
+    'pet.guardian': 'Gardien',
+    'pet.spirit': 'Esprit',
+
+    'mount.land': 'Terrestre',
+    'mount.aerial': 'Aérienne',
+    'mount.aquatic': 'Aquatique',
+    'mount.spectral': 'Spectrale',
+
+    'pack.mineral': 'Minerais',
+    'pack.wood': 'Bois',
+    'pack.plant': 'Plantes',
+    'pack.fabric': 'Tissus',
+    'pack.magic': 'Magique',
+    'pack.food': 'Vivres',
+    'pack.bundle': 'Pack mixte',
+
+    'cosmetic.skin': 'Skin personnage',
+    'cosmetic.armor': 'Apparence d’armure',
+    'cosmetic.weapon': 'Apparence d’arme',
+    'cosmetic.weapon_effect': 'Effet d’arme',
 
     'universe.eyebrow': 'Codex de King Of Nowhere',
     'universe.title': "L'univers, ses âmes et ses pierres.",
@@ -40,6 +151,106 @@ export const ui = {
     'universe.camps_lead': 'Anges, Démons, et la voie qui se trace entre les deux. Ton serment n’est jamais figé.',
     'universe.build_title': 'Construire',
     'universe.build_lead': 'Une planche, une pierre, un trône, un rempart. Tout ce que le monde te laisse poser — et casser.',
+    'universe.rules_title': 'Règles du Monde',
+    'universe.rules_lead': 'Le pouvoir transforme. Chaque race a ses dons et son prix. Chaque école de magie a ses limites. Personne ne peut tout maîtriser.',
+
+    'worldRules.eyebrow': 'Codex · Règles du Monde',
+    'worldRules.title': 'Le pouvoir transforme. Toujours.',
+    'worldRules.lead':
+      "Tous les joueurs peuvent évoluer, apprendre, découvrir, débloquer des compétences. Mais certaines capacités restent interdites à certaines races ou lignées — et c'est ce qui rend chaque identité précieuse.",
+    'worldRules.back': '← Codex de King Of Nowhere',
+
+    'worldRules.principle_eyebrow': '⚖',
+    'worldRules.principle_title': 'La règle principale du monde',
+    'worldRules.principle_text':
+      "Dans King Of Nowhere, le pouvoir transforme le joueur. Chaque capacité influence son apparence, change sa réputation, modifie ses relations, transforme sa place dans le monde. Le pouvoir n'est jamais gratuit. Chaque chemin demande des sacrifices.",
+    'worldRules.principle_quote':
+      "« Vous ne pouvez pas tout apprendre. Vous ne pouvez pas tout maîtriser. Vous ne pouvez pas devenir parfait. Ce que vous gagnez, vous le payez. »",
+
+    'worldRules.races_section_eyebrow': '✦',
+    'worldRules.races_section_title': 'Les lignées et leur prix',
+    'worldRules.races_section_lead':
+      "Trois lignées sont au cœur du conflit. Chacune porte ses dons — et le poids de ce qu'elle ne pourra jamais devenir.",
+
+    'worldRules.humans_name': 'Les Humains',
+    'worldRules.humans_tagline': 'Polyvalents. Adaptables. Vulnérables.',
+    'worldRules.humans_text':
+      "Les humains excellent dans le commerce, la stratégie, l'artisanat, la diplomatie, la survie. Ils apprennent beaucoup de métiers, manient armes et armures, pratiquent une magie simple. Ils créent des royaumes et des alliances qui tiennent.",
+    'worldRules.humans_can': 'Polyvalence · Magie simple · Artisanat avancé · Royaumes & alliances · Diplomatie',
+    'worldRules.humans_cannot':
+      'Très mauvaise résistance à la corruption · Transformations interdites · Certaines magies trop puissantes détruisent leur corps',
+
+    'worldRules.lycans_name': 'Les Lycans',
+    'worldRules.lycans_tagline': 'Sang chaud. Crocs longs. Émotions à vif.',
+    'worldRules.lycans_text':
+      "Les Lycans vivent dans les forêts, les montagnes, les frontières, les zones sauvages. Ils appartiennent aux deux mondes sans appartenir totalement à aucun. La rage, l'instinct, la chasse, la vitesse — voilà leurs armes. La lune est leur calendrier.",
+    'worldRules.lycans_can': 'Transformations · Régénération · Sens développés · Capacités sauvages · Hurlement de meute',
+    'worldRules.lycans_cannot':
+      'Magie complexe très difficile · Contrôle émotionnel fragile · Certaines émotions déclenchent des transformations incontrôlées',
+
+    'worldRules.demons_name': 'Les Démons',
+    'worldRules.demons_tagline': 'Rares. Dangereux. Marqués au fer ancien.',
+    'worldRules.demons_text':
+      "Les démons ne sont pas simplement « méchants ». Ils sont rares, mystérieux, liés à la corruption ancienne du monde. Certains portent cornes, yeux anormaux, aura sombre, marques visibles. Leur seule présence dérange le monde vivant — bétail nerveux, plantes qui se ferment, enfants qui se taisent.",
+    'worldRules.demons_can': 'Feu noir · Corruption · Malédictions · Invocation · Magie interdite · Manipulation mentale',
+    'worldRules.demons_cannot':
+      "Tout pouvoir a un prix · Perte lente d'humanité · Instabilité croissante · Rejet des royaumes · Attire monstres et corruption",
+
+    'worldRules.magic_section_eyebrow': '✺',
+    'worldRules.magic_section_title': 'Les trois écoles',
+    'worldRules.magic_section_lead':
+      "Le monde possède trois écoles magiques principales. Aucune ne se mélange impunément. Choisir une voie, c'est en fermer deux autres.",
+
+    'worldRules.magic_noble_name': 'Magie Noble',
+    'worldRules.magic_noble_text':
+      "Liée à la lumière, au soin, à la protection, aux royaumes. Très présente côté vivant. Pratiquée par les Anges et les humains pieux. S'affaiblit dans les nuits sans lune et les biomes maudits.",
+    'worldRules.magic_wild_name': 'Magie Sauvage',
+    'worldRules.magic_wild_text':
+      "Liée à la lune, aux instincts, à la nature, aux transformations. Très utilisée par les Lycans. Puissante mais imprévisible — réagit aux saisons, aux émotions, à la phase lunaire.",
+    'worldRules.magic_forbidden_name': 'Magie Interdite',
+    'worldRules.magic_forbidden_text':
+      "Liée à la corruption, aux malédictions, au chaos, aux Abyssaux. Très présente côté détruit. Quiconque la pratique paie de son corps, de sa réputation, ou de sa raison. Souvent les trois.",
+
+    'worldRules.status_section_eyebrow': '🩸',
+    'worldRules.status_section_title': 'Statuts & lignées rares',
+    'worldRules.status_section_lead':
+      "Certaines transformations ne sont pas de naissance. On les choisit, on les subit, ou on naît avec sans le savoir.",
+
+    'worldRules.marked_name': 'Les Marqués',
+    'worldRules.marked_text':
+      "Humains ayant accepté le sang d'un démon par un rituel interdit. Ils restent humains — mais changent lentement. Magie interdite débloquée, puissance physique anormale, résistance à certaines corruptions, perception surnaturelle. Mais leur corps change, leur esprit devient instable, certains perdent totalement leur identité.",
+    'worldRules.abyssal_name': 'Les Abyssaux',
+    'worldRules.abyssal_text':
+      "Démons extrêmes, anciens, presque non-humanoïdes. Ils ne ressemblent plus à des humains ni même à des démons normaux. Ils déforment la réalité, créent des monstres, corrompent des zones entières, marquent les humains. Leur présence détruit souvent le monde autour d'eux.",
+    'worldRules.halfdemon_name': 'Les Demi-démons',
+    'worldRules.halfdemon_text':
+      "Souvent indiscernables des humains. Leur vraie nature peut rester secrète jusqu'à l'utilisation de leurs pouvoirs. Les enfants du Roi Fendu et de Rose en sont les exemples les plus célèbres — Blanche, l'Héritier du Néant, le Roi Décoiffé, Faël.",
+    'worldRules.bloodbond_name': 'Le Lien de Sang',
+    'worldRules.bloodbond_text':
+      "Rituel interdit par lequel un démon lie son sang à un humain. Permet de transmettre une partie de son pouvoir, d'éveiller des capacités cachées, ou de créer des hybrides rares. Celui qui accepte devient Marqué. Celui qui donne perd un peu de lui-même à chaque rituel.",
+
+    'worldRules.identity_section_eyebrow': '👁',
+    'worldRules.identity_section_title': 'Ce que vous ne verrez pas',
+    'worldRules.identity_section_lead':
+      "Dans King Of Nowhere, les autres joueurs ne voient PAS vos compétences exactes, vos spécialisations, vos capacités cachées, vos transformations possibles. Vous devez découvrir les autres en parlant, en observant, en combattant — par réputation.",
+
+    'worldRules.identity_lycan_title': 'Lycans cachés',
+    'worldRules.identity_lycan_text':
+      "Les Lycans peuvent souvent passer pour humains. Mais transformations, émotions fortes, blessures, pleine lune ou instincts incontrôlés peuvent révéler leur nature.",
+    'worldRules.identity_demon_title': 'Démons visibles',
+    'worldRules.identity_demon_text':
+      "Certaines classes démoniaques ne peuvent pas cacher leurs yeux, leurs cornes, leur aura, leurs marques. On reconnaît immédiatement qu'ils ne sont pas humains.",
+    'worldRules.identity_halfdemon_title': 'Demi-démons indétectables',
+    'worldRules.identity_halfdemon_text':
+      "Les demi-démons ressemblent souvent à des humains normaux. Leur vraie nature reste secrète jusqu'au premier sort lancé — et après, plus rien n'est jamais pareil.",
+
+    'worldRules.example_eyebrow': '🔥',
+    'worldRules.example_title': 'Un exemple concret',
+    'worldRules.example_text':
+      "Un humain qui accepte le sang d'un démon peut devenir extrêmement puissant. Mais il perd l'accès à certaines villes, devient instable, attire la corruption, est chassé par certains royaumes, et risque de devenir un Marqué à part entière. Le pouvoir n'est pas gratuit. Il ne le sera jamais.",
+
+    'worldRules.closing_quote':
+      "« Chaque pouvoir a son prix. Chaque chemin demande des sacrifices. C'est ce qui rend votre identité précieuse — et votre serment irrévocable. »",
 
     'camps.eyebrow': 'Camps',
     'camps.title': 'Lumière, ombre, et tout ce qui se joue entre.',
@@ -165,6 +376,7 @@ export const ui = {
     'biomes.fauna': 'Faune',
     'biomes.resources': 'Ressources',
     'biomes.dangers': 'Dangers',
+    'biomes.named_entities': 'Entités Nommées',
     'biomes.back': '← Tous les biomes',
     'biomes.empty': "La cartographie est en cours.",
     'climate.temperate': 'Tempéré',
@@ -174,6 +386,7 @@ export const ui = {
     'climate.volcanic': 'Volcanique',
     'climate.ethereal': 'Éthéré',
     'climate.cursed': 'Maudit',
+    'danger.city': 'Sanctuaire',
     'danger.safe': 'Paisible',
     'danger.low': 'Faible',
     'danger.moderate': 'Modéré',
@@ -348,6 +561,117 @@ export const ui = {
     'nav.beta': 'Join the beta',
     'nav.home': 'Home',
     'nav.universe': 'Universe',
+    'nav.shop': 'Shop',
+    'nav.events': 'Events',
+    'nav.menu': 'Menu',
+    'nav.close': 'Close',
+
+    'events.eyebrow': 'Realm calendar',
+    'events.title': "What's brewing in the world.",
+    'events.lead':
+      'Festivals, sieges, coronations, fleeting raids, updates. The pulse of the server, month by month — so no soul misses the gathering.',
+    'events.empty': 'No events announced yet. The calendar is being written.',
+    'events.empty_month': 'A quiet month. No events announced.',
+    'events.live_now': 'Live now',
+    'events.upcoming': 'Upcoming events',
+    'events.past': 'Past events',
+    'events.month_prev': '← Previous month',
+    'events.month_next': 'Next month →',
+    'events.today': 'Today',
+    'events.filter_all': 'All',
+    'events.starts': 'Starts',
+    'events.ends': 'Ends',
+    'events.server': 'Server',
+    'events.location': 'Location',
+    'events.recurring': 'Recurrence',
+    'events.duration_single_day': 'Single day',
+    'events.back': '← Back to calendar',
+    'events.details': 'See details',
+    'events.status_live': 'Live',
+    'events.status_upcoming': 'Upcoming',
+    'events.status_past': 'Ended',
+
+    'event_cat.festival': 'Festival',
+    'event_cat.pvp': 'PvP & war',
+    'event_cat.coronation': 'Coronation',
+    'event_cat.update': 'Update',
+    'event_cat.community': 'Community',
+    'event_cat.dungeon': 'Fleeting dungeon',
+    'event_cat.economy': 'Economy & market',
+
+    'event_recur.once': 'One-off',
+    'event_recur.weekly': 'Weekly',
+    'event_recur.monthly': 'Monthly',
+    'event_recur.yearly': 'Yearly',
+
+    'cal.day_short_mon': 'Mon',
+    'cal.day_short_tue': 'Tue',
+    'cal.day_short_wed': 'Wed',
+    'cal.day_short_thu': 'Thu',
+    'cal.day_short_fri': 'Fri',
+    'cal.day_short_sat': 'Sat',
+    'cal.day_short_sun': 'Sun',
+
+    'shop.eyebrow': 'Realm shop',
+    'shop.title': 'Pets, mounts and treasures of the world.',
+    'shop.lead':
+      'To dress your soul, ride faster, or fill your purse with materials. Everything the forge prepares for your journey will land here.',
+    'shop.soon': 'Coming soon',
+    'shop.soon_notice': "Payment isn't enabled yet. The shop will open its doors before the beta.",
+    'shop.price_free': 'Free',
+    'shop.price_tbd': 'Price TBD',
+    'shop.buy': 'Buy',
+    'shop.details': 'See details',
+    'shop.back': '← Back to the shop',
+    'shop.filter_all': 'All',
+    'shop.empty': 'The catalog is taking shape. Check back soon.',
+
+    'shop.pets_title': 'Pets',
+    'shop.pets_lead': 'Faithful companions. Shadow familiars or beings of light. A presence by your side.',
+    'shop.mounts_title': 'Mounts',
+    'shop.mounts_lead': 'To tear across plains, cut through the skies, glide over cursed waters.',
+    'shop.packs_title': 'Resources',
+    'shop.packs_lead': 'Material packs delivered straight to your in-game inventory. Build without gathering.',
+    'shop.cosmetics_title': 'Cosmetics',
+    'shop.cosmetics_lead': 'Skins, armor and weapon looks, visual effects. Everything that changes how you look without touching your stats.',
+
+    'shop.pets_eyebrow': 'Pets',
+    'shop.mounts_eyebrow': 'Mounts',
+    'shop.packs_eyebrow': 'In-game resources',
+    'shop.cosmetics_eyebrow': 'Cosmetics',
+
+    'shop.slot': 'Slot',
+    'shop.effect': 'Effect',
+
+    'shop.type': 'Type',
+    'shop.rarity': 'Rarity',
+    'shop.faction': 'Side',
+    'shop.perks': 'Perks',
+    'shop.contents': 'Pack contents',
+    'shop.speed': 'Speed',
+
+    'pet.companion': 'Companion',
+    'pet.familiar': 'Familiar',
+    'pet.guardian': 'Guardian',
+    'pet.spirit': 'Spirit',
+
+    'mount.land': 'Land',
+    'mount.aerial': 'Aerial',
+    'mount.aquatic': 'Aquatic',
+    'mount.spectral': 'Spectral',
+
+    'pack.mineral': 'Ores',
+    'pack.wood': 'Wood',
+    'pack.plant': 'Plants',
+    'pack.fabric': 'Fabrics',
+    'pack.magic': 'Magic',
+    'pack.food': 'Food',
+    'pack.bundle': 'Mixed pack',
+
+    'cosmetic.skin': 'Character skin',
+    'cosmetic.armor': 'Armor look',
+    'cosmetic.weapon': 'Weapon look',
+    'cosmetic.weapon_effect': 'Weapon effect',
 
     'universe.eyebrow': 'King Of Nowhere Codex',
     'universe.title': 'The world, its souls and its stones.',
@@ -371,6 +695,106 @@ export const ui = {
     'universe.camps_lead': 'Angels, Demons, and the path traced between them. Your oath is never frozen.',
     'universe.build_title': 'Build',
     'universe.build_lead': 'A plank, a stone, a throne, a rampart. Everything the world lets you place — and break.',
+    'universe.rules_title': 'World Rules',
+    'universe.rules_lead': 'Power transforms. Each race has its gifts and its price. Each school of magic has its limits. No one can master it all.',
+
+    'worldRules.eyebrow': 'Codex · World Rules',
+    'worldRules.title': 'Power transforms. Always.',
+    'worldRules.lead':
+      "Every player can grow, learn, discover, unlock new skills. But some abilities remain forbidden to certain races or bloodlines — and that is what makes each identity precious.",
+    'worldRules.back': '← King Of Nowhere Codex',
+
+    'worldRules.principle_eyebrow': '⚖',
+    'worldRules.principle_title': 'The main rule of the world',
+    'worldRules.principle_text':
+      "In King Of Nowhere, power transforms the player. Every ability influences appearance, shifts reputation, changes relationships, reshapes one's place in the world. Power is never free. Every path demands sacrifice.",
+    'worldRules.principle_quote':
+      "\"You cannot learn everything. You cannot master everything. You cannot become perfect. Whatever you gain, you pay for.\"",
+
+    'worldRules.races_section_eyebrow': '✦',
+    'worldRules.races_section_title': 'Bloodlines and their price',
+    'worldRules.races_section_lead':
+      "Three bloodlines stand at the heart of the conflict. Each carries gifts — and the weight of what it can never become.",
+
+    'worldRules.humans_name': 'The Humans',
+    'worldRules.humans_tagline': 'Versatile. Adaptable. Vulnerable.',
+    'worldRules.humans_text':
+      "Humans excel at trade, strategy, craft, diplomacy, survival. They learn many trades, wield weapons and armor, practice simple magic. They build kingdoms and alliances that hold.",
+    'worldRules.humans_can': 'Versatility · Simple magic · Advanced craft · Kingdoms & alliances · Diplomacy',
+    'worldRules.humans_cannot':
+      'Very poor resistance to corruption · Transformations forbidden · Some powerful magics destroy their body',
+
+    'worldRules.lycans_name': 'The Lycans',
+    'worldRules.lycans_tagline': 'Hot blood. Long fangs. Raw emotion.',
+    'worldRules.lycans_text':
+      "Lycans live in forests, mountains, frontiers, wild lands. They belong to both worlds without fully belonging to either. Rage, instinct, hunt, speed — these are their weapons. The moon is their calendar.",
+    'worldRules.lycans_can': 'Transformations · Regeneration · Heightened senses · Wild abilities · Pack-howl',
+    'worldRules.lycans_cannot':
+      'Complex magic very difficult · Fragile emotional control · Strong emotions trigger uncontrolled transformations',
+
+    'worldRules.demons_name': 'The Demons',
+    'worldRules.demons_tagline': 'Rare. Dangerous. Marked by ancient iron.',
+    'worldRules.demons_text':
+      "Demons are not simply \"evil\". They are rare, mysterious, bound to the world's ancient corruption. Some bear horns, abnormal eyes, dark aura, visible marks. Their mere presence unsettles the living world — nervous cattle, plants that close, children who fall silent.",
+    'worldRules.demons_can': 'Black fire · Corruption · Curses · Summoning · Forbidden magic · Mental manipulation',
+    'worldRules.demons_cannot':
+      "Every power has a price · Slow loss of humanity · Growing instability · Rejection by kingdoms · Draws monsters and corruption",
+
+    'worldRules.magic_section_eyebrow': '✺',
+    'worldRules.magic_section_title': 'The three schools',
+    'worldRules.magic_section_lead':
+      "The world holds three main schools of magic. None mix safely. Choosing a path closes two others.",
+
+    'worldRules.magic_noble_name': 'Noble Magic',
+    'worldRules.magic_noble_text':
+      "Bound to light, healing, protection, kingdoms. Strong on the living side. Practiced by Angels and pious humans. Weakens during moonless nights and in cursed biomes.",
+    'worldRules.magic_wild_name': 'Wild Magic',
+    'worldRules.magic_wild_text':
+      "Bound to the moon, instincts, nature, transformations. Wielded mostly by Lycans. Powerful but unpredictable — reacts to seasons, emotions, the lunar phase.",
+    'worldRules.magic_forbidden_name': 'Forbidden Magic',
+    'worldRules.magic_forbidden_text':
+      "Bound to corruption, curses, chaos, the Abyssals. Strong on the destroyed side. Whoever practices it pays with body, reputation, or sanity. Often all three.",
+
+    'worldRules.status_section_eyebrow': '🩸',
+    'worldRules.status_section_title': 'Statuses & rare bloodlines',
+    'worldRules.status_section_lead':
+      "Some transformations are not born. They are chosen, endured, or carried in secret since birth.",
+
+    'worldRules.marked_name': 'The Marked',
+    'worldRules.marked_text':
+      "Humans who have accepted a demon's blood through a forbidden ritual. They remain human — but change slowly. Forbidden magic unlocked, abnormal physical strength, resistance to some corruptions, supernatural perception. But their body changes, their mind grows unstable, some lose their identity entirely.",
+    'worldRules.abyssal_name': 'The Abyssals',
+    'worldRules.abyssal_text':
+      "Extreme demons, ancient, almost non-humanoid. They no longer resemble humans or even normal demons. They warp reality, breed monsters, corrupt entire zones, mark humans. Their presence often destroys the world around them.",
+    'worldRules.halfdemon_name': 'The Half-demons',
+    'worldRules.halfdemon_text':
+      "Often indistinguishable from humans. Their true nature can stay secret until their powers are used. The children of the Cleaved King and Rose are the most famous examples — Blanche, the Heir of the Void, the Disheveled King, Faël.",
+    'worldRules.bloodbond_name': 'The Blood Bond',
+    'worldRules.bloodbond_text':
+      "A forbidden ritual through which a demon binds its blood to a human. Transmits part of its power, awakens hidden abilities, or creates rare hybrids. The one who accepts becomes Marked. The one who gives loses a piece of themselves with each ritual.",
+
+    'worldRules.identity_section_eyebrow': '👁',
+    'worldRules.identity_section_title': 'What you will not see',
+    'worldRules.identity_section_lead':
+      "In King Of Nowhere, other players do NOT see your exact skills, your specializations, your hidden abilities, your possible transformations. You must discover others by speaking, observing, fighting — by reputation.",
+
+    'worldRules.identity_lycan_title': 'Hidden Lycans',
+    'worldRules.identity_lycan_text':
+      "Lycans can often pass for human. But transformations, strong emotions, wounds, the full moon, or uncontrolled instincts can reveal their nature.",
+    'worldRules.identity_demon_title': 'Visible Demons',
+    'worldRules.identity_demon_text':
+      "Some demonic classes cannot hide their eyes, their horns, their aura, their marks. They are recognized as non-human at first sight.",
+    'worldRules.identity_halfdemon_title': 'Undetectable Half-demons',
+    'worldRules.identity_halfdemon_text':
+      "Half-demons often look like normal humans. Their true nature stays secret until the first spell is cast — and after that, nothing is ever the same.",
+
+    'worldRules.example_eyebrow': '🔥',
+    'worldRules.example_title': 'A concrete example',
+    'worldRules.example_text':
+      "A human who accepts a demon's blood can become extremely powerful. But they lose access to certain cities, grow unstable, attract corruption, are hunted by some kingdoms, and risk becoming a full Marked. Power is not free. It never will be.",
+
+    'worldRules.closing_quote':
+      "\"Every power has its price. Every path demands sacrifice. That is what makes your identity precious — and your oath irrevocable.\"",
 
     'camps.eyebrow': 'Sides',
     'camps.title': 'Light, shadow, and everything in between.',
@@ -496,6 +920,7 @@ export const ui = {
     'biomes.fauna': 'Wildlife',
     'biomes.resources': 'Resources',
     'biomes.dangers': 'Dangers',
+    'biomes.named_entities': 'Named Entities',
     'biomes.back': '← All biomes',
     'biomes.empty': 'The cartography is in progress.',
     'climate.temperate': 'Temperate',
@@ -505,6 +930,7 @@ export const ui = {
     'climate.volcanic': 'Volcanic',
     'climate.ethereal': 'Ethereal',
     'climate.cursed': 'Cursed',
+    'danger.city': 'Sanctuary',
     'danger.safe': 'Safe',
     'danger.low': 'Low',
     'danger.moderate': 'Moderate',

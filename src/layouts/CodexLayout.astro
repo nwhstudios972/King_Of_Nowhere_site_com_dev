@@ -14,14 +14,16 @@ interface Props {
   crumbs: Crumb[];
   eyebrow?: string;
   ogImage?: string;
+  rootCrumb?: Crumb;
 }
 
-const { title, description, crumbs, eyebrow, ogImage } = Astro.props;
+const { title, description, crumbs, eyebrow, ogImage, rootCrumb } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
+const defaultRoot: Crumb = { href: getLocalizedPath(lang, '/univers/'), label: t('universe.eyebrow') };
 const fullCrumbs: Crumb[] = [
-  { href: getLocalizedPath(lang, '/univers/'), label: t('universe.eyebrow') },
+  rootCrumb ?? defaultRoot,
   ...crumbs,
   { href: '', label: title },
 ];

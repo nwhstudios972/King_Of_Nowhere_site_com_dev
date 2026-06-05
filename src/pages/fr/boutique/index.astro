@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ShopHub from '../../../components/ShopHub.astro';
+import { useTranslations } from '../../../i18n/ui';
+
+const t = useTranslations('fr');
+---
+
+<BaseLayout title={`${t('shop.title')} — King Of Nowhere`} description={t('shop.lead')}>
+  <ShopHub />
+</BaseLayout>

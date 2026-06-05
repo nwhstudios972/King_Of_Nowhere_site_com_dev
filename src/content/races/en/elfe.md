@@ -1,29 +1,33 @@
 ---
-name: Elfe
-tagline: Gardiens des forêts éternelles, mémoire vivante du monde.
+cover: /images/codex/races/elfe/cover.jpg
+gallery:
+- /images/codex/races/elfe/01.jpg
+- /images/codex/races/elfe/02.jpg
+name: Elf
+tagline: Guardians of the eternal forests, the world's living memory.
 alignment: good
-origin: Émergés des racines des arbres-mères, les elfes existaient avant les humains et avant les Anges.
+origin: Risen from the roots of the mother-trees, elves existed before humans and before the Angels.
 traits:
-  - Longévité quasi-infinie
-  - Lien profond avec la nature
-  - Mémoire ancestrale
+  - Near-infinite lifespan
+  - Deep bond with nature
+  - Ancestral memory
 strengths:
-  - Magie naturelle
-  - Précision au combat
-  - Affinité avec les animaux
+  - Natural magic
+  - Combat precision
+  - Affinity with animals
 weaknesses:
-  - Lenteur de décision
-  - Fragilité face au fer froid
+  - Slow decision-making
+  - Frailty against cold iron
 lang: en
 order: 2
 ---
 
-## Les premiers témoins
+## The first witnesses
 
-Les elfes se souviennent du temps où les Anges et les Démons se faisaient la guerre dans les cieux, avant même que le sol n'existe. Ils ont assisté à la chute. Ils ont planté les premières graines.
+Elves remember the time when Angels and Demons waged war in the heavens, before the ground even existed. They watched the fall. They planted the first seeds.
 
-## Style de jeu
+## Playstyle
 
-Magie naturelle puissante, mais une **pénalité au combat urbain** : les elfes perdent 15% de leurs stats dans les zones construites en pierre.
+Powerful natural magic, but a **penalty in urban combat**: elves lose 15% of their stats in zones built from stone.
 
-> *Placeholder — à remplacer par le contenu Drive.*
+> *Placeholder — content coming soon.*

@@ -154,10 +154,11 @@ const biomes = defineCollection({
   schema: z.object({
     name: z.string(),
     climate: z.enum(BIOME_CLIMATES),
-    dangerLevel: z.enum(['safe', 'low', 'moderate', 'high', 'deadly']).default('moderate'),
+    dangerLevel: z.enum(['city', 'safe', 'low', 'moderate', 'high', 'deadly']).default('moderate'),
     fauna: z.array(z.string()).default([]),
     resources: z.array(z.string()).default([]),
     dangers: z.array(z.string()).default([]),
+    namedEntities: z.array(z.string()).default([]),
     summary: z.string(),
     cover: z.string().optional(),
     gallery: z.array(z.string()).default([]),
@@ -246,4 +247,130 @@ const buildables = defineCollection({
   }),
 });
 
-export const collections = { devlog, races, characters, resources, weapons, skills, biomes, creatures, buildables };
+export const SHOP_CURRENCIES = ['eur', 'usd', 'gold', 'gems'] as const;
+export type ShopCurrency = (typeof SHOP_CURRENCIES)[number];
+
+const shopBaseSchema = {
+  name: z.string(),
+  tagline: z.string().optional(),
+  summary: z.string(),
+  price: z.number().nonnegative().optional(),
+  currency: z.enum(SHOP_CURRENCIES).default('eur'),
+  rarity: z.enum(['common', 'uncommon', 'rare', 'epic', 'legendary']).default('common'),
+  faction: z.enum(['angel', 'demon', 'neutral']).default('neutral'),
+  highlight: z.boolean().default(false),
+  cover: z.string().optional(),
+  gallery: z.array(z.string()).default([]),
+  lang: langField,
+  draft: z.boolean().default(false),
+  order: z.number().default(100),
+};
+
+export const PET_TYPES = ['companion', 'familiar', 'guardian', 'spirit'] as const;
+export type PetType = (typeof PET_TYPES)[number];
+
+const pets = defineCollection({
+  type: 'content',
+  schema: z.object({
+    ...shopBaseSchema,
+    type: z.enum(PET_TYPES).default('companion'),
+    perks: z.array(z.string()).default([]),
+  }),
+});
+
+export const MOUNT_TYPES = ['land', 'aerial', 'aquatic', 'spectral'] as const;
+export type MountType = (typeof MOUNT_TYPES)[number];
+
+const mounts = defineCollection({
+  type: 'content',
+  schema: z.object({
+    ...shopBaseSchema,
+    type: z.enum(MOUNT_TYPES).default('land'),
+    speed: z.number().int().min(0).max(10).optional(),
+    perks: z.array(z.string()).default([]),
+  }),
+});
+
+export const COSMETIC_TYPES = ['skin', 'armor', 'weapon', 'weapon_effect'] as const;
+export type CosmeticType = (typeof COSMETIC_TYPES)[number];
+
+const cosmetics = defineCollection({
+  type: 'content',
+  schema: z.object({
+    ...shopBaseSchema,
+    type: z.enum(COSMETIC_TYPES).default('skin'),
+    slot: z.string().optional(),
+    effect: z.string().optional(),
+    perks: z.array(z.string()).default([]),
+  }),
+});
+
+export const SHOP_PACK_CATEGORIES = ['mineral', 'wood', 'plant', 'fabric', 'magic', 'food', 'bundle'] as const;
+export type ShopPackCategory = (typeof SHOP_PACK_CATEGORIES)[number];
+
+const shopPacks = defineCollection({
+  type: 'content',
+  schema: z.object({
+    ...shopBaseSchema,
+    category: z.enum(SHOP_PACK_CATEGORIES).default('bundle'),
+    contents: z
+      .array(
+        z.object({
+          name: z.string(),
+          quantity: z.number().int().positive().optional(),
+        }),
+      )
+      .default([]),
+  }),
+});
+
+export const EVENT_CATEGORIES = [
+  'festival',
+  'pvp',
+  'coronation',
+  'update',
+  'community',
+  'dungeon',
+  'economy',
+] as const;
+export type EventCategory = (typeof EVENT_CATEGORIES)[number];
+
+export const EVENT_RECURRENCES = ['once', 'weekly', 'monthly', 'yearly'] as const;
+export type EventRecurrence = (typeof EVENT_RECURRENCES)[number];
+
+const events = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    summary: z.string(),
+    startDate: z.coerce.date(),
+    endDate: z.coerce.date().optional(),
+    category: z.enum(EVENT_CATEGORIES),
+    faction: z.enum(['angel', 'demon', 'neutral']).default('neutral'),
+    server: z.string().optional(),
+    location: z.string().optional(),
+    recurring: z.enum(EVENT_RECURRENCES).default('once'),
+    cover: z.string().optional(),
+    featured: z.boolean().default(false),
+    lang: langField,
+    draft: z.boolean().default(false),
+    order: z.number().default(100),
+  }),
+});
+
+export const collections = {
+  devlog,
+  races,
+  characters,
+  resources,
+  weapons,
+  skills,
+  biomes,
+  creatures,
+  buildables,
+  pets,
+  mounts,
+  shopPacks,
+  cosmetics,
+  events,
+};

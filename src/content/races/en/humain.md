@@ -1,31 +1,31 @@
 ---
-name: Humain
-tagline: La race adaptable, ni bénie ni damnée.
+name: Human
+tagline: The adaptable race, neither blessed nor damned.
 alignment: neutral
-origin: Originaires des plaines centrales du monde, les humains sont la lignée la plus jeune mais la plus prolifique.
+origin: Born on the central plains of the world, humans are the youngest bloodline — and the most prolific.
 traits:
-  - Curiosité indomptable
-  - Capacité d'adaptation
-  - Mortalité courte
+  - Untamable curiosity
+  - Capacity to adapt
+  - Short mortality
 strengths:
-  - Flexibilité de classe
-  - Diplomatie naturelle
-  - Apprentissage rapide
+  - Class flexibility
+  - Natural diplomacy
+  - Fast learning
 weaknesses:
-  - Fragilité physique
-  - Espérance de vie limitée
+  - Physical frailty
+  - Limited lifespan
 lang: en
 order: 1
 ---
 
-## Le pari humain
+## The human gamble
 
-Les humains de King Of Nowhere n'ont aucun don magique inné. Aucune force naturelle ne les distingue. Pourtant, ils sont partout — et ils dominent les routes commerciales, les forges, et la moitié des conseils de guerre.
+The humans of King Of Nowhere have no innate magical gift. No natural force sets them apart. Yet they are everywhere — and they dominate trade routes, forges, and half the war councils.
 
-**Pourquoi ?** Parce qu'ils apprennent. Parce qu'ils s'allient. Parce qu'ils trahissent quand il faut.
+**Why?** Because they learn. Because they ally. Because they betray when they must.
 
-## Style de jeu
+## Playstyle
 
-Le joueur humain commence avec **deux compétences libres** au lieu d'une, et peut basculer entre les serments des Anges et des Démons jusqu'au niveau 10. Après ce seuil, le choix devient irréversible — et l'avantage de polyvalence disparaît.
+The human player starts with **two free skills** instead of one, and can swing between the Angel and Demon oaths up to level 10. Past that threshold, the choice becomes irreversible — and the versatility edge disappears.
 
-> *Placeholder de scaffold — remplacer par le contenu réel du Drive.*
+> *Placeholder — content coming soon.*

@@ -1,4 +1,8 @@
 ---
+cover: /images/codex/races/elfe/cover.jpg
+gallery:
+- /images/codex/races/elfe/01.jpg
+- /images/codex/races/elfe/02.jpg
 name: Elfe
 tagline: Gardiens des forêts éternelles, mémoire vivante du monde.
 alignment: good

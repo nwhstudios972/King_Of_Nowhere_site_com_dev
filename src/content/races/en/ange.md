@@ -1,24 +1,28 @@
 ---
-name: Ange
-tagline: Hérauts de l'ordre, descendants directs du serment de lumière.
+cover: /images/codex/races/ange/cover.jpg
+gallery:
+- /images/codex/races/ange/01.jpg
+- /images/codex/races/ange/02.jpg
+name: Angel
+tagline: Heralds of order, direct descendants of the oath of light.
 alignment: good
-origin: Forgés dans la lumière originelle, les Anges sont les premiers serviteurs de l'ordre cosmique.
+origin: Forged in the original light, Angels are the first servants of cosmic order.
 traits:
-  - Ailes de lumière (vol limité)
-  - Aura sacrée
-  - Immortalité conditionnelle
+  - Wings of light (limited flight, 30s — 2min cooldown)
+  - Sacred aura (restores 5% HP per second for 30s — 5min cooldown)
+  - Conditional immortality (regain 30% max HP and become immortal for 5s after taking a blow that would have been lethal — 10min cooldown)
 strengths:
-  - Magie sacrée puissante
-  - Résistance aux ténèbres
+  - Powerful sacred magic
+  - Resistance to darkness
 weaknesses:
-  - Vulnérabilité aux pactes brisés
-  - Code moral rigide
+  - Vulnerability to undead
+  - Rigid moral code
 lang: en
 order: 3
 ---
 
-## Les serviteurs de la lumière
+## Servants of the light
 
-Choisir Ange comme race, c'est naître avec le serment déjà partiellement scellé. Le camp Anges est presque obligatoire (95% de pénalité si vous choisissez Démons).
+Choosing Angel as a race means being born with your oath already half-sealed. The Angel side is nearly mandatory (95% penalty if you choose Demons).
 
-> *Placeholder — contenu Drive à intégrer.*
+> *Placeholder — content coming soon.*

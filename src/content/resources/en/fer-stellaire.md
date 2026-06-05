@@ -1,23 +1,23 @@
 ---
-name: Fer stellaire
+name: Stellar Iron
 category: mineral
 rarity: rare
 uses:
-  - Forge d'armes légendaires (palier 4+)
-  - Composant des armures angéliques
-  - Catalyseur de sorts de lumière
-whereFound: Veines profondes des montagnes du Nord, météorites tombées dans les ruines de Vald.
-summary: Minerai bleuté qui semble respirer faiblement. Tombe du ciel ou se trouve dans les veines les plus profondes du monde.
+  - Forging legendary weapons (tier 4+)
+  - Component of angelic armor
+  - Catalyst for light spells
+whereFound: Deep veins in the northern mountains, meteorites fallen in the ruins of Vald.
+summary: A bluish ore that seems to breathe faintly. Falls from the sky or hides in the deepest veins of the world.
 lang: en
 order: 10
 ---
 
-## Origine
+## Origin
 
-Le fer stellaire ne se forme pas naturellement sous terre. Les veines découvertes en profondeur sont des **météorites enfouies** depuis l'aube du monde. À chaque pluie d'étoiles (événement saisonnier), une nouvelle vague tombe.
+Stellar iron does not form naturally underground. The veins found in the depths are **buried meteorites** from the dawn of the world. With every star-fall (a seasonal event), a fresh wave lands.
 
-## Travail
+## Working it
 
-Seuls les forgerons humains de la guilde *Marteau-Blanc* savent le travailler sans le détruire. Les elfes peuvent le purifier, les démons le corrompent.
+Only the human smiths of the *White Hammer* guild know how to work it without destroying it. Elves can purify it, demons corrupt it.
 
-> *Placeholder Ressource — à remplacer par le contenu Drive.*
+> *Resource placeholder — content coming soon.*

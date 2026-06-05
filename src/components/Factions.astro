@@ -1,8 +1,9 @@
 ---
-import { useTranslations, getLangFromUrl } from '../i18n/ui';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../i18n/ui';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+const racesHref = getLocalizedPath(lang, '/univers/races/');
 ---
 
 <section class="section">
@@ -16,8 +17,9 @@ const t = useTranslations(lang);
 
     <div class="grid md:grid-cols-2 gap-6 lg:gap-10">
       <!-- ANGELS -->
-      <article
-        class="reveal relative overflow-hidden rounded-2xl border border-angel-500/20 p-10 group hover:border-angel-300/60 transition-all duration-500"
+      <a
+        href={racesHref}
+        class="reveal relative block overflow-hidden rounded-2xl border border-angel-500/20 p-10 group hover:border-angel-300/60 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-angel-300/70 transition-all duration-500"
         style="background: linear-gradient(160deg, rgba(91,141,239,0.08) 0%, rgba(13,16,28,0.85) 60%);"
       >
         <div
@@ -36,11 +38,12 @@ const t = useTranslations(lang);
           <span class="w-8 h-px bg-angel-300"></span>
           {t('sides.angels_cta')}
         </div>
-      </article>
+      </a>
 
       <!-- DEMONS -->
-      <article
-        class="reveal relative overflow-hidden rounded-2xl border border-demon-500/20 p-10 group hover:border-demon-300/60 transition-all duration-500"
+      <a
+        href={racesHref}
+        class="reveal relative block overflow-hidden rounded-2xl border border-demon-500/20 p-10 group hover:border-demon-300/60 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-demon-300/70 transition-all duration-500"
         style="background: linear-gradient(200deg, rgba(216,58,26,0.08) 0%, rgba(13,16,28,0.85) 60%); animation-delay: 0.15s"
       >
         <div
@@ -59,7 +62,7 @@ const t = useTranslations(lang);
           <span class="w-8 h-px bg-demon-300"></span>
           {t('sides.demons_cta')}
         </div>
-      </article>
+      </a>
     </div>
   </div>
 </section>
