@@ -2,7 +2,7 @@
 cover: /images/codex/environnement/ravenshield/cover.jpg
 gallery:
 - /images/codex/environnement/ravenshield/01.jpg
-name: Ravenshield
+name: Ravenshield - Human Kingdom
 climate: temperate
 dangerLevel: low
 fauna:
