@@ -3,10 +3,13 @@
   "type": "module",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build && node scripts/patch-vercel-runtime.mjs",
+    "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
