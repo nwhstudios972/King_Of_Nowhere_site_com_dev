@@ -540,6 +540,15 @@ export const ui = {
     'comingSoon.beta_intro': 'Inscrivez-vous pour être prévenu en premier.',
     'comingSoon.locked_notice': 'Accès restreint pendant la phase de développement.',
 
+    'videoIntro.eyebrow': 'Bande-annonce',
+    'videoIntro.title': "Plonge dans l'univers de King Of Nowhere.",
+    'videoIntro.play_aria': 'Lire la vidéo',
+    'videoIntro.pause_aria': 'Mettre en pause',
+    'videoIntro.unmute_aria': 'Activer le son',
+    'videoIntro.mute_aria': 'Couper le son',
+    'videoIntro.volume_aria': 'Volume',
+    'videoIntro.fullscreen_aria': 'Plein écran',
+
     'adminLogin.eyebrow': 'Accès restreint',
     'adminLogin.title': 'Le seuil du royaume.',
     'adminLogin.lead': 'Seuls les forgerons du studio peuvent franchir cette porte.',
@@ -1082,6 +1091,15 @@ export const ui = {
       'Build without limits. Forge clans. Choose your side in the eternal war between Angels and Demons. The site opens to the public in a few weeks — until then, only invited souls may cross the threshold.',
     'comingSoon.beta_intro': 'Sign up to be the first to know.',
     'comingSoon.locked_notice': 'Restricted access during development.',
+
+    'videoIntro.eyebrow': 'Trailer',
+    'videoIntro.title': 'Step into the world of King Of Nowhere.',
+    'videoIntro.play_aria': 'Play video',
+    'videoIntro.pause_aria': 'Pause video',
+    'videoIntro.unmute_aria': 'Unmute',
+    'videoIntro.mute_aria': 'Mute',
+    'videoIntro.volume_aria': 'Volume',
+    'videoIntro.fullscreen_aria': 'Fullscreen',
 
     'adminLogin.eyebrow': 'Restricted access',
     'adminLogin.title': 'The threshold of the realm.',

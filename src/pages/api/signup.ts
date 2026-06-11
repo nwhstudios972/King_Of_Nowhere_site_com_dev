@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { getServerSupabase } from '../../lib/supabase';
+import { encryptEmail, hashEmail, hasEncryptionKey } from '../../lib/crypto';
 
 export const prerender = false;
 
@@ -36,10 +37,22 @@ export const POST: APIRoute = async ({ request }) => {
     return json({ error: 'server' }, 500);
   }
 
+  if (!hasEncryptionKey()) {
+    console.error('[signup] EMAIL_ENCRYPTION_KEY missing or invalid (expect 32-byte hex)');
+    return json({ error: 'server' }, 500);
+  }
+
+  const encrypted = encryptEmail(email);
+  if (!encrypted) {
+    return json({ error: 'server' }, 500);
+  }
+
   const userAgent = request.headers.get('user-agent')?.slice(0, 500) ?? null;
 
   const { error } = await supabase.from('beta_signups').insert({
-    email,
+    email_ciphertext: encrypted.ciphertext,
+    email_iv: encrypted.iv,
+    email_hash: hashEmail(email),
     preferred_side: side,
     locale,
     user_agent: userAgent,

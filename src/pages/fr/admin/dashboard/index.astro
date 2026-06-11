@@ -1,0 +1,204 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { getServerSupabase } from '../../../../lib/supabase';
+import { decryptEmail, hasEncryptionKey } from '../../../../lib/crypto';
+
+export const prerender = false;
+
+type SignupRow = {
+  id: string;
+  email_ciphertext: string;
+  email_iv: string;
+  preferred_side: 'angel' | 'demon' | 'undecided';
+  locale: 'fr' | 'en';
+  user_agent: string | null;
+  created_at: string;
+};
+
+type Signup = {
+  id: string;
+  email: string;
+  side: 'angel' | 'demon' | 'undecided';
+  locale: 'fr' | 'en';
+  userAgent: string | null;
+  createdAt: Date;
+};
+
+const supabase = getServerSupabase();
+
+let signups: Signup[] = [];
+let loadError: string | null = null;
+
+if (!supabase) {
+  loadError = 'Supabase non configuré (SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY).';
+} else if (!hasEncryptionKey()) {
+  loadError = 'EMAIL_ENCRYPTION_KEY manquant ou invalide (32 octets hex attendus).';
+} else {
+  const { data, error } = await supabase
+    .from('beta_signups')
+    .select('id, email_ciphertext, email_iv, preferred_side, locale, user_agent, created_at')
+    .order('created_at', { ascending: false })
+    .limit(500);
+
+  if (error) {
+    loadError = `Erreur Supabase : ${error.message}`;
+  } else {
+    signups = (data as SignupRow[]).map((row) => ({
+      id: row.id,
+      email: decryptEmail(row.email_ciphertext, row.email_iv) ?? '⚠ déchiffrement impossible',
+      side: row.preferred_side,
+      locale: row.locale,
+      userAgent: row.user_agent,
+      createdAt: new Date(row.created_at),
+    }));
+  }
+}
+
+const total = signups.length;
+const byAngel = signups.filter((s) => s.side === 'angel').length;
+const byDemon = signups.filter((s) => s.side === 'demon').length;
+const byUndecided = signups.filter((s) => s.side === 'undecided').length;
+const byFr = signups.filter((s) => s.locale === 'fr').length;
+const byEn = signups.filter((s) => s.locale === 'en').length;
+const last7Days = signups.filter(
+  (s) => Date.now() - s.createdAt.getTime() < 7 * 24 * 60 * 60 * 1000
+).length;
+
+const sideLabel: Record<Signup['side'], string> = {
+  angel: 'Ange',
+  demon: 'Démon',
+  undecided: 'Indécis',
+};
+
+const dateFormatter = new Intl.DateTimeFormat('fr-FR', {
+  dateStyle: 'short',
+  timeStyle: 'short',
+});
+---
+
+<BaseLayout title="Dashboard · King Of Nowhere" description="Console d'administration.">
+  <section class="relative min-h-screen py-16 sm:py-24">
+    <div class="absolute inset-0 -z-30 starfield opacity-20"></div>
+
+    <div class="container-x">
+      <header class="flex flex-wrap items-end justify-between gap-4 mb-10">
+        <div>
+          <p class="eyebrow">Console d'administration</p>
+          <h1 class="mt-2 text-3xl sm:text-4xl font-display text-white leading-tight">Dashboard</h1>
+          <p class="mt-2 text-sm text-white/60">
+            Inscriptions à la bêta — chiffrées côté serveur (AES-256-GCM).
+          </p>
+        </div>
+        <form method="POST" action="/api/admin/logout">
+          <button
+            type="submit"
+            class="rounded-md border border-white/10 bg-ink-800/50 px-4 py-2 text-xs font-display tracking-widest uppercase text-white/70 hover:bg-ink-800/80 hover:text-white transition-colors"
+          >
+            Se déconnecter
+          </button>
+        </form>
+      </header>
+
+      {loadError && (
+        <div class="mb-8 rounded-md border border-demon-500/40 bg-demon-500/10 px-4 py-3 text-sm text-demon-300">
+          {loadError}
+        </div>
+      )}
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
+        <div class="rounded-xl border border-white/10 bg-ink-800/50 backdrop-blur-xl p-5">
+          <p class="text-xs font-display tracking-widest uppercase text-white/50">Inscriptions</p>
+          <p class="mt-2 text-3xl text-white font-display">{total}</p>
+        </div>
+        <div class="rounded-xl border border-white/10 bg-ink-800/50 backdrop-blur-xl p-5">
+          <p class="text-xs font-display tracking-widest uppercase text-white/50">7 derniers jours</p>
+          <p class="mt-2 text-3xl text-white font-display">{last7Days}</p>
+        </div>
+        <div class="rounded-xl border border-white/10 bg-ink-800/50 backdrop-blur-xl p-5">
+          <p class="text-xs font-display tracking-widest uppercase text-white/50">Anges / Démons</p>
+          <p class="mt-2 text-xl text-white font-display">
+            <span class="text-angel-300">{byAngel}</span>
+            <span class="text-white/30 mx-1">·</span>
+            <span class="text-demon-300">{byDemon}</span>
+          </p>
+          <p class="text-xs text-white/40 mt-1">Indécis : {byUndecided}</p>
+        </div>
+        <div class="rounded-xl border border-white/10 bg-ink-800/50 backdrop-blur-xl p-5">
+          <p class="text-xs font-display tracking-widest uppercase text-white/50">FR / EN</p>
+          <p class="mt-2 text-xl text-white font-display">
+            <span>{byFr}</span>
+            <span class="text-white/30 mx-1">·</span>
+            <span>{byEn}</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="rounded-xl border border-white/10 bg-ink-800/50 backdrop-blur-xl overflow-hidden">
+        <div class="flex items-center justify-between px-5 py-4 border-b border-white/10">
+          <h2 class="font-display text-white">Inscrits</h2>
+          <span class="text-xs text-white/40">{total} entrée{total > 1 ? 's' : ''} · 500 max affichées</span>
+        </div>
+        {signups.length === 0 ? (
+          <p class="px-5 py-10 text-center text-sm text-white/50">
+            {loadError ? 'Impossible de charger les données.' : 'Aucune inscription pour le moment.'}
+          </p>
+        ) : (
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead class="bg-ink-900/60">
+                <tr class="text-left text-xs font-display tracking-widest uppercase text-white/50">
+                  <th class="px-5 py-3">Email</th>
+                  <th class="px-5 py-3">Camp</th>
+                  <th class="px-5 py-3">Langue</th>
+                  <th class="px-5 py-3">Reçue le</th>
+                  <th class="px-5 py-3 hidden lg:table-cell">User agent</th>
+                </tr>
+              </thead>
+              <tbody>
+                {signups.map((s) => (
+                  <tr class="border-t border-white/5 hover:bg-ink-900/30 transition-colors">
+                    <td class="px-5 py-3 text-white/90 font-mono text-xs">
+                      <a href={`mailto:${s.email}`} class="hover:text-gold-300 transition-colors">
+                        {s.email}
+                      </a>
+                    </td>
+                    <td class="px-5 py-3">
+                      <span
+                        class:list={[
+                          'inline-block px-2 py-0.5 rounded text-xs font-display tracking-wider',
+                          s.side === 'angel' && 'bg-angel-500/15 text-angel-300',
+                          s.side === 'demon' && 'bg-demon-500/15 text-demon-300',
+                          s.side === 'undecided' && 'bg-white/5 text-white/60',
+                        ]}
+                      >
+                        {sideLabel[s.side]}
+                      </span>
+                    </td>
+                    <td class="px-5 py-3 text-white/60 uppercase text-xs">{s.locale}</td>
+                    <td class="px-5 py-3 text-white/60 text-xs whitespace-nowrap">
+                      {dateFormatter.format(s.createdAt)}
+                    </td>
+                    <td class="px-5 py-3 text-white/40 text-xs hidden lg:table-cell max-w-xs truncate" title={s.userAgent ?? ''}>
+                      {s.userAgent ?? '—'}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+
+      <div class="mt-10 rounded-xl border border-white/10 bg-ink-800/30 backdrop-blur-xl p-6">
+        <p class="eyebrow">À venir</p>
+        <h3 class="mt-2 font-display text-white text-xl">Prochaines fonctionnalités du dashboard</h3>
+        <ul class="mt-4 space-y-2 text-sm text-white/60 list-disc list-inside">
+          <li>Ajout d'éléments à l'univers (personnages, classes, lieux, histoire)</li>
+          <li>Rédaction et publication d'articles de devlog / blog</li>
+          <li>Export CSV des inscrits</li>
+          <li>Envoi groupé d'emails (campagnes bêta)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

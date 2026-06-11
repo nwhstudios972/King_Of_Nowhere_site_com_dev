@@ -8,6 +8,10 @@ location: La Lanterne Tordue, sur l'ancien champ de bataille de la Première Mar
 summary: Sergent humain rescapé de trois sièges, Galen a planté son auberge sur le tombeau de sa compagnie. Pas de magie, pas de don — juste un serment tenu trop longtemps. Personne ne meurt sous son toit.
 cover: /images/codex/personnages/galen-bord-de-fer/cover.jpg
 portrait: /images/codex/galen-bord-de-fer/portrait.jpg
+galery: 
+- /images/codex/galen-bord-de-fer/01.jpg
+- /images/codex/galen-bord-de-fer/02.jpg
+
 lang: fr
 order: 200
 ---

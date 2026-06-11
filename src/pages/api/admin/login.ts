@@ -23,9 +23,7 @@ function loginPath(locale: string): string {
   return locale === 'en' ? '/en/admin/secure' : '/fr/admin/secure';
 }
 
-function homePath(locale: string): string {
-  return locale === 'en' ? '/en/' : '/fr/';
-}
+const DASHBOARD_PATH = '/fr/admin/dashboard';
 
 export const POST: APIRoute = async ({ request, cookies, clientAddress, redirect }) => {
   const ip = clientAddress || 'unknown';
@@ -65,5 +63,5 @@ export const POST: APIRoute = async ({ request, cookies, clientAddress, redirect
     maxAge: COOKIE_MAX_AGE,
   });
 
-  return redirect(homePath(locale), 303);
+  return redirect(DASHBOARD_PATH, 303);
 };

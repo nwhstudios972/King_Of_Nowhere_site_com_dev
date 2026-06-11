@@ -24,12 +24,52 @@ function getAuthSecret(): string | null {
 export async function verifyAdminCredentials(email: string, password: string): Promise<boolean> {
   const expectedEmail = getAdminEmail();
   const expectedHash = getAdminPasswordHash();
-  if (!expectedEmail || !expectedHash) return false;
+  const secret = getAuthSecret();
 
+  // ── DIAG ──────────────────────────────────────────────────────────────
+  // Temporary login diagnostic. Prints flags only, never the values.
+  // Remove once we know why the prod login is failing.
+  const hashLooksValid =
+    !!expectedHash &&
+    /^\$2[aby]\$\d{2}\$/.test(expectedHash) &&
+    expectedHash.length === 60;
+
+  const hashPrefix = expectedHash ? expectedHash.slice(0, 4) : '(none)';
   const submittedEmail = email.trim().toLowerCase();
+
+  console.log('[login-diag]', {
+    env_ADMIN_EMAIL_present: !!expectedEmail,
+    env_ADMIN_EMAIL_length: expectedEmail?.length ?? 0,
+    env_ADMIN_PASSWORD_HASH_present: !!expectedHash,
+    env_ADMIN_PASSWORD_HASH_length: expectedHash?.length ?? 0,
+    env_ADMIN_PASSWORD_HASH_prefix: hashPrefix,
+    hash_format_valid: hashLooksValid,
+    env_AUTH_SECRET_present: !!secret,
+    env_AUTH_SECRET_length: secret?.length ?? 0,
+    submitted_email_length: submittedEmail.length,
+    submitted_password_length: password.length,
+    email_matches: !!expectedEmail && submittedEmail === expectedEmail,
+  });
+
+  if (!expectedEmail || !expectedHash) {
+    console.log('[login-diag] FAIL → missing env var');
+    return false;
+  }
+  // ──────────────────────────────────────────────────────────────────────
+
   // Use bcrypt.compare regardless of email match to keep timing roughly constant.
-  const passwordOk = await bcrypt.compare(password, expectedHash);
-  return submittedEmail === expectedEmail && passwordOk;
+  let passwordOk = false;
+  try {
+    passwordOk = await bcrypt.compare(password, expectedHash);
+  } catch (err) {
+    console.log('[login-diag] FAIL → bcrypt.compare threw', (err as Error)?.message);
+    return false;
+  }
+
+  const emailOk = submittedEmail === expectedEmail;
+  console.log('[login-diag] result', { emailOk, passwordOk });
+
+  return emailOk && passwordOk;
 }
 
 function b64urlEncode(input: string): string {
