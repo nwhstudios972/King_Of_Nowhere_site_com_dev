@@ -3,7 +3,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 
 export const prerender = false;
 
-const SITE = 'https://kingofnowhere.com';
+const SITE = 'https://kingofnowhere-nws.com';
 
 type Lang = 'fr' | 'en';
 
