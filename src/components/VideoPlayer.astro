@@ -58,7 +58,7 @@ const computedAria = ariaLabel ?? t('videoIntro.title');
     <!-- Bottom controls bar -->
     <div
       data-controls
-      class="absolute inset-x-0 bottom-0 px-3 sm:px-5 pb-3 sm:pb-4 pt-10 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 transition-opacity duration-300 pointer-events-none"
+      class="absolute inset-x-0 bottom-0 px-3 sm:px-5 pb-3 sm:pb-4 pt-10 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 pointer-events-none"
     >
       <!-- Progress bar -->
       <div
@@ -163,10 +163,18 @@ const computedAria = ariaLabel ?? t('videoIntro.title');
 </div>
 
 <style>
+  [data-controls] {
+    transform: translateY(1rem);
+    transition: opacity 300ms ease, transform 300ms ease;
+  }
+
   .video-intro:hover [data-controls],
   .video-intro:focus-within [data-controls],
-  .video-intro[data-paused='true'] [data-controls] {
+  .video-intro[data-paused='true'] [data-controls],
+  [data-controls][data-show='true'] {
     opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
   }
 
   .volume-slider {
@@ -423,5 +431,37 @@ const computedAria = ariaLabel ?? t('videoIntro.title');
     updateProgress();
   }
 
-  document.querySelectorAll<HTMLElement>('[data-video-intro]').forEach(initVideoPlayer);
+  const allShowers: Array<() => void> = [];
+
+  function setupAutoHide(root: HTMLElement): void {
+    const controls = root.querySelector<HTMLElement>('[data-controls]');
+    if (!controls) return;
+
+    let hideTimer: number | null = null;
+
+    const show = (): void => {
+      controls.dataset.show = 'true';
+      if (hideTimer !== null) clearTimeout(hideTimer);
+      hideTimer = window.setTimeout(() => {
+        controls.dataset.show = 'false';
+        hideTimer = null;
+      }, 1000);
+    };
+
+    allShowers.push(show);
+    show();
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-video-intro]').forEach((root) => {
+    initVideoPlayer(root);
+    setupAutoHide(root);
+  });
+
+  window.addEventListener(
+    'scroll',
+    () => {
+      for (const show of allShowers) show();
+    },
+    { passive: true },
+  );
 </script>
