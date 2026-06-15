@@ -23,6 +23,12 @@ const categoryLabels: Record<string, { fr: string; en: string }> = {
   food: { fr: 'Nourriture', en: 'Food' },
   relic: { fr: 'Relique', en: 'Relic' },
   misc: { fr: 'Divers', en: 'Misc' },
+  currency: { fr: 'Monnaie', en: 'Currency' },
+  quest: { fr: 'Quête', en: 'Quest' },
+  upgrade: { fr: 'Amélioration', en: 'Upgrade' },
+  crafting: { fr: 'Artisanat', en: 'Crafting' },
+  consumable: { fr: 'Consommable', en: 'Consumable' },
+  other: { fr: 'Autre', en: 'Other' },
 };
 
 const rarityStyle = (r: string) => {
@@ -136,4 +142,10 @@ const filters = [allFilter, ...catFilters];
       });
     });
   });
+
+  const hash = window.location.hash.replace(/^#/, '');
+  if (hash) {
+    const match = Array.from(filters).find((p) => p.dataset.filter === hash);
+    if (match) match.click();
+  }
 </script>

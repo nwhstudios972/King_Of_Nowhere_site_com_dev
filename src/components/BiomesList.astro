@@ -126,4 +126,10 @@ const filters = [allFilter, ...climateFilters];
       });
     });
   });
+
+  const hash = window.location.hash.replace(/^#/, '');
+  if (hash) {
+    const match = Array.from(filters).find((p) => p.dataset.filter === hash);
+    if (match) match.click();
+  }
 </script>

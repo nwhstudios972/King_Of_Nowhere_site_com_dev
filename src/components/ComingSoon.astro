@@ -1,6 +1,7 @@
 ---
 import { useTranslations, getLangFromUrl } from '../i18n/ui';
 import BetaSignup from './BetaSignup.astro';
+import VideoPlayer from './VideoPlayer.astro';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -59,6 +60,10 @@ const t = useTranslations(lang);
         {t('comingSoon.lead')}
       </p>
 
+      <div class="reveal mt-12 max-w-3xl mx-auto text-left">
+        <VideoPlayer src="/videos/boss-donjon.mp4" poster="/videos/boss-donjon-poster.jpg" loop />
+      </div>
+
       <div class="reveal mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
         <a href="#beta" class="btn-primary">
           {t('comingSoon.beta_intro')}
@@ -75,6 +80,18 @@ const t = useTranslations(lang);
   <div class="absolute bottom-8 left-1/2 -translate-x-1/2 reveal">
     <div class="w-6 h-10 rounded-full border border-white/20 flex items-start justify-center p-1.5">
       <div class="w-1 h-2 rounded-full bg-gold-300/60 animate-bounce"></div>
+    </div>
+  </div>
+</section>
+
+<section class="relative py-16 sm:py-24 overflow-hidden">
+  <div
+    class="absolute inset-0 -z-10"
+    style="background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(200,154,58,0.08) 0%, transparent 70%);"
+  ></div>
+  <div class="container-x">
+    <div class="reveal max-w-4xl mx-auto">
+      <VideoPlayer src="/videos/monde-changeable.mp4" poster="/videos/monde-changeable-poster.jpg" loop />
     </div>
   </div>
 </section>

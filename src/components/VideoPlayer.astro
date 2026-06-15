@@ -1,0 +1,427 @@
+---
+import { useTranslations, getLangFromUrl } from '../i18n/ui';
+
+interface Props {
+  src: string;
+  poster?: string;
+  ariaLabel?: string;
+  rounded?: boolean;
+  loop?: boolean;
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const { src, poster, ariaLabel, rounded = true, loop = false } = Astro.props;
+const computedAria = ariaLabel ?? t('videoIntro.title');
+---
+
+<div
+  class:list={[
+    'video-intro group relative w-full overflow-hidden border border-white/10 bg-black shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)]',
+    rounded ? 'rounded-2xl' : '',
+  ]}
+  data-video-intro
+>
+  <div class="relative aspect-video">
+    <video
+      data-video
+      class="absolute inset-0 w-full h-full object-cover cursor-pointer"
+      src={src}
+      poster={poster}
+      preload="metadata"
+      autoplay
+      muted
+      playsinline
+      loop={loop}
+      aria-label={computedAria}>
+    </video>
+
+    <!-- Big play button overlay (shown when paused) -->
+    <button
+      type="button"
+      data-big-play
+      aria-label={t('videoIntro.play_aria')}
+      data-pause-label={t('videoIntro.pause_aria')}
+      class="absolute inset-0 hidden items-center justify-center bg-black/40 backdrop-blur-[2px] transition-opacity"
+      data-state="hidden"
+    >
+      <span
+        class="flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gold-300/90 text-ink-900 shadow-[0_0_60px_rgba(200,154,58,0.5)] transition-transform hover:scale-110"
+      >
+        <svg viewBox="0 0 24 24" class="w-9 h-9 sm:w-11 sm:h-11" fill="currentColor" aria-hidden="true">
+          <path d="M8 5v14l11-7z" />
+        </svg>
+      </span>
+    </button>
+
+    <!-- Bottom controls bar -->
+    <div
+      data-controls
+      class="absolute inset-x-0 bottom-0 px-3 sm:px-5 pb-3 sm:pb-4 pt-10 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 transition-opacity duration-300 pointer-events-none"
+    >
+      <!-- Progress bar -->
+      <div
+        data-progress
+        class="group/progress relative h-1.5 w-full cursor-pointer rounded-full bg-white/20 mb-3 pointer-events-auto"
+        role="slider"
+        aria-label="Progress"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="0"
+        tabindex="0"
+      >
+        <div
+          data-progress-buffered
+          class="absolute inset-y-0 left-0 rounded-full bg-white/30"
+          style="width: 0%"
+        ></div>
+        <div
+          data-progress-played
+          class="absolute inset-y-0 left-0 rounded-full bg-gold-300"
+          style="width: 0%"
+        ></div>
+        <div
+          data-progress-thumb
+          class="absolute top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-gold-300 shadow-[0_0_10px_rgba(200,154,58,0.7)] opacity-0 group-hover/progress:opacity-100 transition-opacity"
+          style="left: 0%; transform: translate(-50%, -50%);"
+        ></div>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3 text-white pointer-events-auto">
+        <!-- Play/Pause -->
+        <button
+          type="button"
+          data-play-toggle
+          aria-label={t('videoIntro.play_aria')}
+          class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/15 transition-colors"
+        >
+          <svg data-icon-play viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor" aria-hidden="true">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+          <svg data-icon-pause viewBox="0 0 24 24" class="hidden w-5 h-5" fill="currentColor" aria-hidden="true">
+            <path d="M6 5h4v14H6zM14 5h4v14h-4z" />
+          </svg>
+        </button>
+
+        <!-- Mute/Unmute + Volume -->
+        <div class="flex items-center gap-1 group/vol">
+          <button
+            type="button"
+            data-mute-toggle
+            aria-label={t('videoIntro.unmute_aria')}
+            data-mute-label={t('videoIntro.mute_aria')}
+            data-unmute-label={t('videoIntro.unmute_aria')}
+            class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/15 transition-colors"
+          >
+            <svg data-icon-muted viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor" aria-hidden="true">
+              <path
+                d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51A8.796 8.796 0 0021 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.17v2.06a8.99 8.99 0 003.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"
+              />
+            </svg>
+            <svg data-icon-volume viewBox="0 0 24 24" class="hidden w-5 h-5" fill="currentColor" aria-hidden="true">
+              <path
+                d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"
+              />
+            </svg>
+          </button>
+          <input
+            type="range"
+            data-volume
+            min="0"
+            max="100"
+            value="50"
+            aria-label={t('videoIntro.volume_aria')}
+            class="volume-slider w-0 sm:w-20 sm:group-hover/vol:w-24 transition-all duration-300 accent-gold-300"
+          />
+        </div>
+
+        <!-- Time -->
+        <span
+          data-time
+          class="ml-1 text-xs sm:text-sm font-mono tabular-nums text-white/80 select-none"
+        >0:00 / 0:00</span>
+
+        <div class="flex-1"></div>
+
+        <!-- Fullscreen -->
+        <button
+          type="button"
+          data-fullscreen
+          aria-label={t('videoIntro.fullscreen_aria')}
+          class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/15 transition-colors"
+        >
+          <svg viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor" aria-hidden="true">
+            <path
+              d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .video-intro:hover [data-controls],
+  .video-intro:focus-within [data-controls],
+  .video-intro[data-paused='true'] [data-controls] {
+    opacity: 1;
+  }
+
+  .volume-slider {
+    height: 4px;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .volume-slider::-webkit-slider-runnable-track {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 9999px;
+  }
+
+  .volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 9999px;
+    background: #f3d488;
+    margin-top: -4px;
+    box-shadow: 0 0 6px rgba(200, 154, 58, 0.6);
+  }
+
+  .volume-slider::-moz-range-track {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 9999px;
+  }
+
+  .volume-slider::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 9999px;
+    background: #f3d488;
+    border: none;
+    box-shadow: 0 0 6px rgba(200, 154, 58, 0.6);
+  }
+</style>
+
+<script>
+  function formatTime(seconds: number): string {
+    if (!Number.isFinite(seconds) || seconds < 0) return '0:00';
+    const total = Math.floor(seconds);
+    const m = Math.floor(total / 60);
+    const s = total % 60;
+    return `${m}:${s.toString().padStart(2, '0')}`;
+  }
+
+  function initVideoPlayer(root: HTMLElement): void {
+    if (root.dataset.videoInit === 'true') return;
+    root.dataset.videoInit = 'true';
+
+    const video = root.querySelector<HTMLVideoElement>('[data-video]');
+    const bigPlay = root.querySelector<HTMLButtonElement>('[data-big-play]');
+    const playToggle = root.querySelector<HTMLButtonElement>('[data-play-toggle]');
+    const muteToggle = root.querySelector<HTMLButtonElement>('[data-mute-toggle]');
+    const volumeInput = root.querySelector<HTMLInputElement>('[data-volume]');
+    const progress = root.querySelector<HTMLElement>('[data-progress]');
+    const playedBar = root.querySelector<HTMLElement>('[data-progress-played]');
+    const bufferedBar = root.querySelector<HTMLElement>('[data-progress-buffered]');
+    const progressThumb = root.querySelector<HTMLElement>('[data-progress-thumb]');
+    const timeLabel = root.querySelector<HTMLElement>('[data-time]');
+    const fullscreenBtn = root.querySelector<HTMLButtonElement>('[data-fullscreen]');
+    const iconPlay = root.querySelector<HTMLElement>('[data-icon-play]');
+    const iconPause = root.querySelector<HTMLElement>('[data-icon-pause]');
+    const iconMuted = root.querySelector<HTMLElement>('[data-icon-muted]');
+    const iconVolume = root.querySelector<HTMLElement>('[data-icon-volume]');
+
+    if (
+      !video ||
+      !bigPlay ||
+      !playToggle ||
+      !muteToggle ||
+      !volumeInput ||
+      !progress ||
+      !playedBar ||
+      !bufferedBar ||
+      !progressThumb ||
+      !timeLabel ||
+      !fullscreenBtn ||
+      !iconPlay ||
+      !iconPause ||
+      !iconMuted ||
+      !iconVolume
+    ) {
+      return;
+    }
+
+    const playAria = playToggle.getAttribute('aria-label') || 'Play';
+    const pauseAria = bigPlay.dataset.pauseLabel || 'Pause';
+    const muteAria = muteToggle.dataset.muteLabel || 'Mute';
+    const unmuteAria = muteToggle.dataset.unmuteLabel || 'Unmute';
+
+    let initialUnmute = true;
+    video.volume = 0.5;
+
+    function setPlayingUI(playing: boolean): void {
+      iconPlay!.classList.toggle('hidden', playing);
+      iconPause!.classList.toggle('hidden', !playing);
+      bigPlay!.style.display = playing ? 'none' : 'flex';
+      bigPlay!.dataset.state = playing ? 'hidden' : 'visible';
+      playToggle!.setAttribute('aria-label', playing ? pauseAria : playAria);
+      root.dataset.paused = playing ? 'false' : 'true';
+    }
+
+    function setMuteUI(muted: boolean): void {
+      iconMuted!.classList.toggle('hidden', !muted);
+      iconVolume!.classList.toggle('hidden', muted);
+      muteToggle!.setAttribute('aria-label', muted ? unmuteAria : muteAria);
+    }
+
+    function togglePlay(): void {
+      if (video!.paused || video!.ended) {
+        const p = video!.play();
+        if (p && typeof p.catch === 'function') p.catch(() => {});
+      } else {
+        video!.pause();
+      }
+    }
+
+    function toggleMute(): void {
+      if (video!.muted) {
+        video!.muted = false;
+        if (initialUnmute) {
+          video!.volume = 0.5;
+          volumeInput!.value = '50';
+          initialUnmute = false;
+        } else if (video!.volume === 0) {
+          video!.volume = 0.5;
+          volumeInput!.value = '50';
+        }
+      } else {
+        video!.muted = true;
+      }
+    }
+
+    function seekFromEvent(event: PointerEvent | KeyboardEvent): void {
+      if (event instanceof KeyboardEvent) {
+        if (event.key === 'ArrowLeft') {
+          video!.currentTime = Math.max(0, video!.currentTime - 5);
+          event.preventDefault();
+        } else if (event.key === 'ArrowRight') {
+          video!.currentTime = Math.min(video!.duration || 0, video!.currentTime + 5);
+          event.preventDefault();
+        }
+        return;
+      }
+      const rect = progress!.getBoundingClientRect();
+      const ratio = Math.min(Math.max((event.clientX - rect.left) / rect.width, 0), 1);
+      if (Number.isFinite(video!.duration)) {
+        video!.currentTime = ratio * video!.duration;
+      }
+    }
+
+    function updateProgress(): void {
+      const duration = video!.duration || 0;
+      const current = video!.currentTime || 0;
+      const pct = duration > 0 ? (current / duration) * 100 : 0;
+      playedBar!.style.width = pct + '%';
+      progressThumb!.style.left = pct + '%';
+      progress!.setAttribute('aria-valuenow', String(Math.round(pct)));
+      timeLabel!.textContent = `${formatTime(current)} / ${formatTime(duration)}`;
+    }
+
+    function updateBuffered(): void {
+      const duration = video!.duration || 0;
+      if (duration <= 0 || video!.buffered.length === 0) return;
+      const end = video!.buffered.end(video!.buffered.length - 1);
+      bufferedBar!.style.width = (end / duration) * 100 + '%';
+    }
+
+    video.addEventListener('play', () => setPlayingUI(true));
+    video.addEventListener('playing', () => setPlayingUI(true));
+    video.addEventListener('pause', () => setPlayingUI(false));
+    video.addEventListener('ended', () => setPlayingUI(false));
+    video.addEventListener('volumechange', () => {
+      setMuteUI(video!.muted || video!.volume === 0);
+      if (!video!.muted) {
+        volumeInput!.value = String(Math.round(video!.volume * 100));
+      }
+    });
+    video.addEventListener('timeupdate', updateProgress);
+    video.addEventListener('loadedmetadata', updateProgress);
+    video.addEventListener('progress', updateBuffered);
+
+    video.addEventListener('click', togglePlay);
+    bigPlay.addEventListener('click', togglePlay);
+    playToggle.addEventListener('click', togglePlay);
+    muteToggle.addEventListener('click', toggleMute);
+
+    volumeInput.addEventListener('input', () => {
+      const val = Number(volumeInput!.value) / 100;
+      video!.volume = val;
+      if (val > 0 && video!.muted) {
+        video!.muted = false;
+        initialUnmute = false;
+      } else if (val === 0) {
+        video!.muted = true;
+      }
+    });
+
+    progress.addEventListener('pointerdown', (e) => {
+      seekFromEvent(e);
+      const move = (ev: PointerEvent) => seekFromEvent(ev);
+      const up = () => {
+        window.removeEventListener('pointermove', move);
+        window.removeEventListener('pointerup', up);
+      };
+      window.addEventListener('pointermove', move);
+      window.addEventListener('pointerup', up);
+    });
+    progress.addEventListener('keydown', seekFromEvent);
+
+    fullscreenBtn.addEventListener('click', () => {
+      const container = root as HTMLElement & {
+        webkitRequestFullscreen?: () => Promise<void>;
+      };
+      const videoEl = video as HTMLVideoElement & {
+        webkitEnterFullscreen?: () => void;
+      };
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(() => {});
+      } else if (container.requestFullscreen) {
+        container.requestFullscreen().catch(() => {});
+      } else if (container.webkitRequestFullscreen) {
+        container.webkitRequestFullscreen();
+      } else if (videoEl.webkitEnterFullscreen) {
+        videoEl.webkitEnterFullscreen();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!root.matches(':hover') && document.activeElement?.closest('[data-video-intro]') !== root) {
+        return;
+      }
+      const tag = (document.activeElement?.tagName || '').toLowerCase();
+      if (tag === 'input' || tag === 'textarea') return;
+      if (e.key === ' ' || e.key === 'k') {
+        e.preventDefault();
+        togglePlay();
+      } else if (e.key === 'm') {
+        e.preventDefault();
+        toggleMute();
+      } else if (e.key === 'f') {
+        e.preventDefault();
+        fullscreenBtn!.click();
+      }
+    });
+
+    setPlayingUI(!video.paused);
+    setMuteUI(video.muted);
+    updateProgress();
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-video-intro]').forEach(initVideoPlayer);
+</script>

@@ -25,4 +25,6 @@ order: 5
 
 Choisir Démon comme race oriente naturellement vers le camp Démons. La trahison de leur propre nature est punie sévèrement.
 
+Vous pouvez toujours changer de camps au fur et à mesure de vos choix lors de votre aventure. Il est tout à fait possible qu'un démon devienne un Archange sur son serveur.
+
 > *Le chemin est long, mais la voie est sûre*

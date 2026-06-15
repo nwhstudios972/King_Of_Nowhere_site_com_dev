@@ -25,4 +25,6 @@ order: 5
 
 Choosing Demon as a race naturally pulls you toward the Demon side. Betraying their own nature is punished harshly.
 
+You can always change sides as you make choices during your adventure. It's entirely possible for a demon to become an Archangel on their server.
+
 > *Placeholder — content coming soon.*

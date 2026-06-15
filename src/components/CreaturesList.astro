@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import { useTranslations, getLangFromUrl, getLocalizedPath } from '../i18n/ui';
+import { CREATURE_TYPES } from '../content/config';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -26,6 +27,11 @@ const threatClass = (level: string) => {
       return 'border-white/15 text-white/60';
   }
 };
+
+const filters = [
+  { value: 'all', label: lang === 'fr' ? 'Toutes' : 'All' },
+  ...CREATURE_TYPES.map((c) => ({ value: c, label: t(`creature.${c}` as any) })),
+];
 ---
 
 <section class="pt-32 pb-24">
@@ -40,15 +46,29 @@ const threatClass = (level: string) => {
     <h1 class="mt-4 text-4xl sm:text-5xl text-white">{t('creatures.title')}</h1>
     <p class="mt-4 max-w-2xl text-white/70">{t('creatures.lead')}</p>
 
+    <div id="creature-filters" class="mt-10 flex flex-wrap gap-2">
+      {filters.map((f) => (
+        <button
+          type="button"
+          class="filter-pill text-xs font-display tracking-widest uppercase px-4 py-2 rounded-full border border-white/10 text-white/60 hover:border-gold-300/60 hover:text-gold-300 transition-all data-[active=true]:border-gold-300 data-[active=true]:text-gold-300 data-[active=true]:bg-gold-500/10"
+          data-filter={f.value}
+          data-active={f.value === 'all' ? 'true' : 'false'}
+        >
+          {f.label}
+        </button>
+      ))}
+    </div>
+
     {
       creatures.length === 0 ? (
         <p class="mt-16 text-white/40 italic">{t('creatures.empty')}</p>
       ) : (
-        <div class="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {creatures.map((c) => (
             <a
               href={getLocalizedPath(lang, `/univers/creatures/${slugFor(c.id)}/`)}
-              class="group rounded-xl border border-white/10 bg-ink-800/40 overflow-hidden hover:border-gold-500/40 transition-all hover:-translate-y-1 duration-300 block"
+              class="creature-card group rounded-xl border border-white/10 bg-ink-800/40 overflow-hidden hover:border-gold-500/40 transition-all hover:-translate-y-1 duration-300 block"
+              data-type={c.data.type}
             >
               {c.data.cover ? (
                 <div class="aspect-[4/3] overflow-hidden bg-ink-900">
@@ -92,3 +112,31 @@ const threatClass = (level: string) => {
     }
   </div>
 </section>
+
+<script>
+  function setupCreatureFilters() {
+    const pills = document.querySelectorAll<HTMLButtonElement>('#creature-filters .filter-pill');
+    const cards = document.querySelectorAll<HTMLElement>('.creature-card');
+    if (!pills.length) return;
+
+    const apply = (value: string) => {
+      pills.forEach((p) =>
+        p.setAttribute('data-active', p.dataset.filter === value ? 'true' : 'false'),
+      );
+      cards.forEach((card) => {
+        const match = value === 'all' || card.dataset.type === value;
+        (card as HTMLElement).style.display = match ? '' : 'none';
+      });
+    };
+
+    pills.forEach((p) => p.addEventListener('click', () => apply(p.dataset.filter || 'all')));
+
+    const hash = window.location.hash.replace(/^#/, '');
+    if (hash) {
+      const match = Array.from(pills).find((p) => p.dataset.filter === hash);
+      if (match) apply(hash);
+    }
+  }
+  setupCreatureFilters();
+  document.addEventListener('astro:page-load', setupCreatureFilters);
+</script>

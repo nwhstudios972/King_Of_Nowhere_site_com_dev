@@ -180,10 +180,10 @@ export const ui = {
     'worldRules.humans_cannot':
       'Très mauvaise résistance à la corruption · Transformations interdites · Certaines magies trop puissantes détruisent leur corps',
 
-    'worldRules.lycans_name': 'Les Lycans',
+    'worldRules.lycans_name': 'Les Wolfs',
     'worldRules.lycans_tagline': 'Sang chaud. Crocs longs. Émotions à vif.',
     'worldRules.lycans_text':
-      "Les Lycans vivent dans les forêts, les montagnes, les frontières, les zones sauvages. Ils appartiennent aux deux mondes sans appartenir totalement à aucun. La rage, l'instinct, la chasse, la vitesse — voilà leurs armes. La lune est leur calendrier.",
+      "Les Wolfs vivent dans les forêts, les montagnes, les frontières, les zones sauvages. Ils appartiennent aux deux mondes sans appartenir totalement à aucun. La rage, l'instinct, la chasse, la vitesse — voilà leurs armes. La lune est leur calendrier.",
     'worldRules.lycans_can': 'Transformations · Régénération · Sens développés · Capacités sauvages · Hurlement de meute',
     'worldRules.lycans_cannot':
       'Magie complexe très difficile · Contrôle émotionnel fragile · Certaines émotions déclenchent des transformations incontrôlées',
@@ -191,7 +191,7 @@ export const ui = {
     'worldRules.demons_name': 'Les Démons',
     'worldRules.demons_tagline': 'Rares. Dangereux. Marqués au fer ancien.',
     'worldRules.demons_text':
-      "Les démons ne sont pas simplement « méchants ». Ils sont rares, mystérieux, liés à la corruption ancienne du monde. Certains portent cornes, yeux anormaux, aura sombre, marques visibles. Leur seule présence dérange le monde vivant — bétail nerveux, plantes qui se ferment, enfants qui se taisent.",
+      "Les démons ne sont pas simplement « méchants ». Ils sont unique, mystérieux, liés à la corruption ancienne du monde. Certains portent cornes, yeux anormaux, aura sombre, marques visibles. Leur seule présence dérange le monde vivant — bétail nerveux, plantes qui se ferment, enfants qui se taisent.",
     'worldRules.demons_can': 'Feu noir · Corruption · Malédictions · Invocation · Magie interdite · Manipulation mentale',
     'worldRules.demons_cannot':
       "Tout pouvoir a un prix · Perte lente d'humanité · Instabilité croissante · Rejet des royaumes · Attire monstres et corruption",
@@ -439,6 +439,14 @@ export const ui = {
     'resources.where_found': 'Où la trouver',
     'resources.back': '← Toutes les ressources',
     'resources.empty': "Les premières fiches arrivent.",
+    'resources.cat_mineral': 'Minerais',
+    'resources.cat_plant': 'Plantes',
+    'resources.cat_wood': 'Bois',
+    'resources.cat_fabric': 'Tissus',
+    'resources.cat_magic': 'Magiques',
+    'resources.cat_food': 'Vivres',
+    'resources.cat_relic': 'Reliques',
+    'resources.cat_misc': 'Divers',
 
     'rarity.common': 'Commune',
     'rarity.uncommon': 'Peu commune',
@@ -536,7 +544,7 @@ export const ui = {
     'comingSoon.title': 'King Of Nowhere',
     'comingSoon.tagline': 'Le MMORPG qui réécrit les règles arrive bientôt.',
     'comingSoon.lead':
-      'Bâtissez sans limites. Forgez des clans. Choisissez votre camp dans la guerre éternelle entre Anges et Démons. Le site ouvre ses portes au public dans quelques semaines — d’ici là, seules les âmes invitées peuvent franchir le seuil.',
+      'Bâtissez sans limites. Forgez des clans. Vos choix vous mèneront à choisir votre camp dans la guerre éternelle entre Anges et Démons. Le site ouvre ses portes au public dans quelques semaines — d’ici là, seules les âmes invitées peuvent franchir le seuil.',
     'comingSoon.beta_intro': 'Inscrivez-vous pour être prévenu en premier.',
     'comingSoon.locked_notice': 'Accès restreint pendant la phase de développement.',
 
@@ -733,10 +741,10 @@ export const ui = {
     'worldRules.humans_cannot':
       'Very poor resistance to corruption · Transformations forbidden · Some powerful magics destroy their body',
 
-    'worldRules.lycans_name': 'The Lycans',
+    'worldRules.lycans_name': 'The Wolfs',
     'worldRules.lycans_tagline': 'Hot blood. Long fangs. Raw emotion.',
     'worldRules.lycans_text':
-      "Lycans live in forests, mountains, frontiers, wild lands. They belong to both worlds without fully belonging to either. Rage, instinct, hunt, speed — these are their weapons. The moon is their calendar.",
+      "Wolfs live in forests, mountains, frontiers, wild lands. They belong to both worlds without fully belonging to either. Rage, instinct, hunt, speed — these are their weapons. The moon is their calendar.",
     'worldRules.lycans_can': 'Transformations · Regeneration · Heightened senses · Wild abilities · Pack-howl',
     'worldRules.lycans_cannot':
       'Complex magic very difficult · Fragile emotional control · Strong emotions trigger uncontrolled transformations',
@@ -787,9 +795,9 @@ export const ui = {
     'worldRules.identity_section_lead':
       "In King Of Nowhere, other players do NOT see your exact skills, your specializations, your hidden abilities, your possible transformations. You must discover others by speaking, observing, fighting — by reputation.",
 
-    'worldRules.identity_lycan_title': 'Hidden Lycans',
+    'worldRules.identity_lycan_title': 'Hidden Wolfs',
     'worldRules.identity_lycan_text':
-      "Lycans can often pass for human. But transformations, strong emotions, wounds, the full moon, or uncontrolled instincts can reveal their nature.",
+      "Wolfs can often pass for human. But transformations, strong emotions, wounds, the full moon, or uncontrolled instincts can reveal their nature.",
     'worldRules.identity_demon_title': 'Visible Demons',
     'worldRules.identity_demon_text':
       "Some demonic classes cannot hide their eyes, their horns, their aura, their marks. They are recognized as non-human at first sight.",
@@ -992,6 +1000,20 @@ export const ui = {
     'resources.where_found': 'Where to find',
     'resources.back': '← All resources',
     'resources.empty': 'The first entries are coming.',
+    'resources.cat_mineral': 'Ores',
+    'resources.cat_plant': 'Plants',
+    'resources.cat_wood': 'Wood',
+    'resources.cat_fabric': 'Fabrics',
+    'resources.cat_magic': 'Magical',
+    'resources.cat_food': 'Food',
+    'resources.cat_relic': 'Relics',
+    'resources.cat_misc': 'Misc',
+    'resources.cat_currency': 'Currency',
+    'resources.cat_quest': 'Quest Items',
+    'resources.cat_upgrade': 'Upgrades',
+    'resources.cat_crafting': 'Crafting Materials',
+    'resources.cat_consumable': 'Consumables',
+    'resources.cat_other': 'Other',
 
     'rarity.common': 'Common',
     'rarity.uncommon': 'Uncommon',

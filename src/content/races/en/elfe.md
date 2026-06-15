@@ -5,7 +5,7 @@ gallery:
 - /images/codex/races/elfe/02.jpg
 name: Elf
 tagline: Guardians of the eternal forests, the world's living memory.
-alignment: good
+alignment: neutral
 origin: Risen from the roots of the mother-trees, elves existed before humans and before the Angels.
 traits:
   - Near-infinite lifespan

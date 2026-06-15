@@ -2,9 +2,15 @@
 import { getCollection } from 'astro:content';
 import { useTranslations, getLangFromUrl, getLocalizedPath } from '../i18n/ui';
 import type { Lang } from '../i18n/ui';
+import { EVENT_CATEGORIES } from '../content/config';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+const eventFilters = [
+  { value: 'all', label: t('events.filter_all') },
+  ...EVENT_CATEGORIES.map((c) => ({ value: c, label: t(`event_cat.${c}` as any) })),
+];
 
 const slugFor = (id: string) => id.replace(/^[^/]+\//, '').replace(/\.(md|mdx)$/, '');
 
@@ -132,6 +138,21 @@ function formatRange(e: CookedEvent): string {
     <h1 class="mt-4 text-4xl sm:text-5xl text-white">{t('events.title')}</h1>
     <p class="mt-4 max-w-2xl text-white/70">{t('events.lead')}</p>
 
+    {events.length > 0 && (
+      <div id="event-filters" class="mt-10 flex flex-wrap gap-2">
+        {eventFilters.map((f) => (
+          <button
+            type="button"
+            class="filter-pill text-xs font-display tracking-widest uppercase px-4 py-2 rounded-full border border-white/10 text-white/60 hover:border-gold-300/60 hover:text-gold-300 transition-all data-[active=true]:border-gold-300 data-[active=true]:text-gold-300 data-[active=true]:bg-gold-500/10"
+            data-filter={f.value}
+            data-active={f.value === 'all' ? 'true' : 'false'}
+          >
+            {f.label}
+          </button>
+        ))}
+      </div>
+    )}
+
     {events.length === 0 ? (
       <p class="mt-16 text-white/40 italic">{t('events.empty')}</p>
     ) : (
@@ -145,7 +166,8 @@ function formatRange(e: CookedEvent): string {
               {liveEvents.map((e) => (
                 <a
                   href={eventUrl(e.id)}
-                  class="group relative rounded-xl border border-gold-500/40 bg-gradient-to-br from-gold-900/20 via-ink-800/40 to-ink-900 p-5 hover:border-gold-300 transition-all"
+                  class="event-item group relative rounded-xl border border-gold-500/40 bg-gradient-to-br from-gold-900/20 via-ink-800/40 to-ink-900 p-5 hover:border-gold-300 transition-all"
+                  data-event-cat={e.data.category}
                 >
                   <span class="absolute -top-2 left-5 inline-flex items-center gap-2 rounded-full border border-gold-300/60 bg-ink-900 px-3 py-1 text-[10px] font-display tracking-[0.3em] uppercase text-gold-200">
                     <span class="w-1.5 h-1.5 rounded-full bg-gold-300 animate-pulse"></span>
@@ -253,7 +275,7 @@ function formatRange(e: CookedEvent): string {
             </h2>
             <ul class="mt-6 space-y-4">
               {upcomingEvents.map((e) => (
-                <li>
+                <li class="event-item" data-event-cat={e.data.category}>
                   <a
                     href={eventUrl(e.id)}
                     class="group flex flex-col sm:flex-row sm:items-center gap-4 rounded-xl border border-white/10 bg-ink-800/40 p-5 hover:border-gold-500/40 transition-all"
@@ -298,7 +320,7 @@ function formatRange(e: CookedEvent): string {
             </h2>
             <ul class="mt-6 space-y-3">
               {pastEvents.map((e) => (
-                <li>
+                <li class="event-item" data-event-cat={e.data.category}>
                   <a
                     href={eventUrl(e.id)}
                     class="group flex items-center gap-4 rounded-lg border border-white/5 bg-ink-900/30 px-4 py-3 hover:border-white/15 transition-all opacity-70 hover:opacity-100"
@@ -322,6 +344,34 @@ function formatRange(e: CookedEvent): string {
 </section>
 
 <script>
+  /* Event category filter pills */
+  function setupEventFilters() {
+    const pills = document.querySelectorAll<HTMLButtonElement>('#event-filters .filter-pill');
+    const items = document.querySelectorAll<HTMLElement>('.event-item');
+    if (!pills.length) return;
+
+    const apply = (value: string) => {
+      pills.forEach((p) =>
+        p.setAttribute('data-active', p.dataset.filter === value ? 'true' : 'false'),
+      );
+      items.forEach((item) => {
+        const match = value === 'all' || item.dataset.eventCat === value;
+        item.style.display = match ? '' : 'none';
+      });
+    };
+
+    pills.forEach((p) => p.addEventListener('click', () => apply(p.dataset.filter || 'all')));
+
+    /* URL hash → preselect */
+    const hash = window.location.hash.replace(/^#/, '');
+    if (hash) {
+      const match = Array.from(pills).find((p) => p.dataset.filter === hash);
+      if (match) apply(hash);
+    }
+  }
+  setupEventFilters();
+  document.addEventListener('astro:page-load', setupEventFilters);
+
   const root = document.querySelector('[data-events-calendar]');
   if (root) {
     const months = Array.from(root.querySelectorAll<HTMLElement>('[data-cal-month]'));

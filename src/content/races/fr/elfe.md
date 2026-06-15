@@ -5,7 +5,7 @@ gallery:
 - /images/codex/races/elfe/02.jpg
 name: Elfe
 tagline: Gardiens des forêts éternelles, mémoire vivante du monde.
-alignment: good
+alignment: neutral
 origin: Émergés des racines des arbres-mères, les elfes existaient avant les humains et avant les Anges.
 traits:
   - Longévité quasi-infinie

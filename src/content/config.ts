@@ -67,6 +67,12 @@ export const RESOURCE_CATEGORIES = [
   'food',
   'relic',
   'misc',
+  'currency',
+  'quest',
+  'upgrade',
+  'crafting',
+  'consumable',
+  'other'
 ] as const;
 export type ResourceCategory = (typeof RESOURCE_CATEGORIES)[number];
 
