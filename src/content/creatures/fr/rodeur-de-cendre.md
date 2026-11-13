@@ -1,4 +1,8 @@
 ---
+cover: /images/codex/creatures/rodeur-de-cendre/cover.jpg
+gallery:
+- /images/codex/creatures/rodeur-de-cendre/01.jpg
+- /images/codex/creatures/rodeur-de-cendre/02.jpg
 name: Rôdeur de cendre
 tagline: Une silhouette qui marche encore après que le feu se soit éteint.
 type: undead
